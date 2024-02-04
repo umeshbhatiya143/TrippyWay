@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* offers-slider in header */
+.pipe-slider p {
+    animation: slide-text 30s linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes slide-text {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/*hero section of  page */
+.bg-glassy {
+    backdrop-filter: blur(6px) grayscale(0.5);
+}
