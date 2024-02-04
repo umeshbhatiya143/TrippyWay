@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* slider in hero section of landing page */
+/* .swiper {
+    height: 85vh !important;
+} */
+/* .swiper img{
+    aspect-ratio: 1;
+    object-fit: cover;
+} */

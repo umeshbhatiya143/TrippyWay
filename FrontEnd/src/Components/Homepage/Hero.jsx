@@ -1,9 +1,10 @@
 import React from 'react';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
+import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
 import 'swiper/css';
 
-SwiperCore.use([Navigation, Pagination]);
 
 const HeroSection = () => {
 
@@ -21,12 +22,17 @@ const HeroSection = () => {
 
 
     return (
-        <div className="relative">
+        <div className="h-[84vh] relative overflow-hidden">
             <Swiper
-                navigation
-                pagination={{ clickable: true }}
-                autoplay={{ delay: 5000 }}
-                className="h-screen"
+                // install Swiper modules
+                modules={[Autoplay]}
+                slidesPerView={1}
+                autoplay={{
+                    delay: 5000, // Delay between slides in milliseconds (3 seconds here)
+                    disableOnInteraction: false, // Continue autoplay even after user interaction
+                }}
+                loop={true}
+                className="relative"
             >
 
                 {
@@ -34,17 +40,17 @@ const HeroSection = () => {
                         return (
                             <SwiperSlide>
                                 {/* Your first slide content */}
-                                <div className="bg-cover w-full bg-center h-96 !important flex items-center justify-center" style={{ backgroundImage: `url('/image1.jpg')` }}>
+                                <div className="w-full !important flex items-center justify-center">
                                     {/* Your content for the first slide */}
-                                    <img src={slide.image} alt=""  className='w-full h-full aspect-square !important'/>
+                                    <img src={slide.image} alt="" className='w-full !important' />
                                 </div>
                             </SwiperSlide>
                         )
                     })
                 }
             </Swiper>
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                <div className="text-center text-white z-10">
+            <div className="w-full h-full absolute top-0 z-10 flex justify-center overflow-hidden">
+                <div className=" flex flex-col justify-center text-center text-black z-10">
                     <h1 className="text-4xl font-bold mb-4">Welcome to Our Website</h1>
                     <p className="text-lg mb-8">Explore our unique features and services.</p>
                     <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md">
