@@ -32,29 +32,27 @@ const Packages = () => {
   //let [open, setOpen] = useState(false);
 
   return (
-    <div className="md:m-5 ">
+    <div className=" ">
       {/* Anchor Section */}
-      <div className="bg-slate-300 w-full ">
-        <div className="container mx-auto flex justify-between items-center">
+      <div className="bg-slate-400 w-full fixed z-50">
+        <div className="container  md:flex justify-start gap-5 items-center h-28">
           {/* package heading */}
-          <div>
-            <h1 className="m-2 p-1 items-center font-sans md:text-3xl ">
-              Turkish Extravaganza Package with Sunrise Hot Air Balloon
-            </h1>
+          <div className="m-2 p-1 items-center font-sans md:text-3xl font-bold ">
+            Turkish Extravaganza Package with Sunrise Hot Air Balloon
           </div>
           {/* customize and book Section */}
-          <div className="md:flex md:items-center md:space-x-4  ">
+          <div className="flex items-center space-x-4 gap-5 justify-center ">
             <div>
-              <p className="items-center font-sans md:text-2xl">
+              <p className="items-center font-sans md:text-2xl font-bold">
                 <span>&#8377;</span>49999 <sup>*</sup>
               </p>
             </div>
-            <div className="w-full  md:w-36">
+            <div className="">
               <button className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold md:py-2 md:px-4 py-1 px-2 rounded-lg shadow-md">
                 Customize
               </button>
             </div>
-            <div className="w-full  md:w-36 mt-2 md:mt-0">
+            <div className="">
               <button className="bg-gradient-to-r from-black to-slate-500 hover:from-slate-700 hover:to-slate-400 text-white font-bold md:py-2 md:px-4 py-1 px-2 rounded-lg shadow-md">
                 Book
               </button>
@@ -63,11 +61,11 @@ const Packages = () => {
         </div>
         {/* Anchor section  */}
         <div>
-          <ul className="md:flex md:flex-row md:space-x-6 sm:space-x-3 md:item-center">
-            <div className="flex  hover:bg-red-500 hover:text-white items-center">
+          <ul className="md:flex md:flex-row md:item-center ">
+            <div className="flex  hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center">
               <li className="md:m-1 md:p-2">
                 <a href="#photos">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-1 font-bold">
                     <FaImages className="mr-2 sm:mr-0" />
                     Photos
                   </div>
@@ -75,10 +73,10 @@ const Packages = () => {
               </li>
             </div>
 
-            <div className="flex hover:bg-red-500 hover:text-white items-center">
+            <div className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center ">
               <li className="md:m-1 md:p-2">
                 <a href="#hotels">
-                  <div className="flex items-center">
+                  <div className="flex items-center  gap-1 font-bold">
                     <IoIosInformationCircle className="mr-2 sm" />
                     About
                   </div>
@@ -86,10 +84,10 @@ const Packages = () => {
               </li>
             </div>
 
-            <div className="flex hover:bg-red-500 hover:text-white items-center">
+            <div className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center">
               <li className="md:m-1 md:p-2">
                 <a href="#itinerary">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-1 font-bold ">
                     <LiaHotelSolid className="mr-2" />
                     Hotels
                   </div>
@@ -97,10 +95,10 @@ const Packages = () => {
               </li>
             </div>
 
-            <div className="flex hover:bg-red-500 hover:text-white items-center">
+            <div className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center">
               <li className="md:m-1 md:p-2">
                 <a href="#about">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-1 font-bold">
                     <FaMapMarkerAlt className="mr-2" />
                     Detailed Itinerary
                   </div>
@@ -124,10 +122,10 @@ const Packages = () => {
         </div>
         <div className="absolute flex items-center justify-between inset-0 p-4">
           <button onClick={prev}>
-            <FaChevronLeft className="rounded-full shadow bg-white text-gray-800 hover:bg-slate-300 sm:text-xs md:text-3xl" />
+            <FaChevronLeft className="rounded-full shadow bg-slate-400 text-gray-800 hover:bg-slate-100 sm:text-xs md:text-3xl" />
           </button>
           <button onClick={next}>
-            <FaChevronRight className="rounded-full shadow bg-white text-gray-800  hover:bg-slate-300 sm:text-xs md:text-3xl" />
+            <FaChevronRight className="rounded-full shadow bg-slate-400 text-gray-800  hover:bg-slate-100 sm:text-xs md:text-3xl" />
           </button>
         </div>
         <div className="absolute bottom-4 right-0 left-0">
