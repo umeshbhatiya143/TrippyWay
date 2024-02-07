@@ -4,12 +4,36 @@ import { FaImages } from "react-icons/fa";
 import { LiaHotelSolid } from "react-icons/lia";
 import { IoIosInformationCircle } from "react-icons/io";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaChevronRight,FaChevronLeft } from "react-icons/fa6";
 
 
 const Packages = () => {
   const router = useRouter();
   const { slug } = router.query;
-  let [open, setOpen] = useState(false);
+  //hooks to
+  const [curr , setCurr]=useState(0);
+
+  const images = [
+    {
+      imageurl: "../../slide1.jpg",
+    },
+    {
+      imageurl: "../../slide2.jpg",
+    },
+    {
+      imageurl: "../../slide3.jpg",
+    },
+  ];
+const prev=()=>
+setCurr((curr)=> (curr=0? images.length-1 : curr-1)
+)
+
+const next=()=>setCurr(
+  (curr)=> (curr=images-1 ? 0 : curr+1
+))
+ 
+  //let [open, setOpen] = useState(false);
+
   return (
     <div className="md:m-5 ">
       {/* Anchor Section */}
@@ -41,11 +65,8 @@ const Packages = () => {
           </div>
         </div>
         {/* Anchor section  */}
-        <div  >
-         
-          <ul
-            className="md:flex md:flex-row md:space-x-6 sm:space-x-3 md:item-center"
-          >
+        <div>
+          <ul className="md:flex md:flex-row md:space-x-6 sm:space-x-3 md:item-center">
             <div className="flex  hover:bg-red-500 hover:text-white items-center">
               <li className="md:m-1 md:p-2">
                 <a href="#photos">
@@ -93,6 +114,30 @@ const Packages = () => {
         </div>
       </div>
       {/* Different section of the page */}
+
+      {/* carosel section of the page */}
+      <div className="overflow-hidden relative">
+      <div className="flex transition-transform ease-out duration-500" style={{transform :`translateX(-${curr *100}%)`}}>
+        {images.map((content, index) => {
+          return (
+            
+              <img src={content.imageurl}></img>
+            
+          );
+        })}
+      </div>
+      <div className="absolute flex items-center justify-between inset-0 p-4">
+      <button onClick={prev}>
+        < FaChevronLeft size={40} className="rounded-full shadow bg-white text-gray-800 hover:bg-slate-300"/>
+        </button>
+        <button onClick={next}>
+        < FaChevronRight size={40} className="rounded-full shadow bg-white text-gray-800  hover:bg-slate-300"/>
+        </button>
+        
+      </div>
+      </div>
+
+      
       <div id="photos">photos</div>
       <div id="hotels">hotels</div>
       <div id="itinerary">detailed itinerary</div>
