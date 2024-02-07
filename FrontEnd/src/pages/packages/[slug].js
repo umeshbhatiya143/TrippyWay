@@ -4,14 +4,13 @@ import { FaImages } from "react-icons/fa";
 import { LiaHotelSolid } from "react-icons/lia";
 import { IoIosInformationCircle } from "react-icons/io";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { FaChevronRight,FaChevronLeft } from "react-icons/fa6";
-
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
 
 const Packages = () => {
   const router = useRouter();
   const { slug } = router.query;
   //hooks to
-  const [curr , setCurr]=useState(0);
+  const [curr, setCurr] = useState(0);
 
   const images = [
     {
@@ -24,14 +23,12 @@ const Packages = () => {
       imageurl: "../../slide3.jpg",
     },
   ];
-const prev=()=>
-setCurr((curr)=> (curr=0? images.length-1 : curr-1)
-)
+  const prev = () =>
+    setCurr((curr) => (curr == 0 ? images.length - 1 : curr - 1));
 
-const next=()=>setCurr(
-  (curr)=> (curr=images-1 ? 0 : curr+1
-))
- 
+  const next = () =>
+    setCurr((curr) => (curr == images.length - 1 ? 0 : curr + 1));
+
   //let [open, setOpen] = useState(false);
 
   return (
@@ -117,27 +114,35 @@ const next=()=>setCurr(
 
       {/* carosel section of the page */}
       <div className="overflow-hidden relative">
-      <div className="flex transition-transform ease-out duration-500" style={{transform :`translateX(-${curr *100}%)`}}>
-        {images.map((content, index) => {
-          return (
-            
-              <img src={content.imageurl}></img>
-            
-          );
-        })}
-      </div>
-      <div className="absolute flex items-center justify-between inset-0 p-4">
-      <button onClick={prev}>
-        < FaChevronLeft size={40} className="rounded-full shadow bg-white text-gray-800 hover:bg-slate-300"/>
-        </button>
-        <button onClick={next}>
-        < FaChevronRight size={40} className="rounded-full shadow bg-white text-gray-800  hover:bg-slate-300"/>
-        </button>
-        
-      </div>
+        <div
+          className="flex transition-transform ease-out duration-500"
+          style={{ transform: `translateX(-${curr * 100}%)` }}
+        >
+          {images.map((content, index) => {
+            return <img src={content.imageurl}></img>;
+          })}
+        </div>
+        <div className="absolute flex items-center justify-between inset-0 p-4">
+          <button onClick={prev}>
+            <FaChevronLeft className="rounded-full shadow bg-white text-gray-800 hover:bg-slate-300 sm:text-xs md:text-3xl" />
+          </button>
+          <button onClick={next}>
+            <FaChevronRight className="rounded-full shadow bg-white text-gray-800  hover:bg-slate-300 sm:text-xs md:text-3xl" />
+          </button>
+        </div>
+        <div className="absolute bottom-4 right-0 left-0">
+          <div className="flex justify-center items-center gap-2">
+            {images.map((_, i) => (
+              <div
+                className={`transition-all md:w-4 md:h-4 sm:w-3 sm:h-3 bg-white rounded-full ${
+                  curr == i ? "p-2" : "bg-opacity-50"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
-      
       <div id="photos">photos</div>
       <div id="hotels">hotels</div>
       <div id="itinerary">detailed itinerary</div>
