@@ -62,56 +62,65 @@ const Packages = () => {
         {/* Anchor section  */}
         <div>
           <ul className="md:flex md:flex-row md:item-center ">
-            <div className="flex  hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center">
-              <li className="md:m-1 md:p-2">
-                <a href="#photos">
+          <a href="#photos"
+              
+              className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center"
+            >
+              <li  className="md:m-1 md:p-2">
                   <div className="flex items-center gap-1 font-bold">
                     <FaImages className="mr-2 sm:mr-0" />
                     Photos
                   </div>
-                </a>
+                
               </li>
-            </div>
+            </a>
 
-            <div className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center ">
-              <li className="md:m-1 md:p-2">
-                <a href="#hotels">
+            <a href="#about"
+              
+              className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center"
+            >
+              <li  className="md:m-1 md:p-2">
                   <div className="flex items-center  gap-1 font-bold">
                     <IoIosInformationCircle className="mr-2 sm" />
                     About
                   </div>
-                </a>
+                
               </li>
-            </div>
+            </a>
 
-            <div className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center">
-              <li className="md:m-1 md:p-2">
-                <a href="#itinerary">
+            <a href="#hotels"
+              
+              className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center"
+            >
+              <li  className="md:m-1 md:p-2">
+                
                   <div className="flex items-center gap-1 font-bold ">
                     <LiaHotelSolid className="mr-2" />
                     Hotels
                   </div>
-                </a>
+                
               </li>
-            </div>
+            </a>
 
-            <div className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center">
-              <li className="md:m-1 md:p-2">
-                <a href="#about">
+            <a href="#itinerary"
+              
+              className="flex hover:bg-slate-800 hover:text-white items-center md:w-1/2 sm:w-full justify-center"
+            >
+              <li  className="md:m-1 md:p-2">
                   <div className="flex items-center gap-1 font-bold">
                     <FaMapMarkerAlt className="mr-2" />
                     Detailed Itinerary
                   </div>
-                </a>
+                
               </li>
-            </div>
+            </a>
           </ul>
         </div>
       </div>
       {/* Different section of the page */}
 
       {/* carosel section of the page */}
-      <div className="overflow-hidden relative">
+      <div id="photos" className="overflow-hidden relative">
         <div
           className="flex transition-transform ease-out duration-500"
           style={{ transform: `translateX(-${curr * 100}%)` }}
@@ -141,7 +150,6 @@ const Packages = () => {
         </div>
       </div>
 
-      <div id="photos">photos</div>
       <div id="hotels">hotels</div>
       <div id="itinerary">detailed itinerary</div>
       <div id="about">about the place</div>
