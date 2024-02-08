@@ -101,9 +101,6 @@ const Blog = () => {
             
           </div>
         </div>
-        
-
-
 
         <div class=" m-5 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
           {blogContent.map((blog, index) => {
