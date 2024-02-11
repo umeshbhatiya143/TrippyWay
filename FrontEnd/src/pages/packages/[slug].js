@@ -10,16 +10,19 @@ import { FaCar } from "react-icons/fa";
 import { GiMeal } from "react-icons/gi";
 import { FaMountainSun } from "react-icons/fa6";
 import { FaTents } from "react-icons/fa6";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import pack from "./pack.json";
 
 const Packages = () => {
   const router = useRouter();
   const { slug } = router.query;
   //hooks to
   const [curr, setCurr] = useState(0);
- const [read,setRead]=useState(false);
+  const [read, setRead] = useState(false);
+ // const [open, setOpen] = useState(...pack.detailedItinirary,);
   const images = [
     {
       imageurl: "../../slide1.jpg",
@@ -32,72 +35,11 @@ const Packages = () => {
     },
   ];
 
-  const hotels = [
-    {
-      image: "https://5.imimg.com/data5/SELLER/Default/2020/10/CX/EI/DE/111984546/five-star-hotel-services-500x500.jpeg",
-      name: "At Wood Resort Munnar, Kerala",
-      ratings: 4,
-      location: "Chithirapuram, Pottankadu , Munnar , 685565",
-      distance: "4 km from station",
-    },
-    {
-      image: "../../slide2.jpg",
-      name: "bvhjh",
-      ratings: "5",
-      location: "bhjgjhgk",
-      distance: "2 km from station",
-    },
-    {
-      image: "../../slide3.jpg",
-      name: "kjhuuiuhu",
-      ratings: "4",
-      location: "fhgjhk",
-      distance: "4",
-    },
-    {
-      image: "../../slide1.jpg",
-      name: "qwerr",
-      ratings: 4,
-      location: "bgchghj",
-      distance: "4 km from station",
-    },
-    {
-      image: "../../slide2.jpg",
-      name: "bvhjh",
-      ratings: "5",
-      location: "bhjgjhgk",
-      distance: "2 km from station",
-    },
-    {
-      image: "../../slide3.jpg",
-      name: "kjhuuiuhu",
-      ratings: "4",
-      location: "fhgjhk",
-      distance: "4",
-    },
-    {
-      image: "../../slide2.jpg",
-      name: "bvhjh",
-      ratings: "5",
-      location: "bhjgjhgk",
-      distance: "2 km from station",
-    },
-    {
-      image: "../../slide1.jpg",
-      name: "qwerr",
-      ratings: 4,
-      location: "bgchghj",
-      distance: "4 km from station",
-    },
-  ];
-
   const prev = () =>
     setCurr((curr) => (curr == 0 ? images.length - 1 : curr - 1));
 
   const next = () =>
     setCurr((curr) => (curr == images.length - 1 ? 0 : curr + 1));
-
-  //let [open, setOpen] = useState(false);
   const settings = {
     dots: true,
     infinite: true,
@@ -111,31 +53,46 @@ const Packages = () => {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const settings_small = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   //ReadMore
-const readFunction=()=>
-setRead((read)=>(!read));
-  
+  const readFunction = () => setRead((read) => !read);
+
+  //to maintain accordion state
+  const [openSections, setOpenSections] = useState(Array(pack.detailedItininary.length).fill(false));
+
+  const toggle = (index) => {
+    const newOpenSections = [...openSections];
+    newOpenSections[index] = !newOpenSections[index];
+    setOpenSections(newOpenSections);
+  };
 
   return (
     <div className=" ">
@@ -144,13 +101,15 @@ setRead((read)=>(!read));
         <div className="container  md:flex justify-start gap-5 items-center h-28">
           {/* package heading */}
           <div className="m-2 p-1 items-center font-sans md:text-3xl font-bold ">
-            Turkish Extravaganza Package with Sunrise Hot Air Balloon
+            {pack.title}
           </div>
           {/* customize and book Section */}
           <div className="flex items-center space-x-4 gap-5 justify-center ">
             <div>
               <p className="items-center font-sans md:text-2xl font-bold">
-                <span>&#8377;</span>49999 <sup>*</sup>
+                <span>&#8377;</span>
+                {pack.price}
+                <sup>*</sup>
               </p>
             </div>
             <div className="">
@@ -266,7 +225,7 @@ setRead((read)=>(!read));
             <p className="font-bold md:text-xl">Stay Plan</p>
             <div className=" md:text-xl flex justify-start space-x-5 m-2 mt-8 mb-5">
               <FaTents className="font-bold md:text-2xl" />
-              <p>4 days</p>
+              <p>{pack.stayPlan}</p>
             </div>
             <hr size="3"></hr>
           </div>
@@ -297,76 +256,95 @@ setRead((read)=>(!read));
       </div>
       <hr className="mt-5 mb-5"></hr>
       <div id="about">
-        <div className="text-xl font-bold m-5">
-        About The Place
+        <div className="text-xl font-bold m-5">About The Place</div>
+
+        <div className="m-5">
+          {pack.about1}
+          <button onClick={readFunction} className="font-bold p-1">
+            {" "}
+            {read ? "Read Less" : "Read More..."}
+          </button>
+          {read ? <div>{pack.about2}</div> : <></>}
         </div>
-       
-      <div className="m-5">
-      Planning a weekend getaway in South India? Famous for backwaters, beaches, hill stations, and national parks, Kerala is one of the most visited states in India. The city of Kochi, also known as Cochin, is renowned for colonial heritage and a hub for Keralan arts. Located in the Western Ghats of Kerala, Munnar is popular for stunning viewpoints and verdant tea estates. Our 3 nights 4 days Kochi tour package allows travelers to explore the natural and cultural wealth of Kerala. The well-curated itinerary of our Kochi tour packages offers plenty of activities to enjoy such as boating, wildlife safaris, tea estate visits, and nature walks.
-
-On the first day of this Kochi tour package for 4 days, travelers get to discover the main tourist attractions in Kochi. On this Kochi local tour, travelers can wander around in Fort Kochi area to marvel at the colonial architecture, admire the wall paintings of Mattancherry Palace, and wander around on Marine Drive for sunset views. Shopping and sightseeing are main highlights of our Kochi city tour. After sightseeing in Kochi, take a scenic long drive to Munnar to spend your next couple of days in the beauty of Western Ghats.
-
-On the road to Munnar, there are a few waterfalls like Cheeyappara and Valara that are worth visiting. Top Station, Anamudi Peak, Eravikulam National Park, and Kundala Lake are top places to visit in Munnar. A visit to the famous tea plantations in Munnar is included in our Kochi tour package.
-
-Travelers can fully customize the current Cochin tour itinerary as per their own convenience and budget requirements. Book our 3 nights 4 days Kochi tour package to explore the “God’s Own Country” on a holiday. Here’s the detailed itinerary of 4 days Kochi package below.
-<button onClick={readFunction} className="font-bold p-1"> {read ? "Read Less" :"Read More..."}</button>
-{read ? <div>
-Planning a weekend getaway in South India? Famous for backwaters, beaches, hill stations, and national parks, Kerala is one of the most visited states in India. The city of Kochi, also known as Cochin, is renowned for colonial heritage and a hub for Keralan arts. Located in the Western Ghats of Kerala, Munnar is popular for stunning viewpoints and verdant tea estates. Our 3 nights 4 days Kochi tour package allows travelers to explore the natural and cultural wealth of Kerala. The well-curated itinerary of our Kochi tour packages offers plenty of activities to enjoy such as boating, wildlife safaris, tea estate visits, and nature walks.
-
-On the first day of this Kochi tour package for 4 days, travelers get to discover the main tourist attractions in Kochi. On this Kochi local tour, travelers can wander around in Fort Kochi area to marvel at the colonial architecture, admire the wall paintings of Mattancherry Palace, and wander around on Marine Drive for sunset views. Shopping and sightseeing are main highlights of our Kochi city tour. After sightseeing in Kochi, take a scenic long drive to Munnar to spend your next couple of days in the beauty of Western Ghats.
-
-On the road to Munnar, there are a few waterfalls like Cheeyappara and Valara that are worth visiting. Top Station, Anamudi Peak, Eravikulam National Park, and Kundala Lake are top places to visit in Munnar. A visit to the famous tea plantations in Munnar is included in our Kochi tour package.
-
-Travelers can fully customize the current Cochin tour itinerary as per their own convenience and budget requirements. Book our 3 nights 4 days Kochi tour package to explore the “God’s Own Country” on a holiday. Here’s the detailed itinerary of 4 days Kochi package below.
-
-</div>: <></>}
-      </div>
       </div>
       <hr></hr>
       <div className="text-xl font-bold m-5">Hotels</div>
       <div id="hotels" className="w-11/12 m-auto">
-        
         <div className="mt-5">
-        <Slider {...settings}>
-          {hotels.map((hotel, index) => {
-            return (
-              <div className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
-              <a>
-                <img className="rounded-t-xl h-[200px]" src={hotel.image}></img>
-                <div className="flex flex-col justify-start gap-1 p-1">
-                <p className="text-xl font-semibold">{hotel.name}</p>
-                <p>{hotel.distance}</p>
-                <p>{hotel.location}</p>
+          <Slider {...settings}>
+            {pack.hotels.map((hotel, index) => {
+              return (
+                <div className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
+                  <a>
+                    <img
+                      className="rounded-t-xl h-[200px]"
+                      src={hotel.image}
+                    ></img>
+                    <div className="flex flex-col justify-start gap-1 p-1">
+                      <p className="text-xl font-semibold">{hotel.name}</p>
+                      <p>{hotel.distance}</p>
+                      <p>{hotel.location}</p>
+                    </div>
+                  </a>
                 </div>
-                
-              </a>
-              </div>
-            );
-          })}
+              );
+            })}
           </Slider>
         </div>
       </div>
-      {/* <div id="hotels" className="w-3/4 m-auto">
-        <div className="mt-20">
-          {hotels.map((hotel) => {
-            <div className="bg-white h-[300px] text-black rounded-xl">
-              <a>
-                <div>
-                  <img src={hotel.image} className="rounded-t-xl" />
-                </div>
-                <div>
-                  <p>{hotel.name}</p>
-                  <p>{hotel.distance}</p>
-                  <p>{hotel.location}</p>
-                </div>
-              </a>
-            </div>;
-          })}
-        </div>
-      </div> */}
+      <hr className="mt-10 mb-5"></hr>
 
-      <div id="itinerary">detailed itinerary</div>
-    
+      
+              <div id="itinerary" className="md:w-1/2 m-5 sm:w-full">
+              <div className="text-xl font-bold mb-3">Detailed itinerary</div>
+              <div className="">
+                {pack.detailedItininary.map((itininary, index) => {
+                  return (
+                    <div key={index} >
+                      <div
+                        className="flex justify-between"
+                        onClick={() => toggle(index)}
+                      >
+                        <p>{itininary.titleD}</p>
+                        <FaChevronDown className={openSections[index] ? `rotate-180` : ""} />
+                      </div>
+                      <hr className="mt-3 mb-3"></hr>
+                      {openSections[index] && (
+                        <div className="transition-all ease-in-out duration-100 shadow">
+                          <div className="md:w-1/2 sd:w-full">
+                            <Slider {...settings_small}>
+                              {pack.hotels.map((hotel, indexi) => {
+                                return (
+                                  <div key={indexi} className="w-[200px] h-[200px]">
+                                    <a>
+                                      <img className="h-[200px]" src={hotel.image} alt={`Hotel ${indexi}`} />
+                                    </a>
+                                  </div>
+                                );
+                              })}
+                            </Slider>
+                          </div>
+                          <div className="mt-5 ml-2 mb-5">
+                            <ul>
+                            {Object.keys(itininary.details).map((key) => {
+      return (
+        <li key={key}>
+          {itininary.details[key]}
+        </li>
+      );
+    })}
+
+                      
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              
+        </div>
+      </div>
     </div>
   );
 };
