@@ -1,5 +1,6 @@
 import React from "react";
 import BlogHeader from "@/Components/BlogHeader";
+import Header from "@/Components/Header";
 const Blog = () => {
   const blogContent = [
     {
@@ -82,10 +83,10 @@ const Blog = () => {
   ];
   return (
     <>
-      <BlogHeader />
-      <section class="m-10 my-10">
+      <Header/>
+      <section class="m-2 my-2">
         <div
-          class="  bg-blog-top  w-full bg-cover bg-center flex items-center justify-center m-none mr-0" style={{height:"500px"}}
+          class="  bg-blog-top  w-full bg-cover bg-center flex items-center justify-center m-none mr-0" style={{height:"400px"}}
           
         >
           <div class="text-center ">
