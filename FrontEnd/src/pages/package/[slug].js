@@ -22,7 +22,7 @@ const Packages = () => {
   //hooks to
   const [curr, setCurr] = useState(0);
   const [read, setRead] = useState(false);
- // const [open, setOpen] = useState(...pack.detailedItinirary,);
+  // const [open, setOpen] = useState(...pack.detailedItinirary,);
   const images = [
     {
       imageurl: "../../slide1.jpg",
@@ -202,9 +202,8 @@ const Packages = () => {
             <div className="flex justify-center items-center gap-2">
               {images.map((_, i) => (
                 <div
-                  className={`transition-all md:w-4 md:h-4 sm:w-3 sm:h-3 bg-white rounded-full ${
-                    curr == i ? "p-2" : "bg-opacity-50"
-                  }`}
+                  className={`transition-all md:w-4 md:h-4 sm:w-3 sm:h-3 bg-white rounded-full ${curr == i ? "p-2" : "bg-opacity-50"
+                    }`}
                 />
               ))}
             </div>
@@ -294,55 +293,55 @@ const Packages = () => {
       </div>
       <hr className="mt-10 mb-5"></hr>
 
-      
-              <div id="itinerary" className="md:w-1/2 m-5 sm:w-full">
-              <div className="text-xl font-bold mb-3">Detailed itinerary</div>
-              <div className="">
-                {pack.detailedItininary.map((itininary, index) => {
-                  return (
-                    <div key={index} >
-                      <div
-                        className="flex justify-between"
-                        onClick={() => toggle(index)}
-                      >
-                        <p>{itininary.titleD}</p>
-                        <FaChevronDown className={openSections[index] ? `rotate-180` : ""} />
-                      </div>
-                      <hr className="mt-3 mb-3"></hr>
-                      {openSections[index] && (
-                        <div className="transition-all ease-in-out duration-100 shadow">
-                          <div className="md:w-1/2 sd:w-full">
-                            <Slider {...settings_small}>
-                              {pack.hotels.map((hotel, indexi) => {
-                                return (
-                                  <div key={indexi} className="w-[200px] h-[200px]">
-                                    <a>
-                                      <img className="h-[200px]" src={hotel.image} alt={`Hotel ${indexi}`} />
-                                    </a>
-                                  </div>
-                                );
-                              })}
-                            </Slider>
-                          </div>
-                          <div className="mt-5 ml-2 mb-5">
-                            <ul>
-                            {Object.keys(itininary.details).map((key) => {
-      return (
-        <li key={key}>
-          {itininary.details[key]}
-        </li>
-      );
-    })}
 
-                      
-                            </ul>
-                          </div>
-                        </div>
-                      )}
+      <div id="itinerary" className="md:w-1/2 m-5 sm:w-full">
+        <div className="text-xl font-bold mb-3">Detailed itinerary</div>
+        <div className="">
+          {pack.detailedItininary.map((itininary, index) => {
+            return (
+              <div key={index} >
+                <div
+                  className="flex justify-between"
+                  onClick={() => toggle(index)}
+                >
+                  <p>{itininary.titleD}</p>
+                  <FaChevronDown className={openSections[index] ? `rotate-180` : ""} />
+                </div>
+                <hr className="mt-3 mb-3"></hr>
+                {openSections[index] && (
+                  <div className="transition-all ease-in-out duration-100 shadow">
+                    <div className="md:w-1/2 sd:w-full">
+                      <Slider {...settings_small}>
+                        {pack.hotels.map((hotel, indexi) => {
+                          return (
+                            <div key={indexi} className="w-[200px] h-[200px]">
+                              <a>
+                                <img className="h-[200px]" src={hotel.image} alt={`Hotel ${indexi}`} />
+                              </a>
+                            </div>
+                          );
+                        })}
+                      </Slider>
                     </div>
-                  );
-                })}
-              
+                    <div className="mt-5 ml-2 mb-5">
+                      <ul>
+                        {Object.keys(itininary.details).map((key) => {
+                          return (
+                            <li key={key}>
+                              {itininary.details[key]}
+                            </li>
+                          );
+                        })}
+
+
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
         </div>
       </div>
     </div>

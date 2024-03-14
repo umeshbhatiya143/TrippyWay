@@ -1,7 +1,15 @@
-import React from 'react'
-import Login from '../pages/Login';
+import React from 'react';
+import { useRouter } from 'next/router';
+
+import { CgProfile } from "react-icons/cg";
 
 const Header = () => {
+    const router = useRouter();
+
+    const goToProfilePage = () => {
+        router.push('profile/umesh'); // Replace '/profile' with the actual route to the profile page
+    };
+
     return (
         <>
             {/* offers slider */}
@@ -17,11 +25,11 @@ const Header = () => {
                         <img src="/logo.png" alt="TrippyWay Logo" className="h-14 -ml-20 mr-10" />
                         <nav>
                             <ul className="flex space-x-6">
-                                <li><a href="#" className="hover:text-gray-300">Hotels</a></li>
-                                <li><a href="#" className="hover:text-gray-300">Holidays</a></li>
-                                <li><a href="#" className="hover:text-gray-300">Activities</a></li>
-                                <li><a href="#" className="hover:text-gray-300">Blog</a></li>
-                                <li><a href="#" className="hover:text-gray-300">Offers</a></li>
+                                <li><a href="/" className="hover:text-gray-300">Home</a></li>
+                                <li><a href="/packages" className="hover:text-gray-300">Holidays</a></li>
+                                <li><a href="/activities" className="hover:text-gray-300">Activities</a></li>
+                                <li><a href="/blogs" className="hover:text-gray-300">Blog</a></li>
+                                <li><a href="/offers" className="hover:text-gray-300">Offers</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -30,7 +38,9 @@ const Header = () => {
                     <div className="flex items-center space-x-4">
                         <a href="#" className="hover:text-gray-300">Agent</a>
                         <a href="#" className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md">TrippyAI</a>
-                        <a href="#" className="bg-white text-gray-900 px-4 py-2 rounded-lg shadow-md">Login/SignUp</a>
+                        <button onClick={goToProfilePage} className="">
+                           <CgProfile size={30} />
+                        </button>
                     </div>
                 </div>
             </header>
@@ -38,5 +48,4 @@ const Header = () => {
     );
 };
 
-
-export default Header
+export default Header;
