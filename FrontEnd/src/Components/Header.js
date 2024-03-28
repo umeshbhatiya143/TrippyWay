@@ -13,7 +13,7 @@ const Header = () => {
     return (
         <>
             {/* offers slider */}
-            <div className="w-full pipe-slider flex items-center justify-center py-2 bg-white text-center z-50">
+            <div className="w-full pipe-slider overflow-hidden flex items-center justify-center py-2 bg-white text-center z-50">
                 <p className="w-full text-black text-center">For a limited-time discount: "50% off for the next 48 hours! Don't miss out!"</p>
             </div>
 
@@ -26,9 +26,9 @@ const Header = () => {
                         <nav>
                             <ul className="flex space-x-6">
                                 <li><a href="/" className="hover:text-gray-300">Home</a></li>
-                                <li><a href="/packages" className="hover:text-gray-300">Holidays</a></li>
+                                <li><a href="/holidays/0" className="hover:text-gray-300">Holidays</a></li>
                                 <li><a href="/activities" className="hover:text-gray-300">Activities</a></li>
-                                <li><a href="/blogs" className="hover:text-gray-300">Blog</a></li>
+                                <li><a href="/blogs/0" className="hover:text-gray-300">Blog</a></li>
                                 <li><a href="/offers" className="hover:text-gray-300">Offers</a></li>
                             </ul>
                         </nav>

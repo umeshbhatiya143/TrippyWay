@@ -6,7 +6,7 @@ import Link from 'next/link';
 import DynamicPageLoader from '@/Components/blogs/DynamicPageLoader';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
-import CTA from '../Components/cta';
+import CTA from '@/Components/cta';
 
 const Blogs = () => {
   const [selectedPage, setSelectedPage] = useState('trending');
@@ -14,7 +14,7 @@ const Blogs = () => {
 
   const handleFieldClick = (page) => {
     setSelectedPage(page);
-    // router.push(`/blogs/${page}`);
+    router.push(`/blogs/${page}`);
   };
 
   return (
