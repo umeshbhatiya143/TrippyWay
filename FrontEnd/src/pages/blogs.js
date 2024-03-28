@@ -8,7 +8,7 @@ import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import CTA from '../Components/cta';
 
-const Dashboard = () => {
+const Blogs = () => {
   const [selectedPage, setSelectedPage] = useState('trending');
   const router = useRouter();
 
@@ -65,4 +65,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Blogs;
