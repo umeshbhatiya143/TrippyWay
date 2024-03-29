@@ -1,16 +1,16 @@
 // components/Dashboard.js
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import DynamicPageLoader from '../../Components/holidays/DynamicPageLoader';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
-import CTA from '../../Components/cta';
 
 const Holidays = () => {
-  const [selectedPage, setSelectedPage] = useState('packages');
   const router = useRouter();
+  const slug = router.query.slug;
+  const [selectedPage, setSelectedPage] = useState(slug);
 
   const handleFieldClick = (page) => {
     setSelectedPage(page);
@@ -18,14 +18,23 @@ const Holidays = () => {
     router.push(`/holidays/${page}`);
   };
 
+  useEffect(()=>{
+    if(slug==='activities'){
+      handleFieldClick('activities')
+    }
+    else if(slug==='packages'){
+      handleFieldClick('packages')
+    }
+  },[slug]);
+
   return (
     <>
       <Header />
       <div className="flex flex-col">
 
         {/* filters */}
-        <div className="p-5 bg-gray-200 p-2 float-right">
-          <ul className='flex gap-10 '>
+        <div className=" bg-gray-200 p-2">
+          <ul className='flex gap-10 justify-center '>
             <li className="cursor-pointer mb-2" onClick={() => handleFieldClick('packages')}>
               Packages
             </li>

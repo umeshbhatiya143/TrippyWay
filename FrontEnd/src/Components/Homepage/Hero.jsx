@@ -94,7 +94,7 @@ const HeroSection = () => {
                     <div className="w-[60%] bg-gray-200 rounded-lg shadow-md p-10">
                         {/* Package Selection Form */}
                         <h2 className="text-2xl font-semibold mb-4 text-center">Customize & Book Amazing Holiday Packages</h2>
-                        <div className="mb-4">
+                        {/* <div className="mb-4">
                             <label htmlFor="source" className="block text-gray-700 font-semibold mb-2">Source:</label>
                             <div className="relative">
                                 <input type="text" id="source" className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" />
@@ -102,7 +102,7 @@ const HeroSection = () => {
                                     <option value="hello">hello</option>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="mb-4">
                             <label htmlFor="destination" className="block text-gray-700 font-semibold mb-2">Destination:</label>
                             <div className="relative">

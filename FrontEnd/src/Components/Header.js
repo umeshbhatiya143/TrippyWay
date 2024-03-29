@@ -26,8 +26,8 @@ const Header = () => {
                         <nav>
                             <ul className="flex space-x-6">
                                 <li><a href="/" className="hover:text-gray-300">Home</a></li>
-                                <li><a href="/holidays/0" className="hover:text-gray-300">Holidays</a></li>
-                                <li><a href="/activities" className="hover:text-gray-300">Activities</a></li>
+                                <li><a href="/holidays/packages" className="hover:text-gray-300">Holidays</a></li>
+                                <li><a href="/holidays/activities" className="hover:text-gray-300">Activities</a></li>
                                 <li><a href="/blogs/0" className="hover:text-gray-300">Blog</a></li>
                                 <li><a href="/offers" className="hover:text-gray-300">Offers</a></li>
                             </ul>

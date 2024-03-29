@@ -1,4 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import FAQItem from '../faqItem';
+import ReviewCard from '../reviewCard';
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { PiBinoculars } from "react-icons/pi";
+import { GiHotMeal } from "react-icons/gi";
+import { IoFastFoodOutline } from "react-icons/io5";
+import { MdOutlineTransferWithinAStation } from "react-icons/md";
+import { MdAirportShuttle } from "react-icons/md";
+import { FaCar } from "react-icons/fa";
+import { GiCruiser } from "react-icons/gi";
+import { MdHouseboat } from "react-icons/md";
+import { TbTrekking } from "react-icons/tb";
+import { ImSafari } from "react-icons/im";
+import { MdOutlineFlight } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
 
 const packages = () => {
   const [destination, setDestination] = useState('');
@@ -147,10 +163,118 @@ const packages = () => {
     discount: 12, // in percentage
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
+    inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
+  },
+  {
+    imageUrl: "/slide3.jpg", // Replace with your image path
+    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
+    duration: "7 Days & 6 Nights",
+    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
+    price: "₹22,900",
+    originalPrice: "₹26,024",
+    discount: 12, // in percentage
+    hotelRatings: ['3 Star', '4 Star', '5 Star'],
+    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay']
+  },
+  {
+    imageUrl: "/slide1.jpg", // Replace with your image path
+    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
+    duration: "7 Days & 6 Nights",
+    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
+    price: "₹22,900",
+    originalPrice: "₹26,024",
+    discount: 12, // in percentage
+    hotelRatings: ['3 Star', '4 Star', '5 Star'],
+    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
+    inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
   },
 
   ];
+
+  const iSize = 25;
+  const inclusionIcons = {
+    'Sightseeing': <PiBinoculars size={iSize} />,
+    'Meals': <GiHotMeal size={iSize} />,
+    'Breakfast': <IoFastFoodOutline size={iSize} />,
+    'Transfers': <MdOutlineTransferWithinAStation size={iSize} />,
+    'Airport Pickup-Drop': <MdAirportShuttle size={iSize} />,
+    'Private Cab': <FaCar size={iSize} />,
+    'Cruise': <GiCruiser size={iSize} />,
+    'Houseboat': <MdHouseboat size={iSize} />,
+    'Adventure Activity': <TbTrekking />,
+    'Safari': <ImSafari size={iSize} />,
+    'Flights': <MdOutlineFlight size={iSize} />,
+    'Stay': <FaHome size={iSize} />
+  }
+
+  // ------faqs---------
+  const faqs = [
+    {
+      question: 'How do I sign up?',
+      answer: 'You can sign up by clicking the Sign Up button at the top of the page.',
+    },
+    {
+      question: 'Can I cancel my subscription?',
+      answer: 'Yes, you can cancel your subscription from your profile settings at any time.',
+    },
+    {
+      question: 'How do I sign up?',
+      answer: 'You can sign up by clicking the Sign Up button at the top of the page.',
+    },
+    {
+      question: 'Can I cancel my subscription?',
+      answer: 'Yes, you can cancel your subscription from your profile settings at any time.',
+    },
+    {
+      question: 'How do I sign up?',
+      answer: 'You can sign up by clicking the Sign Up button at the top of the page.',
+    },
+    {
+      question: 'Can I cancel my subscription?',
+      answer: 'Yes, you can cancel your subscription from your profile settings at any time.',
+    },
+    // ... more FAQs
+  ];
+
+  //--------Reviews------
+  const reviews = [
+    // Dummy review data
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    // More reviews...
+  ];
+
 
   return (
     <div className='w-full'>
@@ -211,187 +335,261 @@ const packages = () => {
       </div>
 
 
-      {/* --------------filters and package components------------ */}
+      {/* -----------below portion after searchbar--------- */}
 
       <div className="w-full flex justify-center">
-        <div className="w-[70%] flex flex-row gap-6 border-1 p-6">
+        <div className="flex  gap-10 flex-col w-[70%]">
 
-          {/* ---filters---- */}
-          <aside className="w-full md:w-64 p-4 bg-white shadow-md">
-            <div className="mb-6">
-              {/* Honeymoon & Family checkboxes */}
-              <h4 className="font-semibold mb-2">Categories</h4>
-              {Object.keys(filters.categories).map((key) => (
-                <label key={key} className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    checked={filters.duration[key]}
-                    onChange={() => handleCheckboxChange('duration', key)}
-                    className="form-checkbox"
-                  />
-                  <span className="ml-2">{key}</span>
-                </label>
-              ))}
-            </div>
+          {/* --------------filters and package components------------ */}
 
-            {/* Duration checkboxes */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2">Duration (Days)</h4>
-              {/* Map through durations or any similar category */}
-              {Object.keys(filters.duration).map((key) => (
-                <label key={key} className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    checked={filters.duration[key]}
-                    onChange={() => handleCheckboxChange('duration', key)}
-                    className="form-checkbox"
-                  />
-                  <span className="ml-2">{key}</span>
-                </label>
-              ))}
-            </div>
+          <div className="flex flex-row gap-6 border-1 p-6">
 
-            {/* Duration checkboxes */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2">Budget Per Person</h4>
-              {/* Map through durations or any similar category */}
-              {Object.keys(filters.budgetPerPerson).map((key) => (
-                <label key={key} className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    checked={filters.duration[key]}
-                    onChange={() => handleCheckboxChange('duration', key)}
-                    className="form-checkbox"
-                  />
-                  <span className="ml-2">{key}</span>
-                </label>
-              ))}
-            </div>
+            {/* ---filters---- */}
+            <aside className="w-full md:w-64 p-4 bg-white shadow-md">
+              <div className="mb-6">
+                {/* Honeymoon & Family checkboxes */}
+                <h4 className="font-semibold mb-2">Categories</h4>
+                {Object.keys(filters.categories).map((key) => (
+                  <label key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.duration[key]}
+                      onChange={() => handleCheckboxChange('duration', key)}
+                      className="form-checkbox"
+                    />
+                    <span className="ml-2">{key}</span>
+                  </label>
+                ))}
+              </div>
 
-            {/* Duration checkboxes */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2">Hotel Star Rating</h4>
-              {/* Map through durations or any similar category */}
-              {Object.keys(filters.hotelStarRating).map((key) => (
-                <label key={key} className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    checked={filters.duration[key]}
-                    onChange={() => handleCheckboxChange('duration', key)}
-                    className="form-checkbox"
-                  />
-                  <span className="ml-2">{key}</span>
-                </label>
-              ))}
-            </div>
+              {/* Duration checkboxes */}
+              <div className="mb-6">
+                <h4 className="font-semibold mb-2">Duration (Days)</h4>
+                {/* Map through durations or any similar category */}
+                {Object.keys(filters.duration).map((key) => (
+                  <label key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.duration[key]}
+                      onChange={() => handleCheckboxChange('duration', key)}
+                      className="form-checkbox"
+                    />
+                    <span className="ml-2">{key}</span>
+                  </label>
+                ))}
+              </div>
 
-            {/* Duration checkboxes */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2">Activities</h4>
-              {/* Map through durations or any similar category */}
-              {Object.keys(filters.activities).map((key) => (
-                <label key={key} className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    checked={filters.duration[key]}
-                    onChange={() => handleCheckboxChange('duration', key)}
-                    className="form-checkbox"
-                  />
-                  <span className="ml-2">{key}</span>
-                </label>
-              ))}
-            </div>
+              {/* Duration checkboxes */}
+              <div className="mb-6">
+                <h4 className="font-semibold mb-2">Budget Per Person</h4>
+                {/* Map through durations or any similar category */}
+                {Object.keys(filters.budgetPerPerson).map((key) => (
+                  <label key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.duration[key]}
+                      onChange={() => handleCheckboxChange('duration', key)}
+                      className="form-checkbox"
+                    />
+                    <span className="ml-2">{key}</span>
+                  </label>
+                ))}
+              </div>
 
-            {/* Duration checkboxes */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2">Cities</h4>
-              {/* Map through durations or any similar category */}
-              {Object.keys(filters.cities).map((key) => (
-                <label key={key} className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    checked={filters.duration[key]}
-                    onChange={() => handleCheckboxChange('duration', key)}
-                    className="form-checkbox"
-                  />
-                  <span className="ml-2">{key}</span>
-                </label>
-              ))}
-            </div>
+              {/* Duration checkboxes */}
+              <div className="mb-6">
+                <h4 className="font-semibold mb-2">Hotel Star Rating</h4>
+                {/* Map through durations or any similar category */}
+                {Object.keys(filters.hotelStarRating).map((key) => (
+                  <label key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.duration[key]}
+                      onChange={() => handleCheckboxChange('duration', key)}
+                      className="form-checkbox"
+                    />
+                    <span className="ml-2">{key}</span>
+                  </label>
+                ))}
+              </div>
 
-            {/* Duration checkboxes */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2">Inclusions</h4>
-              {/* Map through durations or any similar category */}
-              {Object.keys(filters.inclusions).map((key) => (
-                <label key={key} className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    checked={filters.duration[key]}
-                    onChange={() => handleCheckboxChange('duration', key)}
-                    className="form-checkbox"
-                  />
-                  <span className="ml-2">{key}</span>
-                </label>
-              ))}
-            </div>
+              {/* Duration checkboxes */}
+              <div className="mb-6">
+                <h4 className="font-semibold mb-2">Activities</h4>
+                {/* Map through durations or any similar category */}
+                {Object.keys(filters.activities).map((key) => (
+                  <label key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.duration[key]}
+                      onChange={() => handleCheckboxChange('duration', key)}
+                      className="form-checkbox"
+                    />
+                    <span className="ml-2">{key}</span>
+                  </label>
+                ))}
+              </div>
 
-          </aside>
+              {/* Duration checkboxes */}
+              <div className="mb-6">
+                <h4 className="font-semibold mb-2">Cities</h4>
+                {/* Map through durations or any similar category */}
+                {Object.keys(filters.cities).map((key) => (
+                  <label key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.duration[key]}
+                      onChange={() => handleCheckboxChange('duration', key)}
+                      className="form-checkbox"
+                    />
+                    <span className="ml-2">{key}</span>
+                  </label>
+                ))}
+              </div>
+
+              {/* Duration checkboxes */}
+              <div className="mb-6">
+                <h4 className="font-semibold mb-2">Inclusions</h4>
+                {/* Map through durations or any similar category */}
+                {Object.keys(filters.inclusions).map((key) => (
+                  <label key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.duration[key]}
+                      onChange={() => handleCheckboxChange('duration', key)}
+                      className="form-checkbox"
+                    />
+                    <span className="ml-2">{key}</span>
+                  </label>
+                ))}
+              </div>
+
+            </aside>
 
 
-          {/*------------ package components ------------*/}
+            {/*------------ package components ------------*/}
 
-          <div className="flex flex-col gap-2">
-            {pkg.map((pkg) => (
+            <div className="flex flex-col gap-2">
+              <h2 className="text-xl font-medium">Showing {pkg.length} results...</h2>
+              {pkg.map((pkg) => (
+                <div className="w-full mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4">
+                  <div className="md:flex p-4 gap-6">
+                    <div>
+                      <div className="md:flex-shrink-0 w-80 h-60">
+                        <img className="h-full w-full object-cover rounded-md" src={pkg.imageUrl} alt={pkg.title} />
+                      </div>
 
-              <div className="max-w-md mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden md:max-w-3xl my-4">
-                <div className="md:flex">
-                  <div className="md:flex-shrink-0">
-                    <img className="h-48 w-full object-cover md:h-full md:w-48" src={pkg.imageUrl} alt={pkg.title} />
-                  </div>
-                  <div className="p-8">
-                    <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{pkg.title}</div>
-                    <p className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{pkg.duration}</p>
-                    <p className="mt-2 text-gray-500">{pkg.shortDescription}</p>
-                    <div className="mt-4">
-                      <div className="text-teal-600">{pkg.discount}% Off</div>
-                      <div className="text-lg font-bold text-gray-900">{pkg.price}</div>
+                      {/* Icons representing various inclusions */}
+                      <div className="flex p-4 gap-2 justify-between flex-wrap items-center mt-4">
+                        {pkg.inclusions.map((inclusion) => (
+                          <div key={inclusion} className="flex flex-col gap-2 justify-center items-center mr-2">
+                            {/*<img className="h-6 w-6" src={`/icons/${inclusion.toLowerCase()}.png`} alt={inclusion} />*/}
+                            {inclusionIcons[inclusion]}
+                            <span className="ml-1 text-sm">{inclusion}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div className="mt-4">
-                      <h3 className="text-gray-700 font-semibold">Hotel included in package:</h3>
-                      {pkg.hotelRatings.map((rating) => (
-                        <span key={rating} className={`inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2`}>{rating}</span>
-                      ))}
-                    </div>
-                    <div className="mt-4">
-                      <h3 className="text-gray-700 font-semibold">Cities:</h3>
-                      <p className="text-gray-700">{pkg.cities.join(' ➜ ')}</p>
-                    </div>
-                    {/* Icons representing various inclusions */}
-                    <div className="flex items-center mt-4">
-                      {pkg.inclusions.map((inclusion) => (
-                        <div key={inclusion} className="flex items-center mr-2">
-                          <img className="h-6 w-6" src={`/icons/${inclusion.toLowerCase()}.png`} alt={inclusion} />
-                          <span className="ml-1 text-sm">{inclusion}</span>
-                        </div>
-                      ))}
-                    </div>
-                    {/* Buttons */}
-                    <div className="flex mt-4">
-                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l">
-                        View Details
-                      </button>
-                      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r">
-                        Customize & Get Quotes
-                      </button>
+                    <div className="">
+                      <div className="uppercase tracking-wide text-lg text-indigo-500 font-semibold">{pkg.title}</div>
+                      <p className="block mt-1 text-sm leading-tight font-medium text-black hover:underline">{pkg.duration}</p>
+                      <p className="mt-2 text-sm text-gray-500">{pkg.shortDescription}</p>
+                      <div className="mt-4">
+                        <div className="text-teal-600">{pkg.discount}% Off</div>
+                        <div className="text-lg font-bold text-gray-900">{pkg.price}</div>
+                      </div>
+                      <div className="mt-4">
+                        <h3 className="text-gray-700 font-semibold">Hotel included in package:</h3>
+                        {pkg.hotelRatings.map((rating) => (
+                          <span key={rating} className={`inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2`}>{rating}</span>
+                        ))}
+                      </div>
+                      <div className="mt-4">
+                        <h3 className="text-gray-700 font-semibold">Cities:</h3>
+                        <p className="text-gray-700">{pkg.cities.join(' ➜ ')}</p>
+                      </div>
+
+                      {/* Buttons */}
+                      <div className="flex mt-4">
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l">
+                          View Details
+                        </button>
+                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r">
+                          Customize & Get Quotes
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          
+
+          {/* -----------Recommended Destinantions----------- */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Recommened Destinations</h2>
+          </div>
+
+          {/* -----------Recommended packages---------------- */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Recommened Packages</h2>
+          </div>
+
+          {/* -----------Recommended Hotels--------------- */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Recommened Hotels</h2>
+          </div>
+
+          {/*----------------- Recommended Blogs----------------- */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Recommened Blogs</h2>
+          </div>
+
+
+          {/*----------------- Tour Reviews----------------- */}
+          <div>
+            <div className="bg-gray-100 py-8">
+              <div className="container mx-auto">
+                <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Tour Reviews</h2>
+                <div className=" -mx-4 justify-center">
+                  <Swiper
+                    modules={[]}
+                    slidesPerView={1}
+                    autoplay={{
+                      delay: 6000,
+                      disableOnInteraction: false,
+                    }}
+                    loop={true}
+                    className="relative"
+                  >
+                    {
+                      reviews.map((review) => {
+                        return (
+                          <SwiperSlide>
+                            <ReviewCard key={review.id} review={review} />
+                          </SwiperSlide>
+                        )
+                      })
+                    }
+                  </Swiper>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          {/* ------------FAQS-------------- */}
+          <div className="w-full mx-auto p-5">
+            <h2 className="text-3xl text-center font-semibold mb-6">Frequently Asked Questions</h2>
+            <div className="space-y-2 md:space-y-4">
+              {faqs.map((faq, index) => (
+                <FAQItem key={index} question={faq.question} answer={faq.answer} />
+              ))}
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
