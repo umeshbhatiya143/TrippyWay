@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "93ab5c13-ade5-45d0-bfbc-ce02967c374f",
+		"name": "TrippyWay",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33966536"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"rohit@gamil.com\",\r\n    \"password\":\"rohit123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Rohit\",\r\n    \"username\":\"Rohit\",\r\n    \"email\":\"rohit@gamil.com\",\r\n    \"password\":\"rohit123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/users/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/users/65bd6406202e6413da6e7534",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"65bd6406202e6413da6e7534"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Rohit rk1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/users/65c0fb954753fb6663df60b6",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"65c0fb954753fb6663df60b6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/users/65bd6406202e6413da6e7534",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"65bd6406202e6413da6e7534"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Packages",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\" Turkish Extravaganza Package with Sunrise Hot Air Balloon\",\r\n    \"price\":33000,\r\n    \"duration\":4,\r\n    \"description\":\"Planning a weekend getaway in South India? Famous for backwaters, beaches, hill stations, and national parks, Kerala is one of the most visited states in India. The city of Kochi, also known as Cochin, is renowned for colonial heritage and a hub for Keralan arts. Located in the Western Ghats of Kerala, Munnar is popular for stunning viewpoints and verdant tea estates. Our 3 nights 4 days Kochi tour package allows travelers to explore the natural and cultural wealth of Kerala. The well-curated itinerary of our Kochi tour packages offers plenty of activities to enjoy such as boating, wildlife safaris, tea estate visits, and nature walks. On the first day of this Kochi tour package for 4 days, travelers get to discover the main tourist attractions in Kochi. On this Kochi local tour, travelers can wander around in Fort Kochi area to marvel at the colonial architecture, admire the wall paintings of Mattancherry Palace, and wander around on Marine Drive for sunset views. Shopping and sightseeing are main highlights of our Kochi city tour. After sightseeing in Kochi, take a scenic long drive to Munnar to spend your next couple of days in the beauty of Western Ghats. On the road to Munnar, there are a few waterfalls like Cheeyappara and Valara that are worth visiting. Top Station, Anamudi Peak, Eravikulam National Park, and Kundala Lake are top places to visit in Munnar. A visit to the famous tea plantations in Munnar is included in our Kochi tour package. Travelers can fully customize the current Cochin tour itinerary as per their own convenience and budget requirements. Book our 3 nights 4 days Kochi tour package to explore the “God’s Own Country” on a holiday. Here’s the detailed itinerary of 4 days Kochi package below.\",\r\n    \"included\": [\"Meals\", \"Sightseeing\", \"Stay\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/packages/add",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"packages",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all packages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/packages",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"packages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get package by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/packages/660a318cb40a7568a72fbf9b",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"packages",
+								"660a318cb40a7568a72fbf9b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update package by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Rohit rk1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/users/65c0fb954753fb6663df60b6",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"65c0fb954753fb6663df60b6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete package by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/users/65bd6406202e6413da6e7534",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"65bd6406202e6413da6e7534"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

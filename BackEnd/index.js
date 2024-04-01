@@ -2,11 +2,14 @@
 const express = require('express');
 //const mongoose = require('mongoose');
 //const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 require('./middleware/mongoose');
 //const connectToDatabase = require('./middleware/mongoose'); // Import the middleware
-const userRouter = require('./routes/user');
+const userRoutes = require('./routes/userRoutes');
+const packageRoutes = require('./routes/packageRoutes');
 //const cors = require('cors');
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -16,7 +19,8 @@ app.use(express.json());
 
 // Apply the middleware to connect to MongoDB before any routes are handled
 //app.use(connectToDatabase);
-app.use(userRouter);
+app.use('/api/users', userRoutes);
+app.use('/api/packages', packageRoutes);
 
 
 // Start the server
