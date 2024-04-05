@@ -15,6 +15,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import pack from "./pack.json";
+import Header from "@/Components/Header";
+import Footer from "@/Components/Footer";
 
 const Packages = () => {
   const router = useRouter();
@@ -95,6 +97,9 @@ const Packages = () => {
   };
 
   return (
+    <>
+    <Header/>
+
     <div className=" ">
       {/* Anchor Section */}
       <div className="bg-slate-200 w-full mt-0">
@@ -345,6 +350,9 @@ const Packages = () => {
         </div>
       </div>
     </div>
+
+    <Footer/>
+    </>
   );
 };
 

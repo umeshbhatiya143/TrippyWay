@@ -282,7 +282,7 @@ const packages = () => {
       {/* -------------------search bar---------------- */}
       <div className="h-60 w-full relative bg-cover bg-no-repeat bg-center flex gap-4 items-center justify-center" style={{ backgroundImage: "url('/bg-pkg.jpg')" }}>
         {/* Search container */}
-        <div className="bg-white bg-opacity-75 rounded-lg  shadow-md p-4 flex w-full max-w-2xl">
+        <div className="bg-dark-cyan bg-opacity-75 rounded-lg  shadow-md p-4 flex w-full max-w-2xl">
           {/* Destination Input */}
           <div className="flex-grow relative">
             <input
@@ -337,15 +337,19 @@ const packages = () => {
 
       {/* -----------below portion after searchbar--------- */}
 
-      <div className="w-full flex justify-center">
-        <div className="flex  gap-10 flex-col w-[70%]">
+      <div className="w-full flex justify-center bg-white">
+        <div className="flex -mt-10 z-1 relative bg-white rounded-2xl shadow-2xl gap-10 flex-col w-[70%]">
+  
 
           {/* --------------filters and package components------------ */}
 
           <div className="flex flex-row gap-6 border-1 p-6">
 
             {/* ---filters---- */}
-            <aside className="w-full md:w-64 p-4 bg-white shadow-md">
+            <aside >
+              <h2 className="p-2 text-xl font-medium border-b-2">Filters</h2>
+              
+              <div className="w-full md:w-64 p-4 bg-white shadow-md">
               <div className="mb-6">
                 {/* Honeymoon & Family checkboxes */}
                 <h4 className="font-semibold mb-2">Categories</h4>
@@ -462,6 +466,7 @@ const packages = () => {
                     <span className="ml-2">{key}</span>
                   </label>
                 ))}
+              </div>
               </div>
 
             </aside>
