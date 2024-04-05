@@ -13,6 +13,8 @@ module.exports = {
         'deep-purple': '#3C096C',
         'custom-black': '#000000',
         'custom-white': '#FFFFFF',
+        'button-color': '#7B2CBF',
+        'button-color-hover': '#3C096C'
       },
     },
   },
