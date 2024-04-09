@@ -98,8 +98,7 @@ const Packages = () => {
 
   return (
     <>
-    <Header/>
-
+ 
     <div className=" ">
       {/* Anchor Section */}
       <div className="bg-slate-200 w-full mt-0">
@@ -350,8 +349,6 @@ const Packages = () => {
         </div>
       </div>
     </div>
-
-    <Footer/>
     </>
   );
 };

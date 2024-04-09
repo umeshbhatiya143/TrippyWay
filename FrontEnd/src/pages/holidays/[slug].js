@@ -21,7 +21,6 @@ const Holidays = () => {
 
   return (
     <>
-      <Header />
       <div className="flex flex-col">
         {/* filters */}
         <div className="bg-dark-cyan p-1 shadow-md">
@@ -44,7 +43,6 @@ const Holidays = () => {
           {selectedPage && <DynamicPageLoader page={selectedPage} />}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

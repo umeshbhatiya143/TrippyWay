@@ -18,7 +18,6 @@ const Dashboard = () => {
 
   return (
     <>
-    <Header/>
     <div className="flex">
       {/* Left sidebar */}
       <div className="p-5 w-[250px] h-[100vh] bg-gray-200 p-4 float-right">
@@ -57,7 +56,6 @@ const Dashboard = () => {
         )}
       </div>
     </div>
-    <Footer/>
     </>
   );
 };

@@ -19,7 +19,6 @@ const Blogs = () => {
 
   return (
     <>
-      <Header />
       <div className="flex flex-col">
         {/* searchbar */}
         <div className="flex justify-center items-center h-40 bg-slate-500">
@@ -60,7 +59,6 @@ const Blogs = () => {
         </div>
 
       </div>
-      <Footer />
     </>
   );
 };
