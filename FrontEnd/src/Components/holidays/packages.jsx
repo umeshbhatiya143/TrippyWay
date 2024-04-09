@@ -399,7 +399,7 @@ const packages = () => {
           </div>
 
           {/* Explore Button */}
-          <button className="bg-button-color hover:bg-button-color-hover text-white font-bold py-2 px-4 rounded-md ml-2"
+          <button className="bg-button-color transition-all duration-1000 hover:bg-button-color-hover text-white font-bold py-2 px-4 rounded-md ml-2"
             onClick={handleSearch}>
             Explore
           </button>

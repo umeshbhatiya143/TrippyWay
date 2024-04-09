@@ -97,6 +97,7 @@ const login = () => {
         </div>
         <form className="flex flex-col w-full gap-2.5 -mt-10 items-center">
           <h3 className="text-2xl font-medium mb-10 text-deep-purple">Welcome to TrippyWay</h3>
+          {/* <img src="/logo.png" alt="Logo" className="h-14" /> */}
           <div className="flex flex-col w-full gap-1.5">
             <label htmlFor="email" className="text-base">Email:</label>
             <input type="email" id="email" name="email" className="bg-gray-100 border-none p-2.5 rounded-lg" placeholder="user@gmail.com" value={values.email} onChange={handleChange} />
