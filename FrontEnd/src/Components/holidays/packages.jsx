@@ -546,7 +546,7 @@ const packages = () => {
 
             {/*------------ package components ------------*/}
 
-            <div className="flex flex-col gap-2">
+            <div className="flex cursor-pointer flex-col gap-2">
               <h2 className="text-xl text-deep-purple font-medium">Showing {pkg.length} results...</h2>
               {pkg.map((pkg) => (
                 <div className="w-full mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4">
@@ -583,7 +583,7 @@ const packages = () => {
                     </div>
                     <div className="">
                       <div className="uppercase tracking-wide text-lg text-dark-cyan font-semibold">{pkg.title}</div>
-                      <p className="block mt-1 text-sm leading-tight font-medium text-black hover:underline">{pkg.duration}</p>
+                      <p className="block mt-1 text-sm leading-tight font-medium text-black ">{pkg.duration}</p>
                       <p className="mt-2 text-sm text-gray-500">{pkg.shortDescription}</p>
                       <div className="mt-4">
                         <div className="text-teal-600">{pkg.discount}% Off</div>
@@ -602,10 +602,10 @@ const packages = () => {
 
                       {/* Buttons */}
                       <div className="flex mt-4">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l">
+                        <button className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
                           View Details
                         </button>
-                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r">
+                        <button className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r">
                           Customize & Get Quotes
                         </button>
                       </div>

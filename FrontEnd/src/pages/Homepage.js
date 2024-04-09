@@ -1,6 +1,6 @@
 import HeroSection from '@/Components/Homepage/Hero'
 import React from 'react'
-import pkg from '@/pages/package/pack.json'
+import pack from './package/pack.json'
 
 const Homepage = () => {
   return (
@@ -10,7 +10,13 @@ const Homepage = () => {
       {/* packages component */}
       <div>
       <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Destinations</h2>
-
+      {/* {
+        pack.map(()=>{
+          <div>
+            jfddfdjfjd
+          </div>
+        })
+      } */}
       </div>
     </section>
   )
