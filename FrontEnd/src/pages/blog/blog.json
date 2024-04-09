@@ -1,0 +1,63 @@
+{
+    "title": "101 Places To Visit In India Before You Turn 30 in 2024",
+    "image":"../../../blog2.jpg",
+    "user":"../../../user.jpg",
+    "username":"TrippyWay Agent",
+    "date" :"12.12.2023",
+    "subTitle":"Best places in India",
+    "desc2":"Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+    "places": [
+        {
+            
+            "name": "Leh-Ladakh",
+            "description": "Known for its breathtaking landscapes and serene monasteries.Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+            "image":"../../../blog1.jpg"
+        },
+        {
+            "name": "Goa",
+            "description": "Famous for its stunning beaches, vibrant nightlife, and Portuguese architecture.Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+            "image":"../../../india1.jpg"
+        },
+        {
+            "name": "Rishikesh",
+            "description": "A spiritual haven with opportunities for yoga, meditation, and adventure sports like white-water rafting.Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+            "image":"../../../blog1.jpg"
+
+        },
+        {
+            "name": "Jaipur",
+            "description": "The Pink City offers a glimpse into India's royal past with its forts and palaces.Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+            "image":""
+        },
+        {
+            "name": "Kerala",
+            "description": "Referred to as 'God\u2019s Own Country', it boasts lush greenery, backwaters, and Ayurvedic treatments.Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+            "image":""
+        },
+        {
+            "name": "Andaman and Nicobar Islands",
+            "description": "A tropical paradise known for its pristine beaches and water sports.Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+            "image":""
+        },
+        {
+            "name": "Varanasi",
+            "description": "One of the world's oldest inhabited cities, offering deep spiritual experiences.Here is a list of the 101 most beautiful places in India before you turn 30. These places in India are known for their magnificence and overall beauty. They are also considered havens for solo travellers. Take a look:",
+            "image":""
+        },
+        {
+            "name": "Mumbai",
+            "description": "The city of dreams, known for its bustling marketplaces, Bollywood industry, and historic landmarks.",
+            "image":""
+        },
+        {
+            "name": "Darjeeling",
+            "description": "Famous for its tea gardens and the majestic view of Kangchenjunga, the world's third-highest mountain.",
+            "image":""
+        },
+        {
+            "name": "Udaipur",
+            "description": "Known as the City of Lakes, it's famous for its Rajput-era palaces and scenic locations.",
+            "image":""
+        }
+    ]
+}

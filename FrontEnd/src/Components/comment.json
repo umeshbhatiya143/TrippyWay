@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "id": 1,
+      "message": "Hi ,How are you ?",
+      "username":"TrippyWay Agent",
+      "profile":"../../user.jpg",
+      "replies": [
+        {
+          "id": 2,
+          "message": "Hi ,How are you ?",
+          "username":"TrippyWay Agent",
+          "profile":"../../user.jpg",
+          "replies": [
+            {
+              "id": 3,
+              "message": "Hi ,How are you ?",
+              "username":"TrippyWay Agent",
+              "profile":"../../user.jpg",
+              "replies": []
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "message": "Hi ,How are you ?",
+          "username":"TrippyWay Agent",
+          "profile":"../../user.jpg",
+
+          "replies": [
+            {
+              "id": 5,
+              "message": "Hi ,How are you ?",
+              "username":"TrippyWay Agent",
+              "profile":"../../user.jpg",
+              "replies": [
+                {
+                  "id": 6,
+                  "message": "Hi ,How are you ?",
+                  "username":"TrippyWay Agent",
+                  "profile":"../../user.jpg",
+                  "replies": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+        "id":7,
+        "message":"Hi ,How are you ?",
+        "username":"TrippyWay Agent",
+        "profile":"../../user.jpg",
+        "replies":[]
+    }
+  ]
+}
