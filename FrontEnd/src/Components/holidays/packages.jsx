@@ -18,6 +18,7 @@ import { TbTrekking } from "react-icons/tb";
 import { ImSafari } from "react-icons/im";
 import { MdOutlineFlight } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
+import Card from '../card';
 
 const packages = () => {
   const [destination, setDestination] = useState('');
@@ -399,7 +400,7 @@ const packages = () => {
           </div>
 
           {/* Explore Button */}
-          <button className="bg-button-color hover:bg-button-color-hover text-white font-bold py-2 px-4 rounded-md ml-2"
+          <button className="bg-button-color transition-all duration-1000 hover:bg-button-color-hover text-white font-bold py-2 px-4 rounded-md ml-2"
             onClick={handleSearch}>
             Explore
           </button>
@@ -546,7 +547,7 @@ const packages = () => {
 
             {/*------------ package components ------------*/}
 
-            <div className="flex flex-col gap-2">
+            <div className="flex cursor-pointer flex-col gap-2">
               <h2 className="text-xl text-deep-purple font-medium">Showing {pkg.length} results...</h2>
               {pkg.map((pkg) => (
                 <div className="w-full mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4">
@@ -583,7 +584,7 @@ const packages = () => {
                     </div>
                     <div className="">
                       <div className="uppercase tracking-wide text-lg text-dark-cyan font-semibold">{pkg.title}</div>
-                      <p className="block mt-1 text-sm leading-tight font-medium text-black hover:underline">{pkg.duration}</p>
+                      <p className="block mt-1 text-sm leading-tight font-medium text-black ">{pkg.duration}</p>
                       <p className="mt-2 text-sm text-gray-500">{pkg.shortDescription}</p>
                       <div className="mt-4">
                         <div className="text-teal-600">{pkg.discount}% Off</div>
@@ -602,10 +603,10 @@ const packages = () => {
 
                       {/* Buttons */}
                       <div className="flex mt-4">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l">
+                        <button className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
                           View Details
                         </button>
-                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r">
+                        <button className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r">
                           Customize & Get Quotes
                         </button>
                       </div>
@@ -618,23 +619,123 @@ const packages = () => {
 
 
           {/* -----------Recommended Destinantions----------- */}
-          <div className="shadow-2xl rounded-xl p-6">
+          <div className=" shadow-2xl rounded-xl pt-20 px-4 pb-10">
             <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Destinations</h2>
+            <div className=" relative">
+              {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
+              <div className="verflow-hidden flex relative">
+                <Swiper
+                  modules={[Autoplay,]}
+                  autoplay={{
+                    delay: 6000,
+                    disableOnInteraction: false,
+                  }}
+                  slidesPerView={4}
+                  spaceBetween={20}
+                  loop={true}
+                  className="h-full relative" // Ensure the Swiper itself has a fixed height
+                >
+                  {[4, 2, 4, 5, 5].map((slide, index) => (
+                    <SwiperSlide key={index}>
+                      <Card />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+            <div className="flex justify-center mt-10">
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+            </div>
           </div>
 
           {/* -----------Recommended packages---------------- */}
-          <div className="shadow-2xl rounded-xl p-6">
+          <div className="shadow-2xl rounded-xl pt-20 px-4 pb-10">
             <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Packages</h2>
+            <div className=" relative">
+              {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
+              <div className="verflow-hidden flex relative">
+                <Swiper
+                  modules={[Autoplay,]}
+                  autoplay={{
+                    delay: 6000,
+                    disableOnInteraction: false,
+                  }}
+                  slidesPerView={4}
+                  spaceBetween={20}
+                  loop={true}
+                  className="h-full relative" // Ensure the Swiper itself has a fixed height
+                >
+                  {[4, 2, 4, 5, 5].map((slide, index) => (
+                    <SwiperSlide key={index}>
+                      <Card />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+            <div className="flex justify-center mt-10">
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+            </div>
           </div>
 
           {/* -----------Recommended Hotels--------------- */}
-          <div className="shadow-2xl rounded-xl p-6">
+          <div className="shadow-2xl rounded-xl pt-20 px-4 pb-10">
             <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Hotels</h2>
+            <div className=" relative">
+              {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
+              <div className="verflow-hidden flex relative">
+                <Swiper
+                  modules={[Autoplay,]}
+                  autoplay={{
+                    delay: 6000,
+                    disableOnInteraction: false,
+                  }}
+                  slidesPerView={4}
+                  spaceBetween={20}
+                  loop={true}
+                  className="h-full relative" // Ensure the Swiper itself has a fixed height
+                >
+                  {[4, 2, 4, 5, 5].map((slide, index) => (
+                    <SwiperSlide key={index}>
+                      <Card />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+            <div className="flex justify-center mt-10">
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+            </div>
           </div>
 
           {/*----------------- Recommended Blogs----------------- */}
-          <div className="shadow-2xl rounded-xl p-6">
+          <div className="shadow-2xl rounded-xl pt-20 px-4 pb-10">
             <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Blogs</h2>
+            <div className=" relative">
+              {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
+              <div className="verflow-hidden flex relative">
+                <Swiper
+                  modules={[Autoplay,]}
+                  autoplay={{
+                    delay: 6000,
+                    disableOnInteraction: false,
+                  }}
+                  slidesPerView={4}
+                  spaceBetween={20}
+                  loop={true}
+                  className="h-full relative" // Ensure the Swiper itself has a fixed height
+                >
+                  {[4, 2, 4, 5, 5].map((slide, index) => (
+                    <SwiperSlide key={index}>
+                      <Card />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+            <div className="flex justify-center mt-10">
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+            </div>
           </div>
 
 

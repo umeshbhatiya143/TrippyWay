@@ -24,6 +24,18 @@
   transition: all .3s ease-in-out;
 }
 
+/* package slug */
+.vertical-strike-tailwind::before {
+    content: '';
+    position: absolute;
+    /* left: 50%; */
+    top: 50%;
+    bottom: 0;
+    width: 1px; /* Adjust the thickness of the line here */
+    background-color: black; /* Adjust the color of the line here */
+    transform: translateX(-50%);
+    z-index: 0;
+  }
 
 @keyframes slide-text {
     0% {
