@@ -59,6 +59,26 @@ const Header = () => {
                                 <li><a href="/blogs/0" className="hover:text-white transition-colors">Blog</a></li>
                                 <li><a href="/offers" className="hover:text-white transition-colors">Offers</a></li>
                             </ul>
+
+                            {/* <ul className="flex items-center space-x-10">
+                                <li className="hover:text-white transition-colors"
+                                    onClick={goToProfilePage('/')}>
+                                    Home
+                                </li>
+                                <li className="hover:text-white transition-colors"
+                                    onClick={goToProfilePage('/holidays/packages')}>
+                                    holidays
+                                </li>
+                                <li className="hover:text-white transition-colors"
+                                    onClick={goToProfilePage('/holidays/activities')}>Activities
+                                </li>
+                                <li className="hover:text-white transition-colors"
+                                    onClick={goToProfilePage('/blogs/0')}>Blogs
+                                </li>
+                                <li className="hover:text-white transition-colors"
+                                    onClick={goToProfilePage('/offers')}>offers
+                                </li>
+                            </ul> */}
                         </nav>
                     </div>
 
