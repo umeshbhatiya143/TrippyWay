@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux'
 import { setShowLogin, setShowSignup, logout } from '@/store/slices';
 import { CgProfile } from "react-icons/cg";
+import { BsCart } from "react-icons/bs";
+import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import Login from '@/Components/login'
 import Signup from '@/Components/signup'
 
@@ -12,7 +14,8 @@ const Header = () => {
 
     const showLogin = useSelector((state) => state.logIn.value)
     const showRegister = useSelector((state) => state.signUp.value)
-    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+    // const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+    const [isLoggedIn, setIsloggedIn] = useState(true)
 
     // useEffect(()=>{
     //     alert(showLogin);
@@ -20,7 +23,7 @@ const Header = () => {
 
 
     const goToProfilePage = () => {
-        router.push('profile/umesh'); // Replace '/profile' with the actual route to the profile page
+        router.push('/profile/umesh'); // Replace '/profile' with the actual route to the profile page
     };
 
     return (
@@ -37,42 +40,62 @@ const Header = () => {
 
             {/* offers slider */}
             <div className="w-full pipe-slider overflow-hidden flex items-center justify-center py-2 bg-white text-center z-50">
-                <p className="w-full text-black text-center">For a limited-time discount: "50% off for the next 48 hours! Don't miss out!"</p>
+                <p className="w-full text-red-600 text-center">For a limited-time discount: "50% off for the next 48 hours! Don't miss out!"</p>
             </div>
 
+            {/* bg-gradient-to-bl from-dark-cyan to-deep-purple via-custom-black text-white */}
+
             {/* header */}
-            <header className="bg-gradient-to-r from-dark-cyan to-deep-purple text-custom-white py-4">
-                <div className="container mx-auto flex justify-between items-center px-4 lg:px-0">
-                    {/* Left section */}
-                    <div className="flex items-center gap-4">
-                        <img src="/logo.png" alt="Logo" className="h-14" />
+            <header className="bg-gray-900 text-gray-100 shadow py-4">
+                <div className="container mx-auto flex justify-between items-center px-6 lg:px-12">
+                    {/* Logo and Navigation */}
+                    <div className="flex items-center">
+                        <img src="/logo.png" alt="Logo" className="h-12 lg:h-14 mr-8" />
                         <nav>
-                            <ul className="hidden md:flex gap-6">
-                                <li><a href="/" className="hover:text-custom-black transition-colors duration-200">Home</a></li>
-                                <li><a href="/holidays/packages" className="hover:text-custom-black transition-colors duration-200">Holidays</a></li>
-                                <li><a href="/holidays/activities" className="hover:text-custom-black transition-colors duration-200">Activities</a></li>
-                                <li><a href="/blogs/0" className="hover:text-custom-black transition-colors duration-200">Blog</a></li>
-                                <li><a href="/offers" className="hover:text-custom-black transition-colors duration-200">Offers</a></li>
+                            <ul className="flex items-center space-x-10">
+                                <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
+                                <li><a href="/holidays/packages" className="hover:text-white transition-colors">Holidays</a></li>
+                                <li><a href="/holidays/activities" className="hover:text-white transition-colors">Activities</a></li>
+                                <li><a href="/blogs/0" className="hover:text-white transition-colors">Blog</a></li>
+                                <li><a href="/offers" className="hover:text-white transition-colors">Offers</a></li>
                             </ul>
                         </nav>
                     </div>
 
-                    {/* Right section */}
-                    {isLoggedIn ? (
-                        <div className="flex items-center gap-4">
-                            <a href="#" className="hover:text-custom-black transition-colors duration-200">Agent</a>
-                            <a href="#" className="text-sm bg-custom-black hover:bg-deep-purple text-custom-white font-bold py-2 px-4 rounded-full shadow hover:shadow-lg transition-all duration-300">TrippyAI</a>
-                            <button onClick={goToProfilePage} className="text-custom-white hover:text-deep-purple transition-colors duration-300">
-                                <CgProfile size={30} />
-                            </button>
-                        </div>
-                    ) : (
-                        <button onClick={() => dispatch(setShowLogin())} className="flex items-center justify-center gap-2 bg-custom-black hover:bg-deep-purple text-custom-white py-2.5 px-5 rounded-md shadow hover:shadow-lg transition-all duration-300">
-                            Login / Signup
-                        </button>
-                    )}
+                    {/* Authentication Section */}
+                    <div>
+                        {isLoggedIn ? (
+                            <div className="flex items-center space-x-6">
+                                <a href="#" className="flex items-center justify-center space-x-2 bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">TrippyAI</a>
+                                <button onClick={goToProfilePage} className="flex items-center justify-center space-x-2 bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
+                                    <CgProfile size={24} />
+                                    <span>Profile</span>
+                                </button>
+                                {/* <BsCart size={30} className='text-deep-purple'/> */}
+
+                                <a href="#" className="relative">
+                                    <PiShoppingCartSimpleFill size={40} />
+                                    <span className='absolute top-2.5 text-deep-purple right-3.5 text-sm'>4</span>
+                                </a>
+
+                            </div>
+                        ) : (
+                            <div className='flex space-x-6'>
+                                <button onClick={() => dispatch(setShowLogin())} className="bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full text-sm">
+                                    Become a Agent
+                                </button>
+                                <button onClick={() => dispatch(setShowLogin())} className="bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full text-sm">
+                                    Login / Signup
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </header>
+
+
+
+
 
         </>
     );
