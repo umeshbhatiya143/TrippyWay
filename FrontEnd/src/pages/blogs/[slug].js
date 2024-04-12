@@ -29,7 +29,7 @@ const Blogs = () => {
 
   return (
     <>
-      <Header />
+    {/* <Header /> */}
       <div className="flex flex-col ">
         {/* searchbar */}
         <div
