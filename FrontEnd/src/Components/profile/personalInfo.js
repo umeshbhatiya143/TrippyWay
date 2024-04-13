@@ -1,86 +1,90 @@
 import React, { useState } from 'react';
-import { BiSolidPencil } from "react-icons/bi";
+import { BiPencil, BiTrash, BiSave } from "react-icons/bi"; // Adding BiSave for save icon
 
-const UserBasicInfo = () => {
+const PersonalInfo = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
-    "username": 'johndoe',
-    "full Name": 'John Doe',
-    "gender": 'Male',
-    "dob": '1990-01-01',
-    "pincode": "1234567",
-    "state": "xyz",
-    "address": '123 Main St, City, Country',
+    username: 'johndoe',
+    fullName: 'John Doe',
+    gender: 'Male',
+    dob: '1990-01-01',
+    pincode: "123456",
+    state: "State",
+    address: '123 Main St, City, Country'
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserData((prevData) => ({ ...prevData, [name]: value }));
+    setUserData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const toggleEdit = () => {
-    setIsEditing(!isEditing);
-  };
+  const toggleEdit = () => setIsEditing(!isEditing);
 
   const updateUserProfile = () => {
-    // Function to update user profile
-    // After update, you might want to set `isEditing` to false
     setIsEditing(false);
     console.log('Profile updated:', userData);
   };
 
+  const removeProfilePicture = () => {
+    console.log('Profile picture removed');
+    // Add logic to remove the profile picture
+  };
+
   return (
-    <div className="w-full flex flex-col gap-4">
-      <div className='flex justify-between bg-gray-200 shadow-xl items-center px-6 rounded-lg relative'>
-        <div className="text-center rounded-lg border p-6 w-80 realtive">
-          <img src="/user.jpg" alt="Profile" className="w-60 h-60 mx-auto rounded-full mb-4" />
-          <div className="relative right-0">
-            <label htmlFor="photo" className="absolute bottom-12 right-5 bg-dark-cyan p-3 text-gray-200 flex justify-center items-center rounded-full cursor-pointer"><BiSolidPencil /></label>
-            <input type="file" className='hidden' name='photo' id='photo' />
-          </div>
+    <div className="w-full bg-gray-100 p-6 rounded-lg shadow-xl transition-shadow duration-500">
+      <div className='flex justify-between items-center bg-gradient-to-r from-dark-cyan to-deep-purple p-4 rounded-lg text-white'>
+        <div className="text-center">
+          <img src="/user.jpg" alt="Profile" className="w-32 h-32 mx-auto rounded-full border-4 border-white shadow-sm" />
+          {isEditing && (
+            <div className="flex justify-center mt-3 space-x-2">
+              <label htmlFor="photo" className="cursor-pointer p-2 rounded-full text-lg bg-dark-cyan hover:bg-deep-purple transition-colors">
+                <BiPencil />
+                <input type="file" id='photo' name='photo' className='hidden' />
+              </label>
+              <button onClick={removeProfilePicture} className="p-2 rounded-full bg-dark-cyan hover:bg-deep-purple transition-colors">
+                <BiTrash />
+              </button>
+            </div>
+          )}
         </div>
-        {/* buttons */}
-        <div className='flex gap-10 h-fit items-center pr-10'>
-          {/* <div className='h-fit'>
-            <label htmlFor="photo" className="bg-dark-cyan bg-opacity-50 hover: transition-all duration-600 py-2 px-10 text-white rounded-full cursor-pointer">Edit</label>
-            <input type="file" className='hidden' name='photo' id='photo' />
-          </div> */}
-          <div className='bg-button-color hover:bg-button-color-hover bg-opacity-50 transition-all duration-600 py-1.5 h-fit px-10 text-white rounded-full cursor-pointer'>
-            Remove
-          </div>
+
+        <div className="flex gap-4">
+          <button
+            onClick={toggleEdit}
+            className={`py-2 px-4 rounded-full font-semibold transition-colors duration-300 ${isEditing ? 'bg-gray-500 hover:bg-gray-600' : 'bg-dark-cyan hover:bg-deep-purple'}`}
+          >
+            {isEditing ? 'Cancel' : 'Edit'}
+          </button>
+          {isEditing && (
+            <button
+              onClick={updateUserProfile}
+              className="py-2 px-4 bg-deep-purple hover:bg-dark-cyan rounded-full text-white font-semibold transition-colors duration-300"
+            >
+              <BiSave className="inline mr-2" />
+              Save
+            </button>
+          )}
         </div>
       </div>
-      <div className="w-full mt-4 bg-gray-200 rounded-lg shadow-xl p-6 ">
+
+      <form className="mt-4 space-y-4">
         {Object.entries(userData).map(([key, value]) => (
-          <div key={key}>
-            <label className="block text-gray-700 text-sm font-bold mb-2 capitalize">{key}:</label>
+          <div key={key} className="flex items-center">
+            <label className="w-1/4 text-dark-cyan text-sm font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}:</label>
             <input
               type={key === 'dob' ? 'date' : 'text'}
               name={key}
               value={value}
               onChange={handleInputChange}
               readOnly={!isEditing}
-              className={`w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4 ${!isEditing ? 'bg-gray-200' : 'bg-white'}`}
+              className={`flex-grow p-2 rounded-lg border-2 ${isEditing ? 'border-deep-purple focus:ring-2 focus:ring-deep-purple' : 'border-gray-200'} transition-colors`}
+              style={{ backgroundColor: isEditing ? '#FFFFFF' : '#F9FAFB' }}
             />
           </div>
         ))}
-        <button
-          type="button"
-          onClick={updateUserProfile}
-          className="bg-deep-purple hover:bg-opacity-75 transition-all duration-600 text-white font-bold py-2 px-4 rounded mr-2"
-        >
-          Update
-        </button>
-        <button
-          type="button"
-          onClick={toggleEdit}
-          className="bg-dark-cyan hover:bg-opacity-75 transition-all duration-600 text-white font-bold py-2 px-4 rounded"
-        >
-          {isEditing ? 'Cancel' : 'Edit'}
-        </button>
-      </div>
+      </form>
     </div>
   );
 };
 
-export default UserBasicInfo;
+export default PersonalInfo;
