@@ -22,8 +22,8 @@ const Header = () => {
     // }, [])
 
 
-    const goToProfilePage = () => {
-        router.push('/profile/umesh'); // Replace '/profile' with the actual route to the profile page
+    const goToProfilePage = (path) => {
+        router.push(path); // Replace '/profile' with the actual route to the profile page
     };
 
     return (
@@ -52,33 +52,33 @@ const Header = () => {
                     <div className="flex items-center">
                         <img src="/logo.png" alt="Logo" className="h-12 lg:h-14 mr-8" />
                         <nav>
-                            <ul className="flex items-center space-x-10">
+                            {/* <ul className="flex items-center space-x-10">
                                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
                                 <li><a href="/holidays/packages" className="hover:text-white transition-colors">Holidays</a></li>
                                 <li><a href="/holidays/activities" className="hover:text-white transition-colors">Activities</a></li>
                                 <li><a href="/blogs/0" className="hover:text-white transition-colors">Blog</a></li>
                                 <li><a href="/offers" className="hover:text-white transition-colors">Offers</a></li>
-                            </ul>
+                            </ul> */}
 
-                            {/* <ul className="flex items-center space-x-10">
-                                <li className="hover:text-white transition-colors"
-                                    onClick={goToProfilePage('/')}>
+                            <ul className="flex items-center">
+                                <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
+                                    onClick={() => goToProfilePage('/')}>
                                     Home
                                 </li>
-                                <li className="hover:text-white transition-colors"
-                                    onClick={goToProfilePage('/holidays/packages')}>
+                                <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
+                                    onClick={() => goToProfilePage('/holidays/packages')}>
                                     holidays
                                 </li>
-                                <li className="hover:text-white transition-colors"
-                                    onClick={goToProfilePage('/holidays/activities')}>Activities
+                                <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
+                                    onClick={() => goToProfilePage('/holidays/activities')}>Activities
                                 </li>
-                                <li className="hover:text-white transition-colors"
-                                    onClick={goToProfilePage('/blogs/0')}>Blogs
+                                <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
+                                    onClick={() => goToProfilePage('/blogs/0')}>Blogs
                                 </li>
-                                <li className="hover:text-white transition-colors"
-                                    onClick={goToProfilePage('/offers')}>offers
+                                <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
+                                    onClick={() => goToProfilePage('/offers')}>offers
                                 </li>
-                            </ul> */}
+                            </ul>
                         </nav>
                     </div>
 
@@ -87,7 +87,7 @@ const Header = () => {
                         {isLoggedIn ? (
                             <div className="flex items-center space-x-6">
                                 <a href="#" className="flex items-center justify-center space-x-2 bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">TrippyAI</a>
-                                <button onClick={goToProfilePage} className="flex items-center justify-center space-x-2 bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
+                                <button onClick={() => goToProfilePage('/profile/umesh')} className="flex items-center justify-center space-x-2 bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
                                     <CgProfile size={24} />
                                     <span>Profile</span>
                                 </button>
