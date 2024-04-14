@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import {  useRouter } from "next/router"; 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import AddTraveller from "@/Components/AddTraveller";
 
 const Cart = () => {
+  const router=useRouter();
   const [openAddTraveller, setOpenAddTraveller] = useState(false);
   const pkg = [
     {
@@ -107,13 +109,6 @@ const Cart = () => {
           return { ...packageItem };
         }
         if (packageItem.id === id) {
-          // Increment the adult property by 1 for the package with the matching id
-          // if(packageItem.adult==2){
-
-          //   setShowError(true);
-          //   setError("The traveller cannot be less than 2 in this package");
-          //   return;
-          // }
           return {
             ...packageItem,
             adult: packageItem.adult - 1,
@@ -127,7 +122,6 @@ const Cart = () => {
     setPackage(
       pack.map((packageItem) => {
         if (packageItem.id === id) {
-          // Increment the adult property by 1 for the package with the matching id
           return {
             ...packageItem,
             children: packageItem.children + 1,
@@ -189,12 +183,18 @@ const Cart = () => {
     setTotalPrice(totalBillSum.toFixed(2));
   }, [pack]);
 
+
+
+  const handleCheckout=()=>{
+    router.push('CheckOut')
+  }
+
   return (
     <div>
       {/* Proceed to checkout section*/}
       <div className="flex flex-row justify-between h-20 bg-white border-2 rounded-xl shadow-md overflow-hidden">
         <div className="text-2xl m-3 p-2">Package Cart</div>
-        <button className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">
+        <button  onClick={handleCheckout}className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">
           Proceed To Checkout
         </button>
       </div>
