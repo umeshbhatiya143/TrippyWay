@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginDetails = () => {
+    const user = useSelector(state => state.auth.userData);
     const [isEditing, setIsEditing] = useState(false);
     const [isPassEditing, setIsPassEditing] = useState(false);
     const [loginData, setLoginData] = useState({

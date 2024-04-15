@@ -48,8 +48,12 @@
 
 /*hero section of  page */
 .bg-glassy {
-    backdrop-filter: blur(6px) grayscale(0.5);
+    background-color: rgba(11, 82, 91, 0.3);
+    backdrop-filter: blur(5px) grayscale(0.5);
+    -webkit-backdrop-filter: blur(5px) grayscale(0.5); /* For Safari */
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
 }
+
 
 .slick-slide > div {
     margin : 0 10px;
