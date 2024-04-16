@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import DynamicPageLoader from '../../Components/profile/DynamicPageLoader';
 import { IoIosArrowForward } from "react-icons/io";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleLogin, loginUser, logoutUser } from '@/store/slices';
 
 const Dashboard = () => {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const [selectedPage, setSelectedPage] = useState('personalInfo');
   const [balance, setBalance] = useState(500); // Initial balance
   const router = useRouter();
+  const dispatch = useDispatch()
   const { id } = router.query;
 
   const handleDeposit = () => {
@@ -30,6 +34,12 @@ const Dashboard = () => {
   const formatPageName = (pageName) => {
     return pageName.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
   };
+
+  useEffect(()=> {
+    if(isLoggedIn === false){
+      router.push('/')
+    }
+  })
 
   return (
     <section className='w-full flex justify-center'>
@@ -60,7 +70,10 @@ const Dashboard = () => {
             ))}
             <li
               className="cursor-pointer text-red-600 font-bold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors duration-300 flex items-center"
-              onClick={() => alert('Logging out...')}
+              onClick={() => {
+                dispatch(logoutUser())
+                window.location.reload()
+              }}
             >
               <FaSignOutAlt className="mr-2" />
               Logout

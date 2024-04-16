@@ -24,17 +24,31 @@ const PersonalInfo = () => {
     address: ""
   });
 
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 1000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  }
+
   useEffect(() => {
     fetchUserData();
-  }, [user.userId]);
+  }, [user?.userId]);
 
   // useEffect(()=> {
   //   console.log(userData)
   // },[userData])
 
   const fetchUserData = async () => {
+
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/${user.userId}`, {
+      // Construct URL with query parameters
+      const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/users/${user.userId}`);
+      const params = { fields: 'name,profilePicture,gender,dob,pincode,state,country,address' }; // Define fields you want to fetch
+      url.search = new URLSearchParams(params).toString();
+
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -48,14 +62,16 @@ const PersonalInfo = () => {
       const data = await response.json();
       setUserData(prevData => ({
         ...prevData,
-        ...Object.keys(prevData).reduce((acc, key) => {
-          if (key in data.user) {
-            acc[key] = data.user[key];
-          }
-          return acc;
-        }, {})
+        name: data.user.name,
+        profilePicture: data.user.profilePicture,
+        gender: data.user.gender,
+        dob: data.user.dob,
+        pincode: data.user.pincode,
+        state: data.user.state,
+        country: data.user.country,
+        address: data.user.address
       }));
-      // console.log(data.user)
+
     } catch (error) {
       console.error('Failed to fetch user data:', error);
     }
@@ -89,7 +105,7 @@ const PersonalInfo = () => {
         resolve(imageUrl);  // Resolve the promise with the new image URL
       } catch (error) {
         console.error(error.message);
-        toast.error('Error uploading image');
+        toast.error('Error uploading image', toastOptions);
         reject(error);
       }
     });
@@ -112,10 +128,10 @@ const PersonalInfo = () => {
         body: JSON.stringify(updatedData),
       });
       if (!response.ok) throw new Error('Failed to update profile');
-      toast.success('Profile updated successfully');
+      toast.success('Profile updated successfully',toastOptions);
     } catch (error) {
       console.error(error.message);
-      toast.error('Failed to update profile');
+      toast.error('Failed to update profile', toastOptions);
     } finally {
       setIsLoading(false)
       setIsEditing(false);

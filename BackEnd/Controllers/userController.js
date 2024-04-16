@@ -52,14 +52,53 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.changePassword = async (req, res, next) => {
+  try {
+    const { userId, oldPassword, newPassword } = req.body;
+
+    // Validate input
+    if (!userId || !oldPassword || !newPassword) {
+      return res.status(400).json({ message: 'userId and passwords are required.' });
+    }
+
+    // Check for user
+    let user = await User.findById(userId);
+    console.log(user)
+
+    if (!user || !(await user.comparePassword(oldPassword))) {
+      return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+
+    // Update password
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error.', error });
+  }
+};
+
 exports.getUserbyId = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user)
-      return res.status(404).send({ message: "No users Found." });
-    res.status(200).send({ user });
-  } catch (err) {
-    res.status(500).send(err.message)
+    const userId = req.params.id;
+    const fields = req.query.fields; // Access fields from query parameters
+
+    // Convert fields query to an object suitable for MongoDB projection
+    const fieldsQuery = fields.split(',').reduce((acc, field) => {
+      acc[field] = 1; // Set each field you want to retrieve as 1
+      return acc;
+    }, {});
+
+    const user = await User.findById(userId, fieldsQuery); // Use MongoDB's projection to select fields
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 

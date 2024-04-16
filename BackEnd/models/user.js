@@ -21,8 +21,8 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String
   },
-  contactNo: {
-    type: String
+  mobileNo: {
+    type: Number
   },
   country: {
     type: String,
