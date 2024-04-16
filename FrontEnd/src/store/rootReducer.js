@@ -1,15 +1,9 @@
 import { combineReducers } from 'redux';
-import { LoginReducer, SignupReducer, authReducer } from './slices';
-// import { CurrentUserReducer } from './currentUserData';
+import {modalVisibilityReducer, authSliceReducer  } from './slices';
 
 const rootReducer = combineReducers({
-  // createPost: CreatePostReducer,
-  // notification: NotificationReducer,
-  logIn: LoginReducer,
-  signUp: SignupReducer,
-  // editPopup:EditPopUpReducer,
-  // currentUser: CurrentUserReducer,
-  auth: authReducer,
+  modalVisibility: modalVisibilityReducer,
+  auth: authSliceReducer,
 });
 
 export default rootReducer;

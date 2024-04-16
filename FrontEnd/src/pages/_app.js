@@ -10,9 +10,11 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Header/>
-        <Component {...pageProps} />
-        <Footer/>
+        <Header />
+        <div className='pt-32'>
+          <Component {...pageProps} />
+        </div>
+        <Footer />
       </PersistGate>
     </Provider>
   );

@@ -1,64 +1,229 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Loader from '@/assets/loader.gif'
+import Image from 'next/image';
 
 const LoginDetails = () => {
-    const [editMode, setEditMode] = useState(false);
+    const user = useSelector(state => state.auth.userData);
+    const [isEditing, setIsEditing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+    const [isPassEditing, setIsPassEditing] = useState(false);
     const [loginData, setLoginData] = useState({
-        email: 'example@example.com',
-        password: '********', // Assuming password should be masked for security
-        mobile: '+1234567890',
+        email: '',
+        mobileNo: '',
+    });
+    const [passwords, setPasswords] = useState({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: ""
     });
 
-    const toggleEditMode = () => {
-        setEditMode(!editMode);
-    };
+    const toastOptions = {
+        position: "top-right",
+        autoClose: 1000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setLoginData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        setLoginData(prevState => ({ ...prevState, [name]: value }));
     };
 
-    const handleUpdate = () => {
-        // Here you can implement the logic to update the login details
-        console.log('Updated login details:', loginData);
-        // For simplicity, let's toggle edit mode after update
-        toggleEditMode();
+    const handlePasswordChange = (e) => {
+        const { name, value } = e.target;
+        setPasswords(prevState => ({ ...prevState, [name]: value }));
     };
+
+    const fetchLoginData = async () => {
+        try {
+            // Construct URL with query parameters
+            const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/users/${user.userId}`);
+            const params = { fields: 'mobileNo,email' }; // Define fields you want to fetch
+            url.search = new URLSearchParams(params).toString();
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            setLoginData(prevData => ({
+                ...prevData,
+                email: data.user.email,
+                mobileNo: data.user.mobileNo,
+            }));
+
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+        }
+    };
+
+    const updateLoginDetails = async () => {
+        setIsLoading(true)
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/${user.userId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginData),
+            });
+            if (!response.ok) throw new Error('Failed to update login details');
+            toast.success('Login details updated successfully');
+        } catch (error) {
+            console.error(error.message);
+            toast.error('Failed to update login details', toastOptions);
+        } finally {
+            setIsLoading(false)
+            setIsEditing(false);
+            fetchLoginData();
+        }
+    };
+
+
+    const updatePasswordDetails = async () => {
+        const updatedPass = {
+            ...passwords,
+            userId: user.userId
+        }
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/change-password`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedPass),
+            });
+            if (!response.ok) throw new Error('Failed to update login details');
+            toast.success('Login details updated successfully', toastOptions);
+        } catch (error) {
+            console.error(error.message);
+            toast.error(error.message || 'Failed to update login details', toastOptions);
+        } finally {
+            setIsLoading(false)
+            setIsEditing(false);
+            fetchLoginData();
+        }
+    };
+
+    useEffect(() => {
+        fetchLoginData()
+    }, [])
+
 
     return (
-        <div className="w-full p-8 bg-gray-200 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Login Details</h2>
-            <div className="mt-4">
-                {editMode ? (
-                    <form>
-                        <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="email" name="email" value={loginData.email} onChange={handleInputChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md px-3 py-2" />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                            <input type="password" id="password" name="password" value={loginData.password} onChange={handleInputChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md px-3 py-2" />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">Mobile</label>
-                            <input type="text" id="mobile" name="mobile" value={loginData.mobile} onChange={handleInputChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md px-3 py-2" />
-                        </div>
-                        <div className="flex justify-between">
-                            <button type="button" onClick={handleUpdate} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Update</button>
-                            <button type="button" onClick={toggleEditMode} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Cancel</button>
-                        </div>
-                    </form>
-                ) : (
-                    <div>
-                        <p className='bg-white w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4'><span className="font-semibold">Email:</span> {loginData.email}</p>
-                        <p className='bg-white w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4'><span className="font-semibold">Password:</span> {loginData.password}</p>
-                        <p className='bg-white w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4'><span className="font-semibold">Mobile:</span> {loginData.mobile}</p>
-                        <button onClick={toggleEditMode} className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</button>
-                    </div>
-                )}
+        <div className="w-full mx-auto rounded-lg">
+            <div className="p-4 bg-gray-100 rounded-md shadow-xl">
+                <div className="mb-4">
+                    <label className="text-dark-cyan font-bold mb-1 capitalize">Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={loginData.email}
+                        onChange={handleInputChange}
+                        readOnly={!isEditing}
+                        className={`w-full p-2 rounded-md border ${isEditing ? 'border-dark-cyan focus:ring-dark-cyan' : 'border-gray-300'} transition-colors`}
+                        style={{ backgroundColor: isEditing ? '#FFFFFF' : '#F9FAFB' }}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="text-dark-cyan font-bold mb-1 capitalize">Mobile No:</label>
+                    <input
+                        type="mobile"
+                        name="mobileNo"
+                        value={loginData.mobileNo}
+                        onChange={handleInputChange}
+                        readOnly={!isEditing}
+                        className={`w-full p-2 rounded-md border ${isEditing ? 'border-dark-cyan focus:ring-dark-cyan' : 'border-gray-300'} transition-colors`}
+                        style={{ backgroundColor: isEditing ? '#FFFFFF' : '#F9FAFB' }}
+                    />
+                </div>
+                <div className="flex justify-between mt-4">
+                    {isEditing && !isLoading ? (
+                        <>
+                            <button
+                                onClick={updateLoginDetails}
+                                className="bg-deep-purple hover:bg-dark-cyan text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+                            >
+                                Update
+                            </button>
+                            <button
+                                onClick={() => setIsEditing(false)}
+                                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+                            >
+                                Cancel
+                            </button>
+                        </>
+                    ) : !isLoading ? (
+                        <button
+                            onClick={() => setIsEditing(true)}
+                            className="bg-dark-cyan hover:bg-deep-purple text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+                        >
+                            Edit
+                        </button>
+                    )
+                        :
+                        (
+                            <div className="w-20 h-20 relative">
+                                <Image src={Loader} alt="Loading..." layout="fill" objectFit="cover" />
+                            </div>
+                        )}
+                </div>
             </div>
+
+            {/* Password Change Section */}
+            <div className="mt-6 p-4 bg-gray-100 rounded-md shadow-xl">
+                {Object.entries(passwords).map(([key, value]) => (
+                    <div key={key} className="mb-4">
+                        <label className="text-dark-cyan font-bold mb-1 capitalize">{key.replace(/([A-Z])/g, ' $1')}:</label>
+                        <input
+                            type="password"
+                            name={key}
+                            value={value}
+                            placeholder='******'
+                            onChange={handlePasswordChange}
+                            readOnly={!isPassEditing}
+                            className={`w-full p-2 rounded-md border ${isPassEditing ? 'border-dark-cyan focus:ring-dark-cyan' : 'border-gray-300'} transition-colors`}
+                            style={{ backgroundColor: isPassEditing ? '#FFFFFF' : '#F9FAFB' }}
+                        />
+                    </div>
+                ))}
+                {passwords.newPassword !== passwords.confirmPassword && <p style={{ color: 'red' }}>*password and confirm password not matched</p>}
+                <div className="flex justify-between mt-4">
+                    {isPassEditing ? (
+                        <>
+                            <button
+                                onClick={updatePasswordDetails}
+                                className="bg-deep-purple hover:bg-dark-cyan text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+                            >
+                                Update
+                            </button>
+                            <button
+                                onClick={() => setIsPassEditing(false)}
+                                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+                            >
+                                Cancel
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={() => setIsPassEditing(true)}
+                            className="bg-dark-cyan hover:bg-deep-purple text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+                        >
+                            Change Password
+                        </button>
+                    )}
+                </div>
+            </div>
+            <ToastContainer />
         </div>
     );
 };

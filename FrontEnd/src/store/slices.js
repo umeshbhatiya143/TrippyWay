@@ -1,54 +1,43 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice} from '@reduxjs/toolkit';
 
-const initialState = {
-    value: "false",
-    loggedIn: false,
-    userData: null,
-}
-
-// login reducer
-export const LoginSlice = createSlice({
-    name: 'logIn',
-    initialState,
-    reducers: {
-        setShowLogin: (state) => {
-            state.value = state.value === "false" ? "true" : "false"
-        },
+// Slice for managing the visibility state of login and signup modals
+const modalVisibilitySlice = createSlice({
+    name: 'modalVisibility',
+    initialState: {
+        login: false,
+        signup: false,
     },
-})
-
-// Action creators are generated for each case reducer function
-export const { setShowLogin } = LoginSlice.actions
-export const LoginReducer = LoginSlice.reducer
-
-// signUp reducer
-export const SignupSlice = createSlice({
-    name: 'signup',
-    initialState,
     reducers: {
-        setShowSignup: (state) => {
-            state.value = state.value === "false" ? "true" : "false"
+        toggleLogin: (state) => {
+            state.login = !state.login;
         },
-    },
-})
-
-// Action creators are generated for each case reducer function
-export const { setShowSignup } = SignupSlice.actions
-export const SignupReducer = SignupSlice.reducer
-
-// user auth
-export const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        login: (state) => {
-            state.loggedIn = true;
-        },
-        logout: (state) => {
-            state.loggedIn = false;
+        toggleSignup: (state) => {
+            state.signup = !state.signup;
         },
     },
 });
 
-export const { login, logout } = authSlice.actions;
-export const authReducer = authSlice.reducer;
+export const { toggleLogin, toggleSignup } = modalVisibilitySlice.actions;
+export const modalVisibilityReducer = modalVisibilitySlice.reducer
+
+// Slice for managing authentication status and user data
+const authSlice = createSlice({
+    name: 'auth',
+    initialState: {
+        isLoggedIn: false,
+        userData: null,
+    },
+    reducers: {
+        loginUser: (state, action) => {
+            state.isLoggedIn = true;
+            state.userData = action.payload;  // Assuming payload contains user data
+        },
+        logoutUser: (state) => {
+            state.isLoggedIn = false;
+            state.userData = null;
+        },
+    },
+});
+
+export const { loginUser, logoutUser } = authSlice.actions;
+export const authSliceReducer = authSlice.reducer

@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-      match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+    match: [/.+\@.+\..+/, 'Please fill a valid email address'],
   },
   password: {
     type: String,
@@ -21,14 +21,14 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String
   },
-  contactNo: {
-    type: String
-  },
-  bio: {
-    type: String,
+  mobileNo: {
+    type: Number
   },
   country: {
     type: String,
+  },
+  pincode: {
+    type: String
   },
   state: {
     type: String,
@@ -40,21 +40,20 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   profilePicture: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Image'
+    type: String,
   },
-  posts: [
-    {
+  walletId: {
+    type: String
+  },
+  cart: [{
+    packageId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'PostId'
+      ref: 'Package'
+    },
+    quantity: {
+      type: Number
     }
-  ],
-  savedPosts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'PostId'
-    }
-  ],
+  }]
 }, { timestamps: true });
 
 // Pre-save middleware to hash password

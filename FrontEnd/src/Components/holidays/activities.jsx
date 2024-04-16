@@ -2,7 +2,7 @@ import React from 'react'
 
 const budget_friendly = () => {
   return (
-    <div>budget_friendly</div>
+    <div className=''>budget_friendly</div>
   )
 }
 
