@@ -1,20 +1,14 @@
 import React from 'react';
 import { IoMdStar } from "react-icons/io";
+import Rating from './Rating';
 
 // Individual review card
 const ReviewCard = ({ review }) => {
+  const rating=4;
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-lg p-10 items-center m-4">
       <div className="flex items-center mb-4">
-        {[...Array(5)].map((_, index) => (
-          //   <StarIcon
-          //     key={index}
-          //     className={`h-5 w-5 ${
-          //       index < review.rating ? 'text-yellow-500' : 'text-gray-300'
-          //     }`}
-          //   />
-          <IoMdStar color={'yellow'} />
-        ))}
+        <Rating stars={rating}/>
       </div>
       <p className="text-gray-600 italic mb-4">"{review.comment}"</p>
       <div className="flex justify-between items-center mt-4">
