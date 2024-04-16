@@ -127,6 +127,9 @@ const CheckOut = () => {
 
   return (
     <div className="flex flex-col ">
+      <div className="flex flex-row justify-around h-20 bg-white border-2 rounded-xl shadow-md overflow-hidden">
+        <div className="text-2xl m-3 p-2 ">Traveller Details</div>
+      </div>
       {pack.map((pkg) => (
         <div className="w-auto  m-2 bg-white border-2 p-2 shadow-md overflow-hidden my-4 ">
           <div className="text-xl font-bold">{pkg.title}</div>
