@@ -354,6 +354,7 @@ const Packages = () => {
               </div>
             </div>
             <hr className="mt-5 mb-5"></hr>
+            {/* About the package */}
             <div id="about">
               <div className="text-xl font-bold m-5">About The Place</div>
 
