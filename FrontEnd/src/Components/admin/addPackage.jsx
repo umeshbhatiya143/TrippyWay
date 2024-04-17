@@ -275,13 +275,13 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                 method: 'POST',
                 body: formData,
             });
-            if (!response.ok) throw new Error('Failed to upload image');
+            // if (!response.ok) throw new Error('Failed to upload image');
             const { imageUrl } = await response.json();
             return imageUrl;  // Resolve the promise with the new image URL
         } catch (error) {
             console.error(error.message);
             toast.error('Error uploading image', toastOptions);
-            reject(error);
+            // reject(error);
         }
         // });
     };
