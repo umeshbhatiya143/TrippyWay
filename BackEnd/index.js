@@ -7,7 +7,8 @@ require('./middleware/mongoose');
 //const connectToDatabase = require('./middleware/mongoose'); // Import the middleware
 const userRoutes = require('./routes/userRoutes');
 const packageRoutes = require('./routes/packageRoutes');
-const imageRoute = require('./routes/imageRoute');
+const imageRoutes = require('./routes/imageRoutes');
+const hotelRoutes = require('./routes/hotelRoutes')
 const cors = require('cors');
 
 dotenv.config();
@@ -22,7 +23,8 @@ app.use(express.json());
 //app.use(connectToDatabase);
 app.use('/api/users', userRoutes);
 app.use('/api/packages', packageRoutes);
-app.use('/api/image', imageRoute);
+app.use('/api/images', imageRoutes);
+app.use('/api/hotels', hotelRoutes)
 
 
 // Start the server

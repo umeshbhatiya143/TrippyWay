@@ -1,13 +1,13 @@
 const Package = require("../models/Package");
 
-// Middleware for error handling
+// // Middleware for error handling
 const asyncMiddleware = fn => 
   (req, res, next) => {
     Promise.resolve(fn(req, res, next))
       .catch(next);
 };
 
-// Validation middleware (placeholder, implement based on your validation strategy)
+// // Validation middleware (placeholder, implement based on your validation strategy)
 const validatePackageInput = (req, res, next) => {
   // Implement validation logic
   // If invalid, respond with an error
@@ -18,6 +18,8 @@ const validatePackageInput = (req, res, next) => {
 // POST: Create a new package
 exports.createPackage = async (req, res, next) => {
     try {
+
+        // console.log(req.body)
       // Create package object
       const package = new Package(req.body);
       

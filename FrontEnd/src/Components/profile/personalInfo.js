@@ -96,7 +96,7 @@ const PersonalInfo = () => {
       formData.append('photo', selectedFile);
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/image/upload-image`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/images/upload-image`, {
           method: 'POST',
           body: formData,
         });
