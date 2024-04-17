@@ -65,7 +65,7 @@ export default function TourPackageForm({ setIsShowHotelForm, isShowHotelForm })
     const removeDestination = (indexToRemove) => {
         setFormData(prevState => ({
             ...prevState,
-            destinations: prevState.destinations.filter((_, index) => index !== indexToRemove)
+            location: prevState.location.filter((_, index) => index !== indexToRemove)
         }));
     };
 
