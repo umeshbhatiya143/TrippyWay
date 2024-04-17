@@ -183,7 +183,6 @@ export default function TourPackageForm({ setIsShowHotelForm, isShowHotelForm })
     }
 
 
-
     // useEffect(() => {
     //     console.log(formData)
     //     console.log(images)
@@ -226,12 +225,12 @@ export default function TourPackageForm({ setIsShowHotelForm, isShowHotelForm })
                         {formData.location.map((destination, index) => (
                             <div key={index} className="bg-gray-200 p-1 rounded-full mr-2 mb-2 flex items-center">
                                 <span className="mr-1">{destination}</span>
-                                <button
+                                <div
                                     onClick={() => removeDestination(index)}
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    className="text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
                                 >
                                     &#10005;
-                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -250,12 +249,12 @@ export default function TourPackageForm({ setIsShowHotelForm, isShowHotelForm })
                         {formData.amenities.map((amenities, index) => (
                             <div key={index} className="bg-gray-200 p-1 rounded-full mr-2 mb-2 flex items-center">
                                 <span className="mr-1">{amenities}</span>
-                                <button
+                                <div
                                     onClick={() => removeAmenitiesItem(index)}
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    className="text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
                                 >
                                     &#10005;
-                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>
