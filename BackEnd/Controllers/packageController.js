@@ -56,8 +56,13 @@ exports.getPackagebyId = async (req, res, next) => {
 
 // GET: Retrieve all packages
 exports.getAllPackage = async (req, res, next) => {
+
     try{
-        const packages = await Package.find();
+        const { limit, page} = req.query;
+        const limitValue = parseInt(limit, 10) || 10;
+        const pageValue = parseInt(page, 10) || 1;
+        const skip = (pageValue - 1) * limitValue;
+        const packages = await Package.find().sort({ createdAt: -1 }).skip(skip).limit(limitValue);
         if(!packages)
             return res.status(404).send({ message: "No packages Found."});
         res.status(200).send({packages});

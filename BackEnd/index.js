@@ -7,7 +7,7 @@ require('./middleware/mongoose');
 //const connectToDatabase = require('./middleware/mongoose'); // Import the middleware
 const userRoutes = require('./routes/userRoutes');
 const packageRoutes = require('./routes/packageRoutes');
-const imageRoutes = require('./routes/imageRoutes');
+const imageRoutes = require('./routes/imageRoute');
 const hotelRoutes = require('./routes/hotelRoutes')
 const cors = require('cors');
 

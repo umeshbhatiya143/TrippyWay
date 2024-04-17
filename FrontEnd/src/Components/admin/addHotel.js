@@ -263,8 +263,8 @@ export default function TourPackageForm({ setIsShowHotelForm, isShowHotelForm })
 
                
                 <div className="mb-4">
-                    <label htmlFor="ratings" className="block text-gray-700 font-bold mb-2">Ratings:</label>
-                    <input type="number" id="ratings" name="ageRestrictions" value={formData.ratigs} onChange={handleChange} className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    <label htmlFor="rating" className="block text-gray-700 font-bold mb-2">Rating:</label>
+                    <input type="number" id="rating" name="rating" value={formData.rating} onChange={handleChange} className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
 
                 {/* upload and display images */}

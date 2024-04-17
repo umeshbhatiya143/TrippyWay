@@ -6,6 +6,9 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
+import Image from 'next/image';
+import Loader from '@/assets/loader.gif'
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 import Card from '../card';
 import PackageCompo from '../packageCompo';
@@ -15,6 +18,13 @@ const packages = () => {
   const [filteredCities, setFilteredCities] = useState([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [month, setMonth] = useState('');
+  const [packages, setPackages] = useState([])
+  const [isLoading, setisLoading] = useState(false)
+  const [isNoMore, setisNoMore] = useState(false)
+  const [page, setPage] = useState(1)
+
+  let currentPage = 1;
+
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -145,8 +155,8 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay']
-},
-{
+  },
+  {
     imageUrl: "/slide1.jpg", // Replace with your image path
     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
     duration: "7 Days & 6 Nights",
@@ -157,8 +167,8 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-},
-{
+  },
+  {
     imageUrl: "/slide3.jpg", // Replace with your image path
     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
     duration: "7 Days & 6 Nights",
@@ -169,8 +179,8 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay']
-},
-{
+  },
+  {
     imageUrl: "/slide1.jpg", // Replace with your image path
     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
     duration: "7 Days & 6 Nights",
@@ -181,8 +191,8 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-},
-{
+  },
+  {
     imageUrl: "/slide3.jpg", // Replace with your image path
     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
     duration: "7 Days & 6 Nights",
@@ -193,8 +203,8 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay']
-},
-{
+  },
+  {
     imageUrl: "/slide1.jpg", // Replace with your image path
     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
     duration: "7 Days & 6 Nights",
@@ -205,8 +215,8 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-},
-{
+  },
+  {
     imageUrl: "/slide3.jpg", // Replace with your image path
     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
     duration: "7 Days & 6 Nights",
@@ -217,8 +227,8 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay']
-},
-{
+  },
+  {
     imageUrl: "/slide1.jpg", // Replace with your image path
     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
     duration: "7 Days & 6 Nights",
@@ -229,10 +239,10 @@ const packages = () => {
     hotelRatings: ['3 Star', '4 Star', '5 Star'],
     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
     inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-},
+  },
 
-];
-  
+  ];
+
 
   // ------faqs---------
   const faqs = [
@@ -314,7 +324,53 @@ const packages = () => {
     }
   ]
 
+  const fetchPackages = async () => {
+    setisLoading(true)
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages?limit=10&page=${currentPage}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data.packages)
+      if (data.length === 0) {
+        setisNoMore(true)
+        setisLoading(false)
+      }
+      return data.packages
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setisLoading(false)
+    }
+  };
 
+  async function nextPage() {
+    currentPage++;
+    setPage(currentPage)
+    const items = await fetchPackages();
+    setPackages(items)
+  }
+
+  // Function to handle previous page button click
+  async function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      setPage(currentPage)
+      const items = await fetchPackages();
+      setPackages(items)
+    }
+  }
+
+  useEffect(() => {
+    // if (page == 1) {
+    //   const items = await fetchPackages()
+    //   setPackages(items)
+    // }
+    console.log(packages)
+  }, [])
 
   return (
     <div className='w-full'>
@@ -334,7 +390,7 @@ const packages = () => {
           <div className="flex-grow relative">
             <input
               type="text"
-              className="w-full p-2 rounded-l-md "
+              className="w-full p-2 rounded-l-md"
               placeholder="Enter destination"
               value={destination}
               onChange={handleDestinationChange}
@@ -521,11 +577,33 @@ const packages = () => {
 
             {/*------------ package components ------------*/}
 
-            <div className="flex cursor-pointer flex-col gap-2">
-              <h2 className="text-xl text-deep-purple font-medium">Showing {pkg.length} results...</h2>
-              {pkg.map((pkg) => (
-                <PackageCompo pkg={pkg}/>
+            <div className="flex items-center w-full cursor-pointer flex-col gap-2">
+              <h2 className="text-xl w-full border-b-2 text-left text-deep-purple font-medium">Showing {pkg.length} results...</h2>
+              {packages.map((pkg) => (
+                <PackageCompo pkg={pkg} />
               ))}
+
+
+              {packages.length === 0 && <span className='text-black text-center mt-2'>Nothing to show...</span>}
+              {isNoMore && packages.length > 0 && <span className='text-black text-center mt-2'>No more content...</span>}
+              {isLoading && <div className="flex items-center w-24 h-24 relative">
+                <Image
+                  alt='loader'
+                  src={Loader}
+                  width={100}
+                  height={100}
+                />
+                Loading...
+              </div>}
+
+              {/* navigation buttons */}
+              <div className='flex gap-6'>
+                {currentPage > 1 && <span onClick={() => prevPage()}
+                  className='flex justify-center items-center gap-2 hover:bg-deep-purple rounded-full px-3 text-dark-cyan hover:text-white transition-all duration-700'><FaArrowLeftLong />prev</span>}
+                <span className='border rounded-full border-2 border-deep-purple flex justify-center items-center w-7 h-7'>{currentPage}</span>
+                {!isNoMore && <span onClick={() => nextPage()}
+                  className='flex justify-center items-center gap-2 hover:bg-deep-purple rounded-full px-3 text-dark-cyan hover:text-white transition-all duration-700'>next<FaArrowRightLong /></span>}
+              </div>
             </div>
           </div>
 
