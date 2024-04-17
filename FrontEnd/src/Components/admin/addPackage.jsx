@@ -51,6 +51,94 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
         theme: "light",
     }
 
+    const fetchHotelData = async () => {
+
+        try {
+          // Construct URL with query parameters
+          const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/hotels`);
+        //   const params = { fields: 'name,profilePicture,gender,dob,pincode,state,country,address' }; // Define fields you want to fetch
+        //   url.search = new URLSearchParams(params).toString();
+    
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          const data = await response.json();
+          setHotels(data);
+    
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      };
+
+    const handleImageUpdate = async (selectedFile) => {
+        // return new Promise(async (resolve, reject) => {
+        //   if (!selectedFile) {
+        //     resolve();
+        //     return;
+        //   }
+        const formData = new FormData();
+        formData.append('photo', selectedFile[0]);
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/images/upload-image`, {
+                method: 'POST',
+                body: formData,
+            });
+            // if (!response.ok) throw new Error('Failed to upload image');
+            const { imageUrl } = await response.json();
+            return imageUrl;  // Resolve the promise with the new image URL
+        } catch (error) {
+            console.error(error.message);
+            toast.error('Error uploading image', toastOptions);
+            // reject(error);
+        }
+        // });
+    };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        setIsLoading(true)
+
+        const imgs = await Promise.all(imageURLs.map(async (imag) => {
+            return handleImageUpdate(imag);
+        }));
+
+        const updatedData = {
+            ...formData,
+            images: imgs
+        }
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData),
+            });
+            if (!response.ok) throw new Error('Failed to add package');
+            toast.success('Package added successfully', toastOptions);
+        } catch (error) {
+            console.error(error.message);
+            toast.error('Failed to add package', toastOptions);
+        } finally {
+            setIsLoading(false)
+            setTimeout(() => {
+
+                setIsShowPackageForm(!isShowPackageForm)
+            }, 1000)
+        }
+    };
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -106,7 +194,6 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
 
 
     //itinerary
-
     const handleItineraryKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -234,93 +321,11 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
         }));
     };
 
-    const fetchHotelData = async () => {
-
-        try {
-          // Construct URL with query parameters
-          const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/hotels`);
-        //   const params = { fields: 'name,profilePicture,gender,dob,pincode,state,country,address' }; // Define fields you want to fetch
-        //   url.search = new URLSearchParams(params).toString();
     
-          const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-    
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-    
-          const data = await response.json();
-          setHotels(data);
-    
-        } catch (error) {
-          console.error('Failed to fetch user data:', error);
-        }
-      };
-
-    const handleImageUpdate = async (selectedFile) => {
-        // return new Promise(async (resolve, reject) => {
-        //   if (!selectedFile) {
-        //     resolve();
-        //     return;
-        //   }
-        const formData = new FormData();
-        formData.append('photo', selectedFile[0]);
-
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/images/upload-image`, {
-                method: 'POST',
-                body: formData,
-            });
-            // if (!response.ok) throw new Error('Failed to upload image');
-            const { imageUrl } = await response.json();
-            return imageUrl;  // Resolve the promise with the new image URL
-        } catch (error) {
-            console.error(error.message);
-            toast.error('Error uploading image', toastOptions);
-            // reject(error);
-        }
-        // });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true)
-
-        const imgs = await Promise.all(imageURLs.map(async (imag) => {
-            return handleImageUpdate(imag);
-        }));
-
-        const updatedData = {
-            ...formData,
-            images: imgs
-        }
-
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/add`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedData),
-            });
-            if (!response.ok) throw new Error('Failed to add package');
-            toast.success('Package added successfully', toastOptions);
-        } catch (error) {
-            console.error(error.message);
-            toast.error('Failed to add package', toastOptions);
-        } finally {
-            setIsLoading(false)
-            setTimeout(() => {
-
-                setIsShowPackageForm(!isShowPackageForm)
-            }, 1000)
-        }
-    };
-
     //images
     function onImageChange(e) {
+        e.preventDefault()
+
         setImageURLs(prevState => [...prevState, e.target.files]);
 
         const file = e.target.files[0];
@@ -398,7 +403,7 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                         {formData.datesAvailable.map((date, index) => (
                             <span key={index} >
                                 {new Date(date).toLocaleDateString()}
-                                <button className="bg-white ml-2 rounded-md px-2 text-red-600" onClick={() => handleRemoveDate(date)}>Remove</button>
+                                <div className="bg-white ml-2 cursor-pointer rounded-md px-2 text-red-600" onClick={() => handleRemoveDate(date)}>Remove</div>
                             </span>
                         ))}
                     </div>
@@ -417,12 +422,12 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                         {formData.destinations.map((destination, index) => (
                             <div key={index} className="bg-gray-200 p-1 rounded-full mr-2 mb-2 flex items-center">
                                 <span className="mr-1">{destination}</span>
-                                <button
+                                <div
                                     onClick={() => removeDestination(index)}
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    className="text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
                                 >
                                     &#10005;
-                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -441,12 +446,12 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                         {formData.itinerary.map((itiner, index) => (
                             <div key={index} className="bg-gray-200 p-1 rounded-full mr-2 mb-2 flex items-center">
                                 <span className="mr-1">{itiner}</span>
-                                <button
+                                <div
                                     onClick={() => removeItineraryItem(index)}
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    className="text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
                                 >
                                     &#10005;
-                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -465,12 +470,12 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                         {formData.inclusions.map((inclusion, index) => (
                             <div key={index} className="bg-gray-200 p-1 rounded-full mr-2 mb-2 flex items-center">
                                 <span className="mr-1">{inclusion}</span>
-                                <button
+                                <div
                                     onClick={() => removeInclusionsItem(index)}
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    className="text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
                                 >
                                     &#10005;
-                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -489,12 +494,12 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                         {formData.exclusions.map((exclusion, index) => (
                             <div key={index} className="bg-gray-200 p-1 rounded-full mr-2 mb-2 flex items-center">
                                 <span className="mr-1">{exclusion}</span>
-                                <button
+                                <div
                                     onClick={() => removeExclusionsItem(index)}
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    className="text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
                                 >
                                     &#10005;
-                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -529,7 +534,7 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                             {formData.hotels.map((hotelId) => (
                                 <li key={hotelId}>
                                     {hotelId}
-                                    <button className='bg-white ml-2 rounded-md px-2 text-red-600' onClick={() => handleRemoveHotel(hotelId)}>Remove</button>
+                                    <div className='bg-white ml-2 cursor-pointer rounded-md px-2 text-red-600' onClick={() => handleRemoveHotel(hotelId)}>Remove</div>
                                 </li>
                             ))}
                         </ul>
@@ -589,12 +594,12 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                         {formData.tagsKeywords.map((keyword, index) => (
                             <div key={index} className="bg-gray-200 p-1 rounded-full mr-2 mb-2 flex items-center">
                                 <span className="mr-1">{keyword}</span>
-                                <button
+                                <div
                                     onClick={() => removeKeywordsItem(index)}
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
+                                    className="text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
                                 >
                                     &#10005;
-                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>

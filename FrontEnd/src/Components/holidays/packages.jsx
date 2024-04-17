@@ -335,11 +335,12 @@ const packages = () => {
       });
       const data = await response.json();
       console.log(data.packages)
+      setPackages(data.packages)
       if (data.length === 0) {
         setisNoMore(true)
         setisLoading(false)
       }
-      return data.packages
+      // return data.packages
     } catch (error) {
       console.log(error)
     } finally {
@@ -350,8 +351,8 @@ const packages = () => {
   async function nextPage() {
     currentPage++;
     setPage(currentPage)
-    const items = await fetchPackages();
-    setPackages(items)
+    await fetchPackages();
+    // setPackages(items)
   }
 
   // Function to handle previous page button click
@@ -359,16 +360,16 @@ const packages = () => {
     if (currentPage > 1) {
       currentPage--;
       setPage(currentPage)
-      const items = await fetchPackages();
-      setPackages(items)
+      await fetchPackages();
+      // setPackages(items)
     }
   }
 
   useEffect(() => {
-    // if (page == 1) {
-    //   const items = await fetchPackages()
-    //   setPackages(items)
-    // }
+    if (page == 1) {
+      fetchPackages()
+      // setPackages(items)
+    }
     console.log(packages)
   }, [])
 
@@ -580,7 +581,7 @@ const packages = () => {
             <div className="flex items-center w-full cursor-pointer flex-col gap-2">
               <h2 className="text-xl w-full border-b-2 text-left text-deep-purple font-medium">Showing {pkg.length} results...</h2>
               {packages.map((pkg) => (
-                <PackageCompo pkg={pkg} />
+                <PackageCompo pkg={pkg}/>
               ))}
 
 
