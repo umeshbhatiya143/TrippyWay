@@ -57,7 +57,7 @@ const login = () => {
       const decodedToken = jwtDecode(data.token);
       dispatch(loginUser({ userId: decodedToken.userId, token: data.token }));
 
-      router.push('/');
+      // router.push('/');
       setTimeout(() => {
         dispatch(toggleLogin());
         window.location.reload()
@@ -145,7 +145,6 @@ const login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </section>
   )
 }

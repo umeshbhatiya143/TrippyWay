@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { FaImages } from "react-icons/fa";
 import { LiaHotelSolid } from "react-icons/lia";
 import { IoIosInformationCircle } from "react-icons/io";
 import { FaMapMarkerAlt } from "react-icons/fa";
 //import { LiaHotelSolid } from "react-icons/lia";
-import { FaCar } from "react-icons/fa";
 import { GiMeal } from "react-icons/gi";
 import { FaMountainSun } from "react-icons/fa6";
 import { FaTents } from "react-icons/fa6";
@@ -13,7 +12,6 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import pack from "./pack.json";
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // Import Swiper styles
@@ -23,10 +21,57 @@ import 'swiper/css/pagination';
 import ReviewCard from "@/Components/reviewCard";
 import FAQItem from "@/Components/faqItem";
 import Card from "@/Components/card";
+import { PiBinoculars } from "react-icons/pi";
+import { GiHotMeal } from "react-icons/gi";
+import { IoFastFoodOutline } from "react-icons/io5";
+import { MdOutlineTransferWithinAStation } from "react-icons/md";
+import { MdAirportShuttle } from "react-icons/md";
+import { FaCar } from "react-icons/fa";
+import { GiCruiser } from "react-icons/gi";
+import { MdHouseboat } from "react-icons/md";
+import { TbTrekking } from "react-icons/tb";
+import { ImSafari } from "react-icons/im";
+import { MdOutlineFlight } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleLogin, loginUser, logoutUser } from '@/store/slices'
+import { toast } from 'react-toastify';
 
 const Packages = () => {
+  const dispatch = useDispatch()
+
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const userData = useSelector((state) => state.auth.userData)
+
+  const [pack, setPack] = useState({
+    title: '',
+    description: '',
+    duration: 0,
+    price: 0,
+    discount: 0,
+    datesAvailable: [],
+    destinations: [],
+    itinerary: [],
+    inclusions: [],
+    exclusions: [],
+    hotels: [],
+    transportation: '',
+    images: [],
+    rating: '',
+    reviews: [],
+    numberOfBookingsMade: 0,
+    availableSpots: 0,
+    cancellationPolicy: '',
+    paymentOptions: [],
+    minimumGroupSize: 0,
+    maximumGroupSize: 0,
+    ageRestrictions: 0,
+    healthAndSafetyMeasures: '',
+    specialOffers: '',
+    tagsKeywords: [],
+  })
   const router = useRouter();
-  const { slug } = router.query;
+  const { id } = router.query;
   //hooks to
   const [read, setRead] = useState(false);
   // const [open, setOpen] = useState(...pack.detailedItinirary,);
@@ -42,6 +87,30 @@ const Packages = () => {
       image: '/slide3.jpg',
     }
   ]
+
+  const toastOptions = {
+    position: "top-right",
+    autoClose: 1000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+}
+
+  const iSize = 25;
+  const inclusionIcons = {
+    'Sightseeing': <PiBinoculars size={iSize} />,
+    'Meals': <GiHotMeal size={iSize} />,
+    'Breakfast': <IoFastFoodOutline size={iSize} />,
+    'Transfers': <MdOutlineTransferWithinAStation size={iSize} />,
+    'Airport Pickup-Drop': <MdAirportShuttle size={iSize} />,
+    'Private Cab': <FaCar size={iSize} />,
+    'Cruise': <GiCruiser size={iSize} />,
+    'Houseboat': <MdHouseboat size={iSize} />,
+    'Adventure Activity': <TbTrekking />,
+    'Safari': <ImSafari size={iSize} />,
+    'Flights': <MdOutlineFlight size={iSize} />,
+    'Stay': <FaHome size={iSize} />
+  }
 
   //--------Reviews------
   const reviews = [
@@ -162,13 +231,102 @@ const Packages = () => {
 
 
   // //to maintain accordion state
-  const [openSections, setOpenSections] = useState(Array(pack.detailedItininary.length).fill(false));
+  // const [openSections, setOpenSections] = useState(Array(pack.detailedItininary.length).fill(false));
 
   const toggle = (index) => {
     const newOpenSections = [...openSections];
     newOpenSections[index] = !newOpenSections[index];
     setOpenSections(newOpenSections);
   };
+
+
+  const fetchHotel = async ({ hotelId }) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/hotels/${hotelId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      return data
+      // return data.packages
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const fetchHotels = async () => {
+    const hotels = await Promise.all(pkg.hotels.map((hotelId) => {
+      return fetchHotel(hotelId);
+    }));
+    setHotels(hotels)
+  }
+
+  const fetchPackage = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      // console.log(data.package)
+      setPack(data.package)
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const updateUserProfile = async (pkgId) => {
+    // setIsLoading(true)
+
+    try {
+      const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`);
+      const params = { fields: 'cart' }; // Define fields you want to fetch
+      url.search = new URLSearchParams(params).toString();
+
+      await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(async res => {
+          res = await res.json();
+
+          const updatedCart = [...res.user.cart, pkgId];
+
+          const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cart: updatedCart }),
+          });
+          if (!response.ok) throw new Error('Failed to update profile');
+          toast.success('Package added in cart successfully', toastOptions);
+        })
+
+    } catch (error) {
+      console.error(error.message);
+      toast.error('Failed to add package in cart', toastOptions);
+    } finally {
+      router.push('/Cart')
+    }
+  };
+
+  const addToCart = (pkgId) => {
+    if (isLoggedIn) {
+      updateUserProfile(pkgId)
+    } else {
+      dispatch(toggleLogin())
+    }
+  }
+
+  useEffect(() => {
+    fetchPackage()
+    console.log(pack)
+  }, [])
 
   return (
     <>
@@ -186,26 +344,26 @@ const Packages = () => {
                     <div className="text-teal-600 text-sm">{pack.discount}% Off</div>
                     <div className="items-center font-sans md:text-2xl font-bold">
                       <span>&#8377;</span>
-                      {pack.price}
-                      <sup>*</sup>
+                      {Math.floor(pack.price - (pack.price * (pack.discount) / 100))}
+                      <sup className="text-red text-bold">*</sup>
                       <div className="ml-4 relative inline-block">
-                        <span className="relative z-10 text-deep-purple text-xl">40,000</span>
+                        <span className="relative z-10 text-deep-purple text-xl">{pack.price}</span>
                         <div className="absolute w-full h-0.5 bg-deep-purple top-1/2 transform -translate-y-1/2"></div>
                       </div>
                     </div>
                   </div>
                 </div>
                 {/* customize and book Section */}
-                <div className="flex items-center space-x-4 gap-5 justify-center ">
+                <div className="flex w-fit items-center space-x-4 gap-5 justify-center ">
 
                   <div className="">
                     <button className="bg-dark-cyan hover:bg-opacity-80 text-white transition-colors duration-300 font-bold md:py-2 md:px-4 py-1 px-2 rounded-lg shadow-md">
                       Customize
                     </button>
                   </div>
-                  <div className="">
-                    <button className="bg-button-color hover:bg-button-color-hover transition-colors duration-300 text-white font-bold md:py-2 md:px-4 py-1 px-2 rounded-lg shadow-md">
-                      Book
+                  <div onClick={() => addToCart(pack._id)} className="">
+                    <button className="bg-button-color w-36 hover:bg-button-color-hover transition-colors duration-300 text-white font-bold md:py-2 md:px-4 py-1 px-2 rounded-lg shadow-md">
+                      Add to Cart
                     </button>
                   </div>
                 </div>
@@ -278,16 +436,18 @@ const Packages = () => {
                   pagination={{ clickable: true }}
                   slidesPerView={1}
                   loop={true}
-                  className="h-full relative" // Ensure the Swiper itself has a fixed height
+                  className="h-[600px] relative" // Ensure the Swiper itself has a fixed height
                 >
-                  {slideContent.map((slide, index) => (
+                  {pack.images.map((slide, index) => (
                     <SwiperSlide key={index}>
-                      <div className="w-full h-full flex items-center rounded-md justify-center bg-gray-200"> {/* Added bg-gray-200 as a placeholder background */}
-                        <img src={slide.image} alt={`Slide ${index + 1}`} className="w-full h-full rounded-md object-cover" />
+                      <div className="w-full h-full flex items-center rounded-md justify-center bg-gray-200">
+                        <img src={slide} alt={`Slide ${index + 1}`} className="w-full h-full rounded-md object-cover" />
                       </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
+
+
                 {/* <div className="absolute bottom-4 right-0 left-0">
                 <div className="flex justify-center items-center gap-2">
                   {images.map((_, i) => (
@@ -314,7 +474,7 @@ const Packages = () => {
                   <p className="font-bold md:text-xl">Stay Plan</p>
                   <div className=" md:text-xl flex justify-start space-x-5 m-2 mt-8 mb-5">
                     <FaTents className="font-bold md:text-2xl" />
-                    <p>{pack.stayPlan}</p>
+                    <p>{pack.duration} days</p>
                   </div>
                   <hr size="3"></hr>
                 </div>
@@ -322,7 +482,7 @@ const Packages = () => {
                 <div className="mt-4">
                   <p className="font-bold md:text-xl">Hotel Included in the package:</p>
                   <div className="mb-5 mt-8">
-                    {pack.hotelRatings.map((rating) => (
+                    {['2 star', '3 star', '4 star', '5 star'].map((rating) => (
                       <span key={rating} className={`inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2`}>{rating}</span>
                     ))}
                   </div>
@@ -331,7 +491,7 @@ const Packages = () => {
 
                 <div id="inclusion" className="mt-2">
                   <p className="font-bold md:text-xl">Inclusions</p>
-                  <div className="flex justify-start space-x-10 m-2 mt-8 mb-5">
+                  {/* <div className="flex justify-start space-x-10 m-2 mt-8 mb-5">
                     <div>
                       <LiaHotelSolid className="font-bold md:text-2xl" />
                       <p>Hotels</p>
@@ -348,6 +508,15 @@ const Packages = () => {
                       <FaMountainSun className="font-bold md:text-2xl" />
                       <p>Sightseeing</p>
                     </div>
+                  </div> */}
+                  <div className="flex p-4 gap-2 justify-between flex-wrap items-center mt-4">
+                    {pack?.inclusions?.map((inclusion) => (
+                      <div key={inclusion} className="flex flex-col gap-2 justify-center items-center mr-2">
+                        {/*<img className="h-6 w-6" src={`/icons/${inclusion.toLowerCase()}.png`} alt={inclusion} />*/}
+                        {inclusionIcons[inclusion]}
+                        <span className="ml-1 text-sm">{inclusion}</span>
+                      </div>
+                    ))}
                   </div>
                   <hr size="3"></hr>
                 </div>
@@ -359,12 +528,12 @@ const Packages = () => {
               <div className="text-xl font-bold m-5">About The Place</div>
 
               <div className="m-5">
-                {pack.about1}
-                <button onClick={readFunction} className="font-bold p-1">
+                {pack.description}
+                {/* <button onClick={readFunction} className="font-bold p-1">
                   {" "}
                   {read ? "Read Less" : "Read More..."}
                 </button>
-                {read ? <div>{pack.about2}</div> : <></>}
+                {read ? <div>{pack.about2}</div> : <></>} */}
               </div>
             </div>
             <hr></hr>
@@ -390,7 +559,9 @@ const Packages = () => {
                   );
                 })}
               </Slider> */}
-                <Swiper
+
+
+                {/* <Swiper
                   modules={[Navigation, Autoplay, Pagination]}
                   autoplay={{
                     delay: 6000,
@@ -403,7 +574,7 @@ const Packages = () => {
                   loop={true}
                   className="h-full w-full relative flex justify-center" // Ensure the Swiper itself has a fixed height
                 >
-                  {pack.hotels.map((hotel, index) => {
+                  {hotels.map((hotel, index) => {
                     return (
                       <SwiperSlide key={index}>
                         <div className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
@@ -422,7 +593,7 @@ const Packages = () => {
                       </SwiperSlide>
                     );
                   })}
-                </Swiper>
+                </Swiper> */}
               </div>
             </div>
             <hr className="mt-10 mb-5"></hr>
@@ -430,17 +601,17 @@ const Packages = () => {
 
             <div id="itininary" className="md:w-1/2 m-5 sm:w-full">
               <div className="text-xl font-bold mb-3">Detailed itininary</div>
-              {pack.detailedItininary.map((itininary, index) => {
+              {pack.itinerary.map((itininary, index) => {
                 return (
                   <div key={index} className="mb-5">
                     <div
                       className="flex justify-between items-center cursor-pointer p-2 bg-gray-100 rounded-md shadow hover:bg-gray-200"
                       onClick={() => toggle(index)}
                     >
-                      <p className="font-semibold">{itininary.titleD}</p>
-                      <FaChevronDown className={`transition-transform duration-300 ${openSections[index] ? 'rotate-180' : ''}`} />
+                      <p className="font-semibold">{itininary}</p>
+                      {/* <FaChevronDown className={`transition-transform duration-300 ${openSections[index] ? 'rotate-180' : ''}`} /> */}
                     </div>
-                    {openSections[index] && (
+                    {/* {openSections[index] && (
                       <div className="mt-3 p-4 bg-white rounded-md shadow">
                         <Swiper
                           modules={[Navigation]}
@@ -463,7 +634,7 @@ const Packages = () => {
                           ))}
                         </ul>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 )
               }

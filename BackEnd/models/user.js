@@ -46,13 +46,14 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   cart: [{
-    packageId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Package'
-    },
-    quantity: {
-      type: Number
-    }
+    type: mongoose.Schema.Types.ObjectId,
+    
+    // packageId: {
+    //   ref: 'Package'
+    // },
+    // quantity: {
+    //   type: Number
+    // }
   }]
 }, { timestamps: true });
 

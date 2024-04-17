@@ -144,105 +144,6 @@ const packages = () => {
     }
   };
 
-  const pkg = [{
-    imageUrl: "/slide3.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay']
-  },
-  {
-    imageUrl: "/slide1.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-  },
-  {
-    imageUrl: "/slide3.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay']
-  },
-  {
-    imageUrl: "/slide1.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-  },
-  {
-    imageUrl: "/slide3.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay']
-  },
-  {
-    imageUrl: "/slide1.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-  },
-  {
-    imageUrl: "/slide3.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay']
-  },
-  {
-    imageUrl: "/slide1.jpg", // Replace with your image path
-    title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-    duration: "7 Days & 6 Nights",
-    shortDescription: "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-    price: "₹22,900",
-    originalPrice: "₹26,024",
-    discount: 12, // in percentage
-    hotelRatings: ['3 Star', '4 Star', '5 Star'],
-    cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-    inclusions: ['Meals', 'Sightseeing', 'Stay', 'Flights', 'Breakfast']
-  },
-
-  ];
-
 
   // ------faqs---------
   const faqs = [
@@ -334,7 +235,7 @@ const packages = () => {
         },
       });
       const data = await response.json();
-      console.log(data.packages)
+      // console.log(data.packages)
       setPackages(data.packages)
       if (data.length === 0) {
         setisNoMore(true)
@@ -350,19 +251,16 @@ const packages = () => {
 
   async function nextPage() {
     currentPage++;
-    setPage(currentPage)
+    setPage(page + 1)
     await fetchPackages();
     // setPackages(items)
   }
 
   // Function to handle previous page button click
   async function prevPage() {
-    if (currentPage > 1) {
-      currentPage--;
-      setPage(currentPage)
-      await fetchPackages();
-      // setPackages(items)
-    }
+    currentPage--;
+    setPage(page - 1)
+    await fetchPackages();
   }
 
   useEffect(() => {
@@ -370,8 +268,8 @@ const packages = () => {
       fetchPackages()
       // setPackages(items)
     }
-    console.log(packages)
-  }, [])
+    // console.log(packages)
+  }, [page])
 
   return (
     <div className='w-full'>
@@ -579,9 +477,9 @@ const packages = () => {
             {/*------------ package components ------------*/}
 
             <div className="flex items-center w-full cursor-pointer flex-col gap-2">
-              <h2 className="text-xl w-full border-b-2 text-left text-deep-purple font-medium">Showing {pkg.length} results...</h2>
+              <h2 className="text-xl w-full border-b-2 text-left text-deep-purple font-medium">Showing {packages.length} results...</h2>
               {packages.map((pkg) => (
-                <PackageCompo pkg={pkg}/>
+                <PackageCompo pkg={pkg} />
               ))}
 
 
@@ -598,10 +496,16 @@ const packages = () => {
               </div>}
 
               {/* navigation buttons */}
-              <div className='flex gap-6'>
-                {currentPage > 1 && <span onClick={() => prevPage()}
-                  className='flex justify-center items-center gap-2 hover:bg-deep-purple rounded-full px-3 text-dark-cyan hover:text-white transition-all duration-700'><FaArrowLeftLong />prev</span>}
-                <span className='border rounded-full border-2 border-deep-purple flex justify-center items-center w-7 h-7'>{currentPage}</span>
+              <div className='mt-10 flex gap-6'>
+                <button
+                  onClick={() => prevPage()}
+                  disabled={page === 1}
+                  className={`flex justify-center items-center gap-2 hover:bg-deep-purple rounded-full px-3 text-dark-cyan hover:text-white transition-all duration-700 ${page === 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                >
+                  <FaArrowLeftLong />
+                  prev
+                </button>
+                <span className='border rounded-full border-2 border-deep-purple flex justify-center items-center w-7 h-7'>{page}</span>
                 {!isNoMore && <span onClick={() => nextPage()}
                   className='flex justify-center items-center gap-2 hover:bg-deep-purple rounded-full px-3 text-dark-cyan hover:text-white transition-all duration-700'>next<FaArrowRightLong /></span>}
               </div>

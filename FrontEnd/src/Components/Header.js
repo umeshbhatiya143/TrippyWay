@@ -110,10 +110,11 @@ const Header = () => {
                                     </div>
                                     {/* <BsCart size={30} className='text-deep-purple'/> */}
 
-                                    <a href="#" className="relative">
+                                    <div onClick={()=> router.push('/Cart')}
+                                     className="relative cursor-pointer">
                                         <PiShoppingCartSimpleFill size={40} />
                                         <span className='absolute top-2.5 text-deep-purple right-3.5 text-sm'>4</span>
-                                    </a>
+                                    </div>
 
                                 </div>
                             ) : (
