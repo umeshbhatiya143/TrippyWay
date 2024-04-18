@@ -113,7 +113,7 @@ const Header = () => {
                                     <div onClick={()=> router.push('/Cart')}
                                      className="relative cursor-pointer">
                                         <PiShoppingCartSimpleFill size={40} />
-                                        <span className='absolute top-2.5 text-deep-purple right-3.5 text-sm'>4</span>
+                                        <span className='absolute top-2.5 text-deep-purple right-3.5 text-sm'>{userData.cart.length}</span>
                                     </div>
 
                                 </div>

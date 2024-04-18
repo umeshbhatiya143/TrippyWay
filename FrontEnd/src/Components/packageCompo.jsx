@@ -102,6 +102,13 @@ const PackageCompo = ({ pkg }) => {
                     });
                     if (!response.ok) throw new Error('Failed to update profile');
                     toast.success('Package added in cart successfully', toastOptions);
+
+                    const updatedData = {
+                        userId: userData.userId,
+                        token: userData.token,
+                        cart: updatedCart
+                    }
+                    dispatch(loginUser(updatedData))
                 })
 
         } catch (error) {

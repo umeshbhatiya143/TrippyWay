@@ -55,7 +55,7 @@ const login = () => {
       toast.success('You are successfully logged in');
       dispatch(loginUser());
       const decodedToken = jwtDecode(data.token);
-      dispatch(loginUser({ userId: decodedToken.userId, token: data.token }));
+      dispatch(loginUser({ userId: decodedToken.userId, token: data.token, cart: decodedToken.cart }));
 
       // router.push('/');
       setTimeout(() => {

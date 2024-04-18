@@ -1,67 +1,85 @@
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import {  useRouter } from "next/router"; 
+import { useRouter } from "next/router";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import AddTraveller from "@/Components/AddTraveller";
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleLogin, loginUser, logoutUser } from '@/store/slices'
+import { toast } from 'react-toastify';
 
 const Cart = () => {
-  const router=useRouter();
+  const router = useRouter();
+  const dispatch = useDispatch()
+
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const userData = useSelector((state) => state.auth.userData)
+
   const [openAddTraveller, setOpenAddTraveller] = useState(false);
-  const pkg = [
-    {
-      id: "1",
-      imageUrl: ["../../slide1.jpg", "../../slide2.jpg", "../../slide3.jpg"], // Replace with your image path
-      title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
-      duration: "7 Days & 6 Nights",
-      shortDescription:
-        "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
-      //price: "₹22,900",
-      originalPrice: "₹26,024",
-      price: 26024,
-      discount: 12, // in percentage
-      cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-      adult: 2,
-      children: 0,
-      type: "honeymoon",
-    },
-    {
-      id: "2",
-      imageUrl: ["/slide1.jpg", "/slide2.jpg", "/slide3.jpg"], // Replace with your image path
-      title: "Soothing Kumarakom, Munnar, Alleppey family Package",
-      duration: "7 Days & 6 Nights",
-      shortDescription:
-        "Explore the serene beauty of Kumarakom with this  package. Includes stay, meals, and sightseeing.",
-      //price: "₹22,900",
-      originalPrice: "₹26,024",
-      price: 26024,
-      discount: 12, // in percentage
-      hotelRatings: ["3 Star", "4 Star", "5 Star"],
-      cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-      type: "family",
-      adult: 2,
-      children: 1,
-    },
-    {
-      id: "3",
-      imageUrl: ["/slide1.jpg", "/slide2.jpg", "/slide3.jpg"], // Replace with your image path
-      title: "Soothing Kumarakom, Munnar, Alleppey family Package",
-      duration: "7 Days & 6 Nights",
-      shortDescription:
-        "Explore the serene beauty of Kumarakom with this  package. Includes stay, meals, and sightseeing.",
-      originalPrice: "₹26,024",
-      price: 26024,
-      discount: 12, // in percentage
-      hotelRatings: ["3 Star", "4 Star", "5 Star"],
-      cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
-      type: "group",
-      adult: 2,
-      children: 0,
-    },
-  ];
-  const [pack, setPackage] = useState(pkg);
+  // const [pkg, setPkg] = useState([])
+
+  const toastOptions = {
+    position: "top-right",
+    autoClose: 1000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  }
+
+  // const pkg = [
+  //   {
+  //     id: "1",
+  //     imageUrl: ["../../slide1.jpg", "../../slide2.jpg", "../../slide3.jpg"], // Replace with your image path
+  //     title: "Soothing Kumarakom, Munnar, Alleppey Honeymoon Package",
+  //     duration: "7 Days & 6 Nights",
+  //     shortDescription:
+  //       "Explore the serene beauty of Kumarakom with this honeymoon package. Includes stay, meals, and sightseeing.",
+  //     //price: "₹22,900",
+  //     originalPrice: "₹26,024",
+  //     price: 26024,
+  //     discount: 12, // in percentage
+  //     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
+  //     adult: 2,
+  //     children: 0,
+  //     type: "honeymoon",
+  //   },
+  //   {
+  //     id: "2",
+  //     imageUrl: ["/slide1.jpg", "/slide2.jpg", "/slide3.jpg"], // Replace with your image path
+  //     title: "Soothing Kumarakom, Munnar, Alleppey family Package",
+  //     duration: "7 Days & 6 Nights",
+  //     shortDescription:
+  //       "Explore the serene beauty of Kumarakom with this  package. Includes stay, meals, and sightseeing.",
+  //     //price: "₹22,900",
+  //     originalPrice: "₹26,024",
+  //     price: 26024,
+  //     discount: 12, // in percentage
+  //     hotelRatings: ["3 Star", "4 Star", "5 Star"],
+  //     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
+  //     type: "family",
+  //     adult: 2,
+  //     children: 1,
+  //   },
+  //   {
+  //     id: "3",
+  //     imageUrl: ["/slide1.jpg", "/slide2.jpg", "/slide3.jpg"], // Replace with your image path
+  //     title: "Soothing Kumarakom, Munnar, Alleppey family Package",
+  //     duration: "7 Days & 6 Nights",
+  //     shortDescription:
+  //       "Explore the serene beauty of Kumarakom with this  package. Includes stay, meals, and sightseeing.",
+  //     originalPrice: "₹26,024",
+  //     price: 26024,
+  //     discount: 12, // in percentage
+  //     hotelRatings: ["3 Star", "4 Star", "5 Star"],
+  //     cities: ["Kochi", "Munnar", "Thekkady", "Kumarakom", "Alleppey"],
+  //     type: "group",
+  //     adult: 2,
+  //     children: 0,
+  //   },
+  // ];
+  const [pack, setPackage] = useState([]);
   const [error, setError] = useState("");
   const [showError, setShowError] = useState(false);
   const [bill, setBill] = useState([]);
@@ -73,18 +91,39 @@ const Cart = () => {
     }, 2000); // 10000 milliseconds = 10 seconds
   }, []);
 
-  // const slideContent = [
-  //   {
-  //     image: "/slide1.jpg",
-  //   },
-  //   {
-  //     image: "/slide2.jpg",
-  //   },
-  //   {
-  //     image: "/slide3.jpg",
-  //   },
-  // ];
-  console.log(openAddTraveller);
+
+  const fetchPackage = async (id) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      // console.log(data.package)
+      // setPack(data.package)
+      // const price = data.package.price
+      // const discount = data.package.discount
+      // setTotalPrice(totalPrice+ (Math.floor(price - (price * (discount) / 100))))
+      return data.package
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const fetchPackages = async () => {
+    const packages = await Promise.all(userData.cart.map((pkgId) => {
+      return fetchPackage(pkgId);
+    }));
+    setPackage(packages)
+  }
+
+  useEffect(() => {
+    fetchPackages()
+    // console.log(pkg)
+  }, [])
+
   const handleIncrementAdultTraveller = (id) => {
     console.log(id);
     setPackage(
@@ -151,8 +190,51 @@ const Cart = () => {
       })
     );
   };
+
+  const updateUserProfile = async (pkgId) => {
+    // setIsLoading(true)
+
+    try {
+      const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`);
+      const params = { fields: 'cart' }; // Define fields you want to fetch
+      url.search = new URLSearchParams(params).toString();
+
+      await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(async res => {
+          res = await res.json();
+
+          const updatedCart = res.user.cart.filter(_id => _id !== pkgId);
+          console.log(updatedCart)
+          const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cart: updatedCart }),
+          });
+          if (!response.ok) throw new Error('Failed to update profile');
+          toast.success('Package removed from cart successfully', toastOptions);
+
+          const updatedData = {
+            userId: userData.userId,
+            token: userData.token,
+            cart: updatedCart
+          }
+          dispatch(loginUser(updatedData))
+        })
+
+    } catch (error) {
+      console.error(error.message);
+      toast.error('Failed to remove package in cart', toastOptions);
+    }
+  };
+
   const handleRemovePackage = (id) => {
-    setPackage((prevPackages) => prevPackages.filter((pack) => pack.id !== id));
+    setPackage((prevPackages) => prevPackages.filter((pack) => pack._id !== id));
+    updateUserProfile(id)
   };
 
   useEffect(() => {
@@ -160,15 +242,16 @@ const Cart = () => {
     const updatedBill = pack.map((packageItem) => {
       //const discountedPrice = (packageItem.price*0.5) - (packageItem.price*0.5 * packageItem.discount) / 100;
 
-      const bill =
-        packageItem.price * 0.5 * packageItem.adult +
-        packageItem.price * 0.5 * 0.5 * packageItem.children;
-      const discountedBill = bill - (bill * packageItem.discount) / 100;
-      const taxedBill = discountedBill - (discountedBill * 18) / 100;
+      const bill = packageItem.price
+      // packageItem.price * 0.5 * packageItem.adult +
+      // packageItem.price * 0.5 * 0.5 * packageItem.children;
+
+      const discountedBill = (Math.floor(bill - (bill * (packageItem.discount) / 100)))
+      const taxedBill = discountedBill + (discountedBill * 18) / 100;
       return {
         title: packageItem.title,
         discount: packageItem.discount,
-        id: packageItem.id,
+        id: packageItem._id,
         originalPrice: bill,
         discountedPrice: discountedBill,
         taxedPrice: taxedBill,
@@ -185,16 +268,16 @@ const Cart = () => {
 
 
 
-  const handleCheckout=()=>{
-    router.push('CheckOut')
+  const handleCheckout = () => {
+    router.push('/CheckOut')
   }
 
   return (
-    <div>
+    <div className="p-4 px-40">
       {/* Proceed to checkout section*/}
       <div className="flex flex-row justify-between h-20 bg-white border-2 rounded-xl shadow-md overflow-hidden">
         <div className="text-2xl m-3 p-2">Package Cart</div>
-        <button  onClick={handleCheckout}className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">
+        <button onClick={handleCheckout} className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">
           Proceed To Checkout
         </button>
       </div>
@@ -213,7 +296,7 @@ const Cart = () => {
                       loop={true}
                       className="h-60 relative" // Ensure the Swiper itself has a fixed height
                     >
-                      {pkg.imageUrl.map((slide, index) => (
+                      {pkg.images.map((slide, index) => (
                         <SwiperSlide key={index}>
                           <div className="w-full h-full flex items-center justify-center bg-gray-200">
                             {" "}
@@ -249,78 +332,77 @@ const Cart = () => {
                     {pkg.title}
                   </div>
                   <p className="block mt-1 text-sm leading-tight font-medium text-black ">
-                    {pkg.duration}
+                    {pkg.duration} days
                   </p>
                   <p className="mt-2 text-sm text-gray-500">
-                    {pkg.shortDescription}
+                    {pkg.description.substring(0, 200)}...
                   </p>
-                  <div className="mt-4">
-                    <div className="text-lg font-bold text-gray-900">
-                      <s className="text-red-600">{pkg.price}</s>
-                    </div>
-                    <div className="text-teal-600">{pkg.discount}% Off</div>
-                    <div className="text-lg font-bold text-gray-900">
-                      {/* Calculate discounted price and format */}
-                      {(
-                        pkg.price -
-                        pkg.price * (pkg.discount / 100)
-                      ).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                  <div className="flex mt-4 flex-col gap-1">
+                    <div className="text-teal-600 text-sm">{pkg.discount}% Off</div>
+                    <div className="items-center font-sans md:text-2xl font-bold">
+                      <span>&#8377;</span>
+                      {Math.floor(pkg.price - (pkg.price * (pkg.discount) / 100))}
+                      <sup className="text-red-600 text-bold">*</sup>
+                      <div className="ml-4 relative inline-block">
+                        <span className="relative z-10 text-deep-purple text-[18px]">{pkg.price}</span>
+                        <div className="absolute w-full h-0.5 bg-deep-purple top-1/2 transform -translate-y-1/2"></div>
+                      </div>
                     </div>
                   </div>
 
                   <div className="mt-4">
                     <h3 className="text-gray-700 font-semibold">Cities:</h3>
-                    <p className="text-gray-700">{pkg.cities.join(" ➜ ")}</p>
+                    <p className="text-gray-700">{pkg.destinations.join(" ➜ ")}</p>
                   </div>
 
                   {/* Buttons */}
                   <div className="flex mt-4">
                     <button
                       onClick={() => {
-                        handleRemovePackage(pkg.id);
+                        handleRemovePackage(pkg._id);
                       }}
                       title="Click to remove this package from cart"
                       className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l"
                     >
                       REMOVE
                     </button>
-                    {pkg.type != "honeymoon" && (
-                      <>
-                        <button
-                          title="Click to customize the number of traveller"
-                          className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
-                          onClick={() => {
-                            setOpenAddTraveller(!openAddTraveller);
-                          }}
-                        >
-                          CUSTOMIZE
-                        </button>
-                        {openAddTraveller && (
-                          <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center">
-                            <AddTraveller
-                              handleIncrementAdultTraveller={
-                                handleIncrementAdultTraveller
-                              }
-                              handleDecrementAdultTraveller={
-                                handleDecrementAdultTraveller
-                              }
-                              handleIncrementChildTraveller={
-                                handleIncrementChildTraveller
-                              }
-                              handleDecrementChildTraveller={
-                                handleDecrementChildTraveller
-                              }
-                              setOpenAddTraveller={setOpenAddTraveller}
-                              adult={pkg.adult}
-                              children={pkg.children}
-                              id={pkg.id}
-                              error={error}
-                              showError={showError}
-                            />
-                          </div>
-                        )}
-                      </>
-                    )}
+                    {/* {pkg.type != "honeymoon" && ( */}
+                    <>
+                      {/* <button
+                        title="Click to customize the number of traveller"
+                        className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
+                        onClick={() => {
+                          setOpenAddTraveller(!openAddTraveller);
+                        }}
+                      >
+                        CUSTOMIZE
+                      </button> */}
+                      {openAddTraveller && (
+                        <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center">
+                          <AddTraveller
+                            handleIncrementAdultTraveller={
+                              handleIncrementAdultTraveller
+                            }
+                            handleDecrementAdultTraveller={
+                              handleDecrementAdultTraveller
+                            }
+                            handleIncrementChildTraveller={
+                              handleIncrementChildTraveller
+                            }
+                            handleDecrementChildTraveller={
+                              handleDecrementChildTraveller
+                            }
+                            setOpenAddTraveller={setOpenAddTraveller}
+                            adult={pkg.adult}
+                            children={pkg.children}
+                            id={pkg.id}
+                            error={error}
+                            showError={showError}
+                          />
+                        </div>
+                      )}
+                    </>
+                    {/* )} */}
                   </div>
                 </div>
               </div>
