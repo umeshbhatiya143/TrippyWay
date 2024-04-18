@@ -53,7 +53,7 @@ const Header = () => {
                     <div className="container mx-auto flex justify-between items-center  px-6 lg:px-12">
                         {/* Logo and Navigation */}
                         <div className="flex items-center">
-                            <img src="/logo.png" alt="Logo" className="h-12 lg:h-14 mr-8" />
+                            <img src="/logo.png" alt="Logo" className="h-12 lg:h-14 w-48 rounded-md mr-8" />
                             <nav>
                                 {/* <ul className="flex items-center space-x-10">
                                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
