@@ -6,16 +6,16 @@ import { useRouter } from "next/router";
 import "swiper/css";
 import "swiper/css/navigation";
 import AddTraveller from "@/Components/AddTraveller";
-import { useSelector, useDispatch } from 'react-redux'
-import { toggleLogin, loginUser, logoutUser } from '@/store/slices'
-import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from "react-redux";
+import { toggleLogin, loginUser, logoutUser } from "@/store/slices";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const userData = useSelector((state) => state.auth.userData)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const userData = useSelector((state) => state.auth.userData);
 
   const [openAddTraveller, setOpenAddTraveller] = useState(false);
   // const [pkg, setPkg] = useState([])
@@ -26,7 +26,7 @@ const Cart = () => {
     pauseOnHover: true,
     draggable: true,
     theme: "light",
-  }
+  };
 
   // const pkg = [
   //   {
@@ -91,38 +91,42 @@ const Cart = () => {
     }, 2000); // 10000 milliseconds = 10 seconds
   }, []);
 
-
   const fetchPackage = async (id) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
       // console.log(data.package)
       // setPack(data.package)
       // const price = data.package.price
       // const discount = data.package.discount
       // setTotalPrice(totalPrice+ (Math.floor(price - (price * (discount) / 100))))
-      return data.package
+      return data.package;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   const fetchPackages = async () => {
-    const packages = await Promise.all(userData.cart.map((pkgId) => {
-      return fetchPackage(pkgId);
-    }));
-    setPackage(packages)
-  }
+    const packages = await Promise.all(
+      userData.cart.map((pkgId) => {
+        return fetchPackage(pkgId);
+      })
+    );
+    setPackage(packages);
+  };
 
   useEffect(() => {
-    fetchPackages()
+    fetchPackages();
     // console.log(pkg)
-  }, [])
+  }, []);
 
   const handleIncrementAdultTraveller = (id) => {
     console.log(id);
@@ -195,46 +199,51 @@ const Cart = () => {
     // setIsLoading(true)
 
     try {
-      const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`);
-      const params = { fields: 'cart' }; // Define fields you want to fetch
+      const url = new URL(
+        `${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`
+      );
+      const params = { fields: "cart" }; // Define fields you want to fetch
       url.search = new URLSearchParams(params).toString();
 
       await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      })
-        .then(async res => {
-          res = await res.json();
+      }).then(async (res) => {
+        res = await res.json();
 
-          const updatedCart = res.user.cart.filter(_id => _id !== pkgId);
-          console.log(updatedCart)
-          const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+        const updatedCart = res.user.cart.filter((_id) => _id !== pkgId);
+        console.log(updatedCart);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ cart: updatedCart }),
-          });
-          if (!response.ok) throw new Error('Failed to update profile');
-          toast.success('Package removed from cart successfully', toastOptions);
-
-          const updatedData = {
-            userId: userData.userId,
-            token: userData.token,
-            cart: updatedCart
           }
-          dispatch(loginUser(updatedData))
-        })
+        );
+        if (!response.ok) throw new Error("Failed to update profile");
+        toast.success("Package removed from cart successfully", toastOptions);
 
+        const updatedData = {
+          userId: userData.userId,
+          token: userData.token,
+          cart: updatedCart,
+        };
+        dispatch(loginUser(updatedData));
+      });
     } catch (error) {
       console.error(error.message);
-      toast.error('Failed to remove package in cart', toastOptions);
+      toast.error("Failed to remove package in cart", toastOptions);
     }
   };
 
   const handleRemovePackage = (id) => {
-    setPackage((prevPackages) => prevPackages.filter((pack) => pack._id !== id));
-    updateUserProfile(id)
+    setPackage((prevPackages) =>
+      prevPackages.filter((pack) => pack._id !== id)
+    );
+    updateUserProfile(id);
   };
 
   useEffect(() => {
@@ -242,11 +251,13 @@ const Cart = () => {
     const updatedBill = pack.map((packageItem) => {
       //const discountedPrice = (packageItem.price*0.5) - (packageItem.price*0.5 * packageItem.discount) / 100;
 
-      const bill = packageItem.price
+      const bill = packageItem.price;
       // packageItem.price * 0.5 * packageItem.adult +
       // packageItem.price * 0.5 * 0.5 * packageItem.children;
 
-      const discountedBill = (Math.floor(bill - (bill * (packageItem.discount) / 100)))
+      const discountedBill = Math.floor(
+        bill - (bill * packageItem.discount) / 100
+      );
       const taxedBill = discountedBill + (discountedBill * 18) / 100;
       return {
         title: packageItem.title,
@@ -266,28 +277,26 @@ const Cart = () => {
     setTotalPrice(totalBillSum.toFixed(2));
   }, [pack]);
 
-
-
   const handleCheckout = () => {
-    router.push('/CheckOut')
-  }
+    router.push("/CheckOut");
+  };
 
   return (
-    <div className="p-4 px-40">
+    <div className="p-4 md:px-40 sm:px-5">
       {/* Proceed to checkout section*/}
       <div className="flex flex-row justify-between h-20 bg-white border-2 rounded-xl shadow-md overflow-hidden">
         <div className="text-2xl m-3 p-2">Package Cart</div>
-        <button onClick={handleCheckout} className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">
+        {/* <button onClick={handleCheckout} className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">
           Proceed To Checkout
-        </button>
+        </button> */}
       </div>
-      <div className="flex flex-row gap-1 justify-center ">
+      <div className="flex md:flex-row sm:flex-col gap-1 justify-center ">
         {/* package add to cart */}
         <div className="w-4/6 m-2 p-1">
           {pack.map((pkg) => (
-            <div className="w-full mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4">
-              <div className="md:flex p-4 gap-6">
-                <div>
+            <div className="w-full flex md:flex-col sm:flex-col xs:flex-col lg:flex-row mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4  md:p-4 gap-6">
+              {/*<div className="flex md:flex-row  p-4 gap-6"> */}
+                
                   <div className="md:flex-shrink-0 w-80 h-60 overflow-hidden">
                     <Swiper
                       modules={[Navigation]}
@@ -311,22 +320,7 @@ const Cart = () => {
                       ))}
                     </Swiper>
                   </div>
-                  {/* No of Traveller */}
-                  {/* {(pkg.type=="honeymoon")}
-                <div className="m-2 flex flex-row gap-2 justify-around text-gray-700 font-semibold">
-                  <div>Adults </div>
-                  <div>Children</div>
-                </div> */}
-                  <div className="flex flex-col gap-2 m-3 items-center">
-                    <h4 className="text-xl font-semibold ">Traveller</h4>
-                    <div className="text-gray-800">
-                      Adult: {" " + pkg.adult}
-                    </div>
-                    <div className="text-gray-800">
-                      Children:{" " + pkg.children}
-                    </div>
-                  </div>
-                </div>
+                
                 <div className="">
                   <div className="uppercase tracking-wide text-lg text-dark-cyan font-semibold">
                     {pkg.title}
@@ -335,28 +329,36 @@ const Cart = () => {
                     {pkg.duration} days
                   </p>
                   <p className="mt-2 text-sm text-gray-500">
-                    {pkg.description.substring(0, 200)}...
+                    {pkg.description.substring(0, 100)}...
                   </p>
                   <div className="flex mt-4 flex-col gap-1">
-                    <div className="text-teal-600 text-sm">{pkg.discount}% Off</div>
+                    <div className="text-teal-600 text-sm">
+                      {pkg.discount}% Off
+                    </div>
                     <div className="items-center font-sans md:text-2xl font-bold">
                       <span>&#8377;</span>
-                      {Math.floor(pkg.price - (pkg.price * (pkg.discount) / 100))}
+                      {Math.floor(pkg.price - (pkg.price * pkg.discount) / 100)}
                       <sup className="text-red-600 text-bold">*</sup>
                       <div className="ml-4 relative inline-block">
-                        <span className="relative z-10 text-deep-purple text-[18px]">{pkg.price}</span>
+                        <span className="relative z-10 text-deep-purple text-[18px]">
+                          {pkg.price}
+                        </span>
                         <div className="absolute w-full h-0.5 bg-deep-purple top-1/2 transform -translate-y-1/2"></div>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-4">
-                    <h3 className="text-gray-700 font-semibold">Cities:</h3>
-                    <p className="text-gray-700">{pkg.destinations.join(" ➜ ")}</p>
+                    <h3 className="text-gray-700 font-semibold">
+                      Destinations:
+                    </h3>
+                    <p className="text-gray-700">
+                      {pkg.destinations.join(" ➜ ")}
+                    </p>
                   </div>
 
                   {/* Buttons */}
-                  <div className="flex mt-4">
+                  <div className="flex md:flex-row sm:flex-col mt-4">
                     <button
                       onClick={() => {
                         handleRemovePackage(pkg._id);
@@ -365,6 +367,13 @@ const Cart = () => {
                       className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l"
                     >
                       REMOVE
+                    </button>
+                    <button
+                      onClick={handleCheckout}
+                      title="Click to remove this package from cart"
+                      className=" bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
+                    >
+                      PROCEED TO CHECKOUT
                     </button>
                     {/* {pkg.type != "honeymoon" && ( */}
                     <>
@@ -405,7 +414,7 @@ const Cart = () => {
                     {/* )} */}
                   </div>
                 </div>
-              </div>
+              {/*</div>*/}
             </div>
           ))}
         </div>
