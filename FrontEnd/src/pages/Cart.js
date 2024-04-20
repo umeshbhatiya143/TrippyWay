@@ -9,7 +9,8 @@ import AddTraveller from "@/Components/AddTraveller";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleLogin, loginUser, logoutUser } from "@/store/slices";
 import { toast } from "react-toastify";
-
+//import ReactConfetti from "react-confetti"
+//import Confetti from "confetti";
 const Cart = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const Cart = () => {
   const userData = useSelector((state) => state.auth.userData);
 
   const [openAddTraveller, setOpenAddTraveller] = useState(false);
+  //const [promos, setPromos] = useState({}); 
+  //const [showConfetti ,setShowConfetti]=useState([])
   // const [pkg, setPkg] = useState([])
 
   const toastOptions = {
@@ -27,6 +30,8 @@ const Cart = () => {
     draggable: true,
     theme: "light",
   };
+
+  const promoCode ="XYZ123";
 
   // const pkg = [
   //   {
@@ -277,10 +282,18 @@ const Cart = () => {
     setTotalPrice(totalBillSum.toFixed(2));
   }, [pack]);
 
-  const handleCheckout = () => {
-    router.push("/CheckOut");
+  const handleCheckout = (id) => {
+    router.push(`/checkout/${id}`);
   };
 
+
+  // const handlePromo=(id)=>{
+  //  // const packageId=id
+  //    promos[id]==promoCode;
+  //    setShowConfetti({...showConfetti,[id]:true})
+  // }
+  // console.log(promos)
+  // console.log(showConfetti)
   return (
     <div className="p-4 md:px-40 sm:px-5">
       {/* Proceed to checkout section*/}
@@ -369,8 +382,8 @@ const Cart = () => {
                       REMOVE
                     </button>
                     <button
-                      onClick={handleCheckout}
-                      title="Click to remove this package from cart"
+                     onClick={() => handleCheckout(pkg._id)} 
+                      title="proceed to checkout"
                       className=" bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
                     >
                       PROCEED TO CHECKOUT
@@ -386,7 +399,7 @@ const Cart = () => {
                       >
                         CUSTOMIZE
                       </button> */}
-                      {openAddTraveller && (
+                      {/* {openAddTraveller && (
                         <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center">
                           <AddTraveller
                             handleIncrementAdultTraveller={
@@ -409,7 +422,7 @@ const Cart = () => {
                             showError={showError}
                           />
                         </div>
-                      )}
+                      )} */}
                     </>
                     {/* )} */}
                   </div>
@@ -433,7 +446,34 @@ const Cart = () => {
             {bill.map((item) => (
               <div key={item.id} className="border-b-2 border-gray-200 pb-4">
                 <div className="text-lg font-semibold mb-2">{item.title}</div>
-                <div className="flex flex-row justify-between mb-2 mr-2">
+                {/* Promo code section */}
+                <div className="flex flex-row m-2 p-1"> 
+                <input
+                
+                type="text"
+                id="promo"
+                name="promo"
+                placeholder="Promo code"
+                className="bg-gray-100 border-none p-2 rounded-l "
+               
+                
+              />
+              {/*  value={promos[item.id] || ''}
+                onChange={(e) =>
+                  setPromos({ ...promos, [item.id]: e.target.value })
+                } */}
+              <button
+                     
+                      title="Click to apply promo"
+                      className=" bg-dark-cyan w-full hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
+                    >
+                      Apply
+                    </button>
+                  {/* <input type="text" placeholder="Promo Code eg:ASDB34" value={0}> </input> */}
+                   </div>
+                   
+                   
+                   <div className="flex flex-row justify-between mb-2 mr-2">
                   <div className="text-sm">Original Price:</div>
                   <div className="text-sm">&#8377; {item.originalPrice}</div>
                 </div>
@@ -455,6 +495,8 @@ const Cart = () => {
                     &#8377; {item.taxedPrice}
                   </div>
                 </div>
+                   
+                
               </div>
             ))}
           </div>

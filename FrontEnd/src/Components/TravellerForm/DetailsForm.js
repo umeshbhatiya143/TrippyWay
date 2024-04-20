@@ -1,13 +1,13 @@
 import React, { useState ,useEffect} from "react";
 import Alert from "../Alert";
 
-const DetailsForm = ({  handleAddDetailsPerPackage,index,detailsPerPackage }) => {
+const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
   const [openError, setOpenError] = useState(false);
   const [errormessage, setErrorMessage] = useState("");
   const [successMessage,setSuccessMessage]=useState("");
   const [openSuccess,setOpenSuccess]=useState(false)
-  console.log("state opening",detailsPerPackage);
-  const initialFormValues = detailsPerPackage.find(detail => detail.index === index) || {
+ // console.log("state opening",detailsPerPackage);
+  const initialFormValues = travellerDetails.find(detail => detail.index === index) || {
     index: index,
     title: "",
     firstname: "",
@@ -48,7 +48,7 @@ const DetailsForm = ({  handleAddDetailsPerPackage,index,detailsPerPackage }) =>
     e.preventDefault();
    const submit= handleValidation();
     if(submit){
-      handleAddDetailsPerPackage(formValues);
+      handleAddDetails(formValues);
       setOpenSuccess(true)
       setSuccessMessage("Information Added")
     }
@@ -64,7 +64,7 @@ const DetailsForm = ({  handleAddDetailsPerPackage,index,detailsPerPackage }) =>
 
  console.log("state after reopening",formValues);
   return (
-    // <section className="  flex justify-center items-center">
+    // <sect className="  flex justify-center items-center">
       <div className=" bg-white p-10 m-2 rounded-lg border border-gray-200 flex flex-col  gap-2 ">
         <h3 className="text-2xl font-bold mb-1 text-deep-purple">
           Add Details
@@ -197,7 +197,7 @@ const DetailsForm = ({  handleAddDetailsPerPackage,index,detailsPerPackage }) =>
             <button
               onClick={handleSubmit}
               type="submit"
-              className="bg-deep-purple w-60 hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l"
+              className="bg-deep-purple  hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded"
             >
               ADD
             </button>
@@ -206,7 +206,7 @@ const DetailsForm = ({  handleAddDetailsPerPackage,index,detailsPerPackage }) =>
           </div>
         </form>
       </div>
-    // </section>
+    
   );
 };
 

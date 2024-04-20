@@ -1,6 +1,7 @@
 import React from "react";
-
+import { useRouter } from "next/router";
 const Payment = () => {
+  const router = useRouter();
   const billingAddress = {
     name: "John Doe",
     address_line1: "1234 Main Street",
@@ -11,6 +12,90 @@ const Payment = () => {
     country: "India",
   };
 
+  const paymentHandler=async(event)=>{
+    const amount = 500;
+    const currency = 'INR';
+    const receiptId = '1234567899';
+
+    const response = await fetch('http://localhost:5000/order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        amount,
+        currency,
+        receipt: receiptId
+      })
+    })
+
+      const order = await response.json();
+      console.log('order', order);
+
+      //predefined template
+      var option = {
+        key:"",
+        amount,
+        currency,
+        name:"TrippyWay",
+        description: "Test Transaction",
+        image:"../logo.png",
+        //passing the orderid geberated above
+        order_id:order.id,
+        handler: async function(response) {
+          //we have to check whether transaction is succesful to reduce fraud
+          const body = {...response,}
+
+          const validateResponse = await fetch('http://localhost:5000/validate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+
+          }
+        )
+
+          const jsonResponse = await validateResponse.json();
+
+          console.log('jsonResponse', jsonResponse);
+          alert("transaction successful");
+          //After successful payment move to home page
+          router.push("/");
+
+
+        },
+        //user billing Address
+        prefill: {
+          name: "kanika", 
+          email: "kanikakur14@gmail,com",
+          contact: "9000000000", 
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        //razorpay popup color
+        theme: {
+          color: "#3C096C",
+        },
+      }
+      var rzp1 = new Razorpay(option);
+      //if payment fails
+      rzp1.on("payment.failed", function(response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      })
+
+      rzp1.open();
+      event.preventDefault();
+
+  }
+
   return (
     <div>
       {/* subheading */}
@@ -19,7 +104,7 @@ const Payment = () => {
       </div>
       {/* main section*/}
       <div className=" flex flex-row justify-center gap-2">
-        <div className="w-1/6"></div>
+        
         <div className="w-3/6 m-8 p-1  bg-white border-2 rounded-xl shadow-md overflow-hidden">
           <div className="flex flex-col  m-3 p-1">
             {/* address area*/}
@@ -44,21 +129,21 @@ const Payment = () => {
               <form className="m-5">
                 <input
                   type="radio"
-                  id="credit_card"
+                  id="online_payment"
                   name="payment_method"
-                  value="credit_card"
+                  value="online_payment"
                 />
-                <label className ="m-2 font-medium"for="credit_card">Credit Card</label>
+                <label className ="m-2 font-medium"for="credit_card">Online Payment</label>
                 <br />
                 <input
                   type="radio"
-                  id="debit_card"
+                  id="cash"
                   name="payment_method"
-                  value="debit_card"
+                  value="cash"
                 />
-                <label className ="m-2 font-medium" for="debit_card">Debit Card</label>
+                <label className ="m-2 font-medium" for="debit_card">Cash</label>
                 <br />
-                <input
+                {/* <input
                   type="radio"
                   id="net_banking"
                   name="payment_method"
@@ -73,19 +158,20 @@ const Payment = () => {
                   name="payment_method"
                   value="upi"
                 />
-                <label className ="m-2 font-medium" for="upi">UPI</label>
+                <label className ="m-2 font-medium" for="upi">UPI</label> */}
                 <br />
-                <button className="bg-deep-purple w-60 hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">Use this payment method</button>
+                <div className="">
+          <h4> Order Total : Rs 56,000</h4>
+         
+        </div>
               </form>
+              <button onClick={paymentHandler} className="bg-deep-purple w-60 hover:bg-opacity-75 transition-colors duration-300 h-10 m-1 text-white font-bold py-2 px-4 rounded-l">Pay</button>
             </div>
           </div>
 
           {/* proceed to pay */}
         </div>
-        <div className="w-2/6 m-10 p-2  gap-x-5   bg-white border-2 rounded-xl shadow-md overflow-hidden h-28">
-          <h4> Order Total : Rs 56,000</h4>
-          <button className="bg-deep-purple w-60 hover:bg-opacity-75 transition-colors duration-300 h-10 m-3 text-white font-bold py-2 px-4 rounded-l">Pay</button>
-        </div>
+       
       </div>
     </div>
   );
