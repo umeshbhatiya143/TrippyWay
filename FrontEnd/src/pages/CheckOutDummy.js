@@ -156,7 +156,7 @@ const CheckOut = () => {
                 </li>
               </ul>
             </div>
-            {openForms[pkg.id] && (
+            {/* {openForms[pkg.id] && (
               <TravellerForm
                 packageid={pkg.id}
                 packagename={pkg.title}
@@ -165,7 +165,7 @@ const CheckOut = () => {
                 adult={pkg.adult}
                 children={pkg.children}
               />
-            )}
+            )} */}
           </>
 
           {/* {[...Array(pkg.adult + pkg.children)].map((_, index) => (
