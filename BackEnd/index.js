@@ -11,7 +11,7 @@ const userRoutes = require('./routes/userRoutes');
 const packageRoutes = require('./routes/packageRoutes');
 const imageRoutes = require('./routes/imageRoute');
 const hotelRoutes = require('./routes/hotelRoutes');
-const orderRoutes=require('./routes/orderRoutes')
+
 const cors = require('cors');
 
 dotenv.config();
