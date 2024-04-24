@@ -189,15 +189,15 @@ export default function TourPackageForm({ setIsShowHotelForm, isShowHotelForm })
     // })
 
     return (
-        <div className="container mx-auto px-4 py-12">
-            <div className="relative w-full flex justify-end">
+        <div className="bg-gray-200 mx-auto px-4 py-12">
+            {/* <div className="relative w-full flex justify-end">
                 <span
                     onClick={() => setIsShowHotelForm(!isShowHotelForm)}
                     className="absolute -right-10 -top-10 z-1 p-2 flex justify-center items-center rounded-lg transition-all duration-300 bg-gray-100 hover:bg-dark-cyan hover:text-white cursor-pointer">
                     <RxCross2 size={20} />
                 </span>
-            </div>
-            <h1 className="text-3xl font-bold mb-4">Add Hotel Form</h1>
+            </div> */}
+            <h1 className="text-3xl font-bold text-center mb-10">Add Hotel Form</h1>
             <form action='' onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name:</label>

@@ -133,7 +133,7 @@ const PackageCompo = ({ pkg }) => {
         <div
             className="w-full mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4">
             <div className="md:flex p-4 gap-6">
-                <div onClick={() => router.push(`/package/${pkg._id}`)}>
+                <div>
                     <div className="md:flex-shrink-0 w-80 h-60 overflow-hidden">
                         <Swiper
                             modules={[Navigation]}
@@ -167,10 +167,10 @@ const PackageCompo = ({ pkg }) => {
                     <div className="uppercase tracking-wide text-lg text-dark-cyan font-semibold">{pkg.title}</div>
                     <p className="block mt-1 text-sm leading-tight font-medium text-black ">{pkg.duration} days</p>
                     <p className="mt-2 text-sm text-gray-500"> {pkg.description.substring(0, 200)}...</p>
-                    <div onClick={() => router.push(`/package/${pkg._id}`)} className="mt-4">
+                    <div className="mt-4">
                         <div className="text-teal-600">{pkg.discount}% Off</div>
                         <div className='flex items-center'>
-                            <div className="text-lg font-bold text-gray-900">{Math.floor(pkg.price - (pkg.price * (pkg.discount) / 100))}</div>
+                            <div className="text-lg font-bold text-gray-900"><span>&#8377;</span>{Math.floor(pkg.price - (pkg.price * (pkg.discount) / 100))}</div>
                             <sup className='text-red-600 text-bold'>*</sup>
                             <div className="ml-4 relative inline-block">
                                 <span className="relative z-10 text-deep-purple text-md">{pkg.price}</span>
@@ -178,7 +178,7 @@ const PackageCompo = ({ pkg }) => {
                             </div>
                         </div>
                     </div>
-                    <div onClick={() => router.push(`/package/${pkg._id}`)} className="mt-4">
+                    <div className="mt-4">
                         <h3 className="text-gray-700 font-semibold">Hotel included in package:</h3>
                         <div className="mb-5 mt-8">
                             {['2 star', '3 star', '4 star', '5 star'].map((rating) => (
@@ -186,13 +186,15 @@ const PackageCompo = ({ pkg }) => {
                             ))}
                         </div>
                     </div>
-                    <div onClick={() => router.push(`/package/${pkg._id}`)} className="mt-4">
+                    <div className="mt-4">
                         <h3 className="text-gray-700 font-semibold">Cities:</h3>
                         <p className="text-gray-700">{pkg.destinations.join(' ➜ ')}</p>
                     </div>
 
                     {/* Buttons */}
-                    <div className="flex mt-4">
+                    <div
+                        onClick={() => router.push(`/package/${pkg._id}`)}
+                        className="flex mt-4">
                         <button className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
                             View Details
                         </button>

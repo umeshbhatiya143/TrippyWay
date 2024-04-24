@@ -1,41 +1,59 @@
 import React, { useState } from 'react';
 import AddPackage from '@/Components/admin/addPackage'
 import AddHotel from '@/Components/admin/addHotel'
+import Dashboard from '@/Components/admin/dashboard';
+import AllPackages from '@/Components/admin/allPackages';
+import AllHotels from '@/Components/admin/allHotels';
+
 
 const AdminDashboard = () => {
-    const [isShowPackageForm, setIsShowPackageForm] = useState(false)
-    const [isShowHotelForm, setIsShowHotelForm] = useState(false)
+    const [selectedPage, setSelectedPage] = useState('dashboard')
+
+
+    const renderPage = () => {
+        switch (selectedPage) {
+            case 'dashboard':
+                return <Dashboard />
+            case 'addPackage':
+                return <AddPackage />;
+            case 'addHotel':
+                return <AddHotel />;
+            case 'allPackages':
+                return <AllPackages />;
+            case 'allHotels':
+                return <AllHotels />;
+            default:
+                return null;
+        }
+    };
+
     return (
         <>
-            {isShowPackageForm === true && <div className="flex justify-center items-center w-full z-30 transition-all duration-1000 bg-black h-fit bg-opacity-50">
-                <AddPackage setIsShowPackageForm={setIsShowPackageForm} isShowPackageForm={isShowPackageForm}/>
-            </div>}
+            <div className='w-full h-[90vh] overflow-hidden flex gap-4 scroll-bar'>
+                <div className="w-80 flex flex-col gap-6 h-screen p-6 pt-10 bg-dark-cyan">
+                    <h1 className="text-2xl font-bold text-deep-purple text-center rounded-md bg-white p-2 shadow-md mb-4">Admin Panel</h1>
+                    <ul className="text-white">
+                        <li
+                            onClick={() => setSelectedPage('dashboard')}
+                            className="mb-2 border-b-2 transition-all duration-700 hover:bg-deep-purple bg-opacity-50 p-3 rounded-md hover:text-yellow-300 cursor-pointer">Dashboard</li>
+                        <li
+                            onClick={() => setSelectedPage('allPackages')}
+                            className="mb-2 border-b-2 transition-all duration-700 hover:bg-deep-purple bg-opacity-50 p-3 rounded-md hover:text-yellow-300 cursor-pointer">Packages</li>
+                        <li
+                            onClick={() => setSelectedPage('allHotels')}
+                            className="mb-2 border-b-2 transition-all duration-700 hover:bg-deep-purple bg-opacity-50 p-3 rounded-md hover:text-yellow-300 cursor-pointer">Hotels</li>
+                        <li
+                            onClick={() => setSelectedPage('addHotel')}
+                            className="mb-2 border-b-2 transition-all duration-700 hover:bg-deep-purple bg-opacity-50 p-3 rounded-md hover:text-yellow-300 cursor-pointer">Add Hotels</li>
+                        <li
+                            onClick={() => setSelectedPage('addPackage')}
+                            className="mb-2 border-b-2 transition-all duration-700 hover:bg-deep-purple bg-opacity-50 p-3 rounded-md hover:text-yellow-300 cursor-pointer">Add Package</li>
+                    </ul>
+                </div>
 
-            {isShowHotelForm === true && <div className="flex justify-center items-center w-full z-30 transition-all duration-1000 bg-black h-fit bg-opacity-50">
-                <AddHotel setIsShowHotelForm={setIsShowHotelForm} isShowHotelForm={isShowHotelForm}/>
-            </div>}
-
-            <div className="w-full h-screen mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-                <h1 className="text-2xl font-bold text-center my-4">Admin Dashboard</h1>
-                <div className="flex justify-center items-center space-x-4">
-                    <button
-                        onClick={() => setIsShowPackageForm(!isShowPackageForm)}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300"
-                    >
-                        Add Package
-                    </button>
-                    <button
-                        onClick={() => setIsShowHotelForm(!isShowHotelForm)}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300"
-                    >
-                        Add Hotel
-                    </button>
-                    <button
-                        onClick={() => console.log('Add Blog')}
-                        className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition duration-300"
-                    >
-                        Add Blog
-                    </button>
+                {/* component */}
+                <div className="h-[90vh] w-full overflow-scroll pb-4" style={{ scrollbarWidth: "none" }}>
+                    {renderPage()}
                 </div>
             </div>
         </>

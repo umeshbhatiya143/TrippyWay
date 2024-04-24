@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loader from '@/assets/loader.gif'
 import Image from 'next/image';
 
-export default function TourPackageForm({ setIsShowPackageForm, isShowPackageForm }) {
+export default function TourPackageForm() {
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const [images, setImages] = useState([]);
@@ -54,29 +54,29 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
     const fetchHotelData = async () => {
 
         try {
-          // Construct URL with query parameters
-          const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/hotels`);
-        //   const params = { fields: 'name,profilePicture,gender,dob,pincode,state,country,address' }; // Define fields you want to fetch
-        //   url.search = new URLSearchParams(params).toString();
-    
-          const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-    
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-    
-          const data = await response.json();
-          setHotels(data);
-    
+            // Construct URL with query parameters
+            const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/hotels`);
+            //   const params = { fields: 'name,profilePicture,gender,dob,pincode,state,country,address' }; // Define fields you want to fetch
+            //   url.search = new URLSearchParams(params).toString();
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            setHotels(data);
+
         } catch (error) {
-          console.error('Failed to fetch user data:', error);
+            console.error('Failed to fetch user data:', error);
         }
-      };
+    };
 
     const handleImageUpdate = async (selectedFile) => {
         // return new Promise(async (resolve, reject) => {
@@ -106,19 +106,19 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         setIsLoading(true)
 
-        const imgs = await Promise.all(imageURLs.map(async (imag) => {
-            return handleImageUpdate(imag);
-        }));
-
-        const updatedData = {
-            ...formData,
-            images: imgs
-        }
-
         try {
+            const imgs = await Promise.all(imageURLs.map(async (imag) => {
+                return handleImageUpdate(imag);
+            }));
+
+            const updatedData = {
+                ...formData,
+                images: imgs
+            }
+
             const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/add`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -131,10 +131,34 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
             toast.error('Failed to add package', toastOptions);
         } finally {
             setIsLoading(false)
-            setTimeout(() => {
-
-                setIsShowPackageForm(!isShowPackageForm)
-            }, 1000)
+            setFormData({
+                title: '',
+                description: '',
+                duration: 0,
+                price: 0,
+                discount: 0,
+                datesAvailable: [],
+                destinations: [],
+                itinerary: [],
+                inclusions: [],
+                exclusions: [],
+                hotels: [],
+                transportation: '',
+                images: [],
+                rating: '',
+                reviews: [],
+                numberOfBookingsMade: 0,
+                availableSpots: 0,
+                cancellationPolicy: '',
+                paymentOptions: [],
+                minimumGroupSize: 0,
+                maximumGroupSize: 0,
+                ageRestrictions: 0,
+                healthAndSafetyMeasures: '',
+                specialOffers: '',
+                tagsKeywords: [],
+            })
+            setInputValue('')
         }
     };
 
@@ -321,7 +345,7 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
         }));
     };
 
-    
+
     //images
     function onImageChange(e) {
         e.preventDefault()
@@ -349,24 +373,24 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
         setImageURLs(updatedImages)
     }
 
-  useEffect(()=>{
-    console.log(formData)
-  })
+    useEffect(() => {
+        console.log(formData)
+    })
 
     useEffect(() => {
         fetchHotelData()
-    },[])
+    }, [])
 
     return (
-        <div className="container mx-auto px-4 py-12">
-            <div className="relative w-full flex justify-end">
+        <div className="mx-auto px-4 py-12 bg-gray-200">
+            {/* <div className="relative w-full flex justify-end">
                 <span
                     onClick={() => setIsShowPackageForm(!isShowPackageForm)}
                     className="absolute -right-10 -top-10 z-1 p-2 flex justify-center items-center rounded-lg transition-all duration-300 bg-gray-100 hover:bg-dark-cyan hover:text-white cursor-pointer">
                     <RxCross2 size={20} />
                 </span>
-            </div>
-            <h1 className="text-3xl font-bold mb-4">Tour Package Form</h1>
+            </div> */}
+            <h1 className="text-3xl text-center font-bold mb-10">Tour Package Form</h1>
             <form action='' onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title:</label>
@@ -519,9 +543,9 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                             {hotels
                                 .filter((hotel) => hotel.name.toLowerCase().includes(searchTerm.toLowerCase()))
                                 .map((hotel) => (
-                                    <li 
-                                    onClick={() => handleHotelSelect(hotel._id)}
-                                    key={hotel.hotelId} className="cursor-pointer hover:bg-gray-100 p-2 rounded-md">
+                                    <li
+                                        onClick={() => handleHotelSelect(hotel._id)}
+                                        key={hotel.hotelId} className="cursor-pointer hover:bg-gray-100 p-2 rounded-md">
                                         <p className="font-medium text-deep-purple">{hotel.name}</p>
                                         <p className="text-gray-500 text-sm">ID: {hotel._id}</p>
                                     </li>
@@ -634,7 +658,7 @@ export default function TourPackageForm({ setIsShowPackageForm, isShowPackageFor
                     </div>
                 </div>
 
-                {!isLoading ? (<button type="submit" className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>)
+                {!isLoading ? (<button type="submit" className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline">Submit</button>)
                     :
                     (
                         <div className="w-20 h-20 relative">

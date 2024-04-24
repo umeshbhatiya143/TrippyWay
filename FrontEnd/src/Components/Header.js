@@ -49,11 +49,11 @@ const Header = () => {
                 <div className="w-full pipe-slider overflow-hidden flex items-center justify-center py-2 bg-white text-center z-10">
                     <p className="w-full text-red-600 text-center">For a limited-time discount: "50% off for the next 48 hours! Don't miss out!"</p>
                 </div>
-                <div className='bg-gray-900 py-4'>
-                    <div className="container mx-auto flex justify-between items-center  px-6 lg:px-12">
+                <div className='bg-white text-black border-t-2 border '>
+                    <div className="container mx-auto flex justify-between items-center   px-6 lg:px-12">
                         {/* Logo and Navigation */}
                         <div className="flex items-center">
-                            <img src="/logo.png" alt="Logo" className="h-12 lg:h-14 w-48 rounded-md mr-8" />
+                            <img src="/logo.png" alt="Logo" className="h-20 w-60 rounded-md mr-8" />
                             <nav>
                                 {/* <ul className="flex items-center space-x-10">
                                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
@@ -88,11 +88,11 @@ const Header = () => {
                         {/* Authentication Section */}
                         <div>
                             {isLoggedIn ? (
-                                <div className="flex items-center space-x-6">
-                                    <a href="#" className="flex items-center justify-center space-x-2 bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">TrippyAI</a>
+                                <div className="flex text-white items-center space-x-6">
+                                    <a href="#" className="flex items-center justify-center space-x-2 bg-dark-cyan hover:bg-button-color-hover bg-gradient-to-bl from-dark-cyan to-deep-purple  text-white transition-colors py-2 px-4 rounded-full">TrippyAI</a>
                                     <div className='relative z-1'
                                     >
-                                        <button onClick={() => setIsShowMenu(!isShowMenu)} className="flex items-center justify-center space-x-2 bg-button-color hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
+                                        <button onClick={() => setIsShowMenu(!isShowMenu)} className="flex items-center justify-center space-x-2 bg-gradient-to-bl from-deep-purple to-dark-cyan text-white bg-dark-cyan hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
                                             <CgProfile size={24} />
                                             <span>Profile</span>
                                         </button>

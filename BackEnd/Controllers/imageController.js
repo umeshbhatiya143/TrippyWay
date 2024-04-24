@@ -36,3 +36,13 @@ exports.uploadImage = async (req, res) => {
     res.status(500).json({ message: 'Error uploading image', error: error.message });
   }
 };
+
+exports.deleteImage = async (res,req)=>{
+  cloudinary.uploader.destroy(req.id, (error, result) => {
+    if (error) {
+      console.error('Error deleting image:', error);
+    } else {
+      console.log('Image deleted successfully:', result);
+    }
+  })
+}
