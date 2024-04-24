@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^3.4.3",
     "@reduxjs/toolkit": "^2.2.3",
     "confetti": "^2.0.3",
+    "easyinvoice": "^3.0.47",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "next": "14.0.4",
