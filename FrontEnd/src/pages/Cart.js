@@ -19,6 +19,7 @@ const Cart = () => {
   const userData = useSelector((state) => state.auth.userData);
 
   const [openAddTraveller, setOpenAddTraveller] = useState(false);
+  const [noOfTravelller,setNoOfTraveller]=useState(1);
   //const [promos, setPromos] = useState({}); 
   //const [showConfetti ,setShowConfetti]=useState([])
   // const [pkg, setPkg] = useState([])
@@ -133,72 +134,77 @@ const Cart = () => {
     // console.log(pkg)
   }, []);
 
-  const handleIncrementAdultTraveller = (id) => {
-    console.log(id);
-    setPackage(
+  const handleIncrementTraveller = (id) => {
+    console.log(pack);
+     
       pack.map((packageItem) => {
         if (packageItem.id === id) {
           // Increment the adult property by 1 for the package with the matching id
-          return {
-            ...packageItem,
-            adult: packageItem.adult + 1,
-          };
-        }
-        return packageItem;
+          // return {
+          //   ...packageItem,
+          //   noOfTravelller: packageItem.noOfTravelller + 1,
+          // };
+          if(noOfTravelller >= packageItem.maximumGroupSize){
+            setShowError(true);
+            setError("Traveller limit excceded !!");
+          }
+          else{
+            setNoOfTraveller(noOfTravelller+1);
+          }
+        } 
       })
-    );
+    
   };
-  const handleDecrementAdultTraveller = (id) => {
-    setPackage(
+  const handleDecrementTraveller = (id) => {
+    
       pack.map((packageItem) => {
-        if (packageItem.adult == 2) {
-          setShowError(true);
-          setError("The traveller cannot be less than 2 in this package");
-          return { ...packageItem };
-        }
+        
         if (packageItem.id === id) {
-          return {
-            ...packageItem,
-            adult: packageItem.adult - 1,
-          };
-        }
-        return packageItem;
-      })
-    );
+          if (noOfTravelller <= pack.minimumGroupSize ) {
+            setShowError(true);
+            setError("The traveller cannot be less than 2 in this package");
+            
+          }
+          else{
+            setNoOfTraveller(noOfTravelller-1)
+          }
+         }
+       })
+    
   };
-  const handleIncrementChildTraveller = (id) => {
-    setPackage(
-      pack.map((packageItem) => {
-        if (packageItem.id === id) {
-          return {
-            ...packageItem,
-            children: packageItem.children + 1,
-          };
-        }
-        return packageItem;
-      })
-    );
-  };
+  // const handleIncrementChildTraveller = (id) => {
+  //   setPackage(
+  //     pack.map((packageItem) => {
+  //       if (packageItem.id === id) {
+  //         return {
+  //           ...packageItem,
+  //           children: packageItem.children + 1,
+  //         };
+  //       }
+  //       return packageItem;
+  //     })
+  //   );
+  // };
 
-  const handleDecrementChildTraveller = (id) => {
-    setPackage(
-      pack.map((packageItem) => {
-        if (packageItem.children == 0) {
-          setShowError(true);
-          setError("Value cannot be less than 0 ");
-          return { ...packageItem };
-        }
-        if (packageItem.id === id) {
-          // Increment the adult property by 1 for the package with the matching id
-          return {
-            ...packageItem,
-            children: packageItem.children - 1,
-          };
-        }
-        return packageItem;
-      })
-    );
-  };
+  // const handleDecrementChildTraveller = (id) => {
+  //   setPackage(
+  //     pack.map((packageItem) => {
+  //       if (packageItem.children == 0) {
+  //         setShowError(true);
+  //         setError("Value cannot be less than 0 ");
+  //         return { ...packageItem };
+  //       }
+  //       if (packageItem.id === id) {
+  //         // Increment the adult property by 1 for the package with the matching id
+  //         return {
+  //           ...packageItem,
+  //           children: packageItem.children - 1,
+  //         };
+  //       }
+  //       return packageItem;
+  //     })
+  //   );
+  // };
 
   const updateUserProfile = async (pkgId) => {
     // setIsLoading(true)
@@ -381,48 +387,42 @@ const Cart = () => {
                     >
                       REMOVE
                     </button>
-                    <button
-                     onClick={() => handleCheckout(pkg._id)} 
-                      title="proceed to checkout"
-                      className=" bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
-                    >
-                      PROCEED TO CHECKOUT
-                    </button>
+                    
                     {/* {pkg.type != "honeymoon" && ( */}
                     <>
-                      {/* <button
+                      <button
                         title="Click to customize the number of traveller"
-                        className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
+                        className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 "
                         onClick={() => {
                           setOpenAddTraveller(!openAddTraveller);
                         }}
                       >
                         CUSTOMIZE
-                      </button> */}
-                      {/* {openAddTraveller && (
+                      </button>
+                      <button
+                     onClick={() => handleCheckout(pkg._id)} 
+                      title="proceed to checkout"
+                      className=" bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
+                    >
+                      PROCEED TO CHECKOUT
+                    </button>
+                      {openAddTraveller && (
                         <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center">
                           <AddTraveller
-                            handleIncrementAdultTraveller={
-                              handleIncrementAdultTraveller
+                            handleIncrementTraveller={
+                              handleIncrementTraveller
                             }
-                            handleDecrementAdultTraveller={
-                              handleDecrementAdultTraveller
-                            }
-                            handleIncrementChildTraveller={
-                              handleIncrementChildTraveller
-                            }
-                            handleDecrementChildTraveller={
-                              handleDecrementChildTraveller
+                            handleDecrementTraveller={
+                              handleDecrementTraveller
                             }
                             setOpenAddTraveller={setOpenAddTraveller}
-                            adult={pkg.adult}
-                            children={pkg.children}
+                            noOfTravelller={noOfTravelller}
                             id={pkg.id}
                             error={error}
                             showError={showError}
                           />
                         </div>
-                      )} */}
+                      )}
                     </>
                     {/* )} */}
                   </div>
