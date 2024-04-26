@@ -1,10 +1,69 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { useRouter } from "next/router";
 import { PDFDownloadLink,PDFViewer } from "@react-pdf/renderer";
+import { useSelector, useDispatch } from "react-redux";
 import Invoice from "@/Components/Invoice";
 const Payment = () => {
   const router = useRouter();
-  const [booking, setBooking] = useState(true);
+  const [booking, setBooking] = useState(false);
+  const [bill ,setBill]=useState({});
+  const userData = useSelector((state) => state.auth.userData);
+  const [name ,setName]=useState("");
+  
+
+  useEffect(() => {
+    // Calculate the bill for each package
+    const originalPrice = parseInt(localStorage.getItem("originalPrice")) || 0;
+    const noOfTraveller = parseInt(localStorage.getItem("noOfTraveller")) || 0;
+    const discount = parseInt(localStorage.getItem("discount")) || 0;
+    
+  
+    const bill = originalPrice * noOfTraveller;
+    const discountedBill = Math.floor(bill - (bill * discount) / 100);
+    const taxedBill = discountedBill + (discountedBill * 18) / 100;
+  
+    const paymentBill = {
+      title: localStorage.getItem("currentBookingName"),
+      discount: discount,
+      originalPrice: bill,
+      discountedPrice: discountedBill,
+      taxedPrice: taxedBill,
+    };
+  
+    // Update the bill state
+    setBill(paymentBill);
+    fetchUser();
+  }, []);
+  
+  const fetchUser= async () => {
+    // setIsLoading(true)
+
+    try {
+      const url = new URL(
+        `${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`
+      );
+      const params = { fields: "name" }; // Define fields you want to fetch
+      url.search = new URLSearchParams(params).toString();
+
+    const  response= await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      const data = await response.json();
+      setName(data.user.name)
+      console.log(data);
+       
+    }
+    catch(err){
+        console.log(err);
+    }
+  };
+
+  
+
+
   const billingAddress = {
     name: "John Doe",
     address_line1: "1234 Main Street",
@@ -33,7 +92,7 @@ const Payment = () => {
     }
   }
   const paymentHandler = async (event) => {
-    const amount = 500;
+    const amount = bill.taxedPrice ;
     const currency = "INR";
     const receiptId = "1234567899";
 
@@ -84,7 +143,7 @@ const Payment = () => {
       },
       //user billing Address ,we have pull user details and pass here
       prefill: {
-        name: "kanika",
+        name: name,
         email: "kanikakur14@gmail,com",
         contact: "9000000000",
       },
@@ -131,7 +190,7 @@ const Payment = () => {
                   </h4>
                   <div>
                     <ul>
-                      <li className="font-medium">{billingAddress.name}</li>
+                      <li className="font-medium">{name}</li>
                       <li>{billingAddress.address_line2}</li>
                       <li>{billingAddress.address_line1}</li>
                       <li>{billingAddress.city}</li>
@@ -145,29 +204,40 @@ const Payment = () => {
                 {/*Select Payment method */}
                 <div className="m-10 p-2 flex flex-col justify-between gap-x-5">
                   <h4 className="text-xl font-semibold">
-                    Choose Your Payment Option
+                  {localStorage.getItem("currentBookingName")}
                   </h4>
-                  <form className="m-5">
-                    <input
-                      type="radio"
-                      id="online_payment"
-                      name="payment_method"
-                      value="online_payment"
-                    />
-                    <label className="m-2 font-medium" for="credit_card">
-                      Online Payment
-                    </label>
-                    <br />
-                    <input
-                      type="radio"
-                      id="cash"
-                      name="payment_method"
-                      value="cash"
-                    />
-                    <label className="m-2 font-medium" for="debit_card">
-                      Cash
-                    </label>
-                    <br />
+
+
+
+                  <div className="border-b-2 border-gray-200 pb-4">
+                {/* <div className="text-lg font-semibold mb-2">{localStorage.getItem("currentBookingName")}</div> */}
+              
+                
+
+                <div className="flex flex-row justify-between mb-2 mr-2">
+                  <div className="text-sm">Original Price:</div>
+                  <div className="text-sm">&#8377; {bill.originalPrice}</div>
+                </div>
+                <div className="flex flex-row justify-between mb-2 mr-2">
+                  <div className="text-sm">Discount:</div>
+                  <div className="text-sm">{bill.discount}%</div>
+                </div>
+                <div className="flex flex-row justify-between mb-2 mr-2">
+                  <div className="text-sm">Discounted Price:</div>
+                  <div className="text-sm">&#8377; {bill.discountedPrice}</div>
+                </div>
+                <div className="flex flex-row justify-between mb-2 mr-2">
+                  <div className="text-sm">Taxes & GST :</div>
+                  <div className="text-sm">18%</div>
+                </div>
+                <div className="flex flex-row justify-between">
+                  <div className="text-lg font-bold">Total Price:</div>
+                  <div className="text-lg font-bold">
+                    &#8377; {bill.taxedPrice}
+                  </div>
+                </div>
+              </div>
+                 
                     {/* <input
                   type="radio"
                   id="net_banking"
@@ -185,10 +255,10 @@ const Payment = () => {
                 />
                 <label className ="m-2 font-medium" for="upi">UPI</label> */}
                     <br />
-                    <div className="">
+                    {/* <div className="">
                       <h4> Order Total : Rs 56,000</h4>
-                    </div>
-                  </form>
+                    </div> */}
+                  
                   <button
                     onClick={paymentHandler}
                     className="bg-deep-purple w-60 hover:bg-opacity-75 transition-colors duration-300 h-10 m-1 text-white font-bold py-2 px-4 rounded-l"

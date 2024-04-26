@@ -8,6 +8,7 @@ const checkOut = () => {
   const [openForm, setOpenform] = useState(false);
   const [travellerDetails, setTravellerDetails] = useState([]);
   const [showError, setShowError] = useState(false);
+  const [noOfTraveller,setNoOfTraveller]=useState(localStorage.getItem("noOfTraveller"))
   //const [showSuccess ,setShowSuccess]=useState(false)
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -66,7 +67,7 @@ const checkOut = () => {
       <div className="flex w-full justify-center m-5">
         <div className="w-[70%]  flex flex-col m-2 bg-white border-2 p-2 shadow-md overflow-hidden my-4 ">
           <div className="text-xl font-bold m-3 p-1">
-            BEST-SELLING GOA TRIP PACKAGE FOR FRIENDS 4 DAYS & 3 NIGHTS
+           {localStorage.getItem("currentBookingName")}
           </div>
 
           {/*Link to Adult form */}
@@ -81,21 +82,17 @@ const checkOut = () => {
                 </li>
               </ul>
             </div>
-            {openForm && (
+            
               <TravellerForm
-                packagename="BEST-SELLING GOA TRIP PACKAGE FOR FRIENDS 4 DAYS & 3 NIGHTS"
+                
                 handleTravellerDetails={handleTravellerDetails}
                 travellerDetails={travellerDetails}
                 handleSubmit={handleSubmit}
+                noOfTraveller={noOfTraveller}
               />
-            )}
+            
             <div className="m-3">
-              <button
-                className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l"
-                onClick={() => toggleForm()}
-              >
-                {openForm ? "Hide Traveller Form" : "Add Traveller"}
-              </button>
+              
               <button
                 onClick={handleProceedToPay}
                 className="bg-deep-purple  hover:bg-opacity-75 transition-colors duration-300  text-white font-bold py-2 px-4 rounded-r"

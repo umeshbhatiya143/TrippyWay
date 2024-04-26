@@ -1,10 +1,12 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import Alert from "./Alert";
 
 const AddTraveller = ({
   handleIncrementTraveller,
   handleDecrementTraveller,
+  setShowError,
   setOpenAddTraveller,
+  setNoOfTraveller,
   noOfTravelller,  
   id,
   error,
@@ -12,8 +14,15 @@ const AddTraveller = ({
 }) => {
 
     const handleClose=()=>{
+        setNoOfTraveller(noOfTravelller)
+        console.log(noOfTravelller)
         setOpenAddTraveller(false)
     }
+    useEffect(() => {
+      setTimeout(() => {
+       setShowError(false);
+      }, 2000); // 10000 milliseconds = 10 seconds
+    }, [showError]);
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50">
       <div className="bg-white p-8 rounded-lg w-96">

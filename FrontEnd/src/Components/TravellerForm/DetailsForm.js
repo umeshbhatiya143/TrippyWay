@@ -86,7 +86,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
           Add Details
         </h3>
         <hr></hr>
-        <h4 className="text-xl font-semibold">package number 1</h4>
+        {/* <h4 className="text-xl font-semibold">{localStorage.getItem("currentBookingName")}</h4> */}
         {/* <h6 className="font-medium">Traveller 1</h6> */}
 
         <form className="w-full" action="">
@@ -108,7 +108,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
               </select>
             </div> */}
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="name">Firstname:</label>
+              <label htmlFor="name"><span className="text-red-700">* </span>Firstname:</label>
               <input
                 required
                 type="text"
@@ -121,7 +121,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
               />
             </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="lastname">Lastname:</label>
+              <label htmlFor="lastname"><span className="text-red-700">* </span>Lastname:</label>
               <input
                 required
                 type="lastname"
@@ -134,7 +134,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
               />
             </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="lastname">Adhaar Number:</label>
+              <label htmlFor="lastname"><span className="text-red-700">* </span>Adhaar Number:</label>
               <input
                 required
                 type="adhaarnumber"
@@ -147,7 +147,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
               />
             </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="dateofbirth">Date Of Birth:</label>
+              <label htmlFor="dateofbirth"><span className="text-red-700">* </span>Date Of Birth:</label>
               <input
                 required
                 type="date"
@@ -159,7 +159,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
               />
             </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="gender">Gender</label>
+              <label htmlFor="gender"><span className="text-red-700">* </span>Gender</label>
               <select
                 required
                 id="gender"
