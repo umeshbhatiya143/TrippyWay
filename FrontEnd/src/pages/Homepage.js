@@ -100,7 +100,7 @@ const Homepage = () => {
         <div className="w-full h-full absolute top-0 z-10 flex justify-center overflow-hidden">
           {/* TrippyAI Section */}
           <div className="flex flex-col gap-3 items-center justify-center w-1/2 text-white bg-glassy my-10 mx-28 px-28 rounded-lg shadow-md">
-            <h2 className="text-6xl font-black mb-4">Discover TrippyAI</h2>
+            <h2 className="text-6xl font-black mb-4">NextGen TrippyAI</h2>
             <span className="text-1xl font-bold text-red-400" >
               <Typewriter
                 words={['TrippyAI: Your personalized travel guru.',

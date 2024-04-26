@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Header />
-        <div className='pt-32'>
+        <div className='pt-[120px]'>
           <Component {...pageProps} />
 
           <ToastContainer/>

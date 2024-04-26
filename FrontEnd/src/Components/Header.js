@@ -69,12 +69,12 @@ const Header = () => {
                                         Home
                                     </li>
                                     <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
-                                        onClick={() => goToProfilePage('/holidays/packages')}>
+                                        onClick={() => goToProfilePage('/holidays')}>
                                         holidays
                                     </li>
-                                    <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
-                                        onClick={() => goToProfilePage('/holidays/activities')}>Activities
-                                    </li>
+                                    {/* <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
+                                        onClick={() => goToProfilePage('/holidays')}>Activities
+                                    </li> */}
                                     <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
                                         onClick={() => goToProfilePage('/blogs/0')}>Blogs
                                     </li>
@@ -112,8 +112,8 @@ const Header = () => {
 
                                     <div onClick={()=> router.push('/Cart')}
                                      className="relative cursor-pointer">
-                                        <PiShoppingCartSimpleFill size={40} />
-                                        <span className='absolute top-2.5 text-deep-purple right-3.5 text-sm'>
+                                        <PiShoppingCartSimpleFill size={40}  color={'black'}/>
+                                        <span className='absolute top-2.5 text-deep-purple text-white right-3.5 text-sm'>
                                         {userData && userData.cart ? userData.cart.length : 0}{/*userData.cart.length*/}</span>
                                     </div>
 
