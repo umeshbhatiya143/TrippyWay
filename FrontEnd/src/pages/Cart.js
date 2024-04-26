@@ -19,8 +19,9 @@ const Cart = () => {
   const userData = useSelector((state) => state.auth.userData);
 
   const [openAddTraveller, setOpenAddTraveller] = useState(false);
-  const [noOfTravelller,setNoOfTraveller]=useState(1);
-  //const [promos, setPromos] = useState({}); 
+  const [noOfTravelller, setNoOfTraveller] = useState(1);
+  const [travelller, settraveller] = useState(1);
+  //const [promos, setPromos] = useState({});
   //const [showConfetti ,setShowConfetti]=useState([])
   // const [pkg, setPkg] = useState([])
 
@@ -32,7 +33,7 @@ const Cart = () => {
     theme: "light",
   };
 
-  const promoCode ="XYZ123";
+  const promoCode = "XYZ123";
 
   // const pkg = [
   //   {
@@ -97,6 +98,21 @@ const Cart = () => {
     }, 2000); // 10000 milliseconds = 10 seconds
   }, []);
 
+  //To maintain state of each package traveller
+  // useEffect(() => {
+  //   const initialNoOfTravellers = {};
+  //   pack.forEach((pkg) => {
+  //     initialNoOfTravellers[pkg.id] = pkg.minimumGroupSize;
+  //   });
+  //   settraveller(initialNoOfTravellers);
+  //   console.log(travelller)
+  // }, [pack]);
+
+
+  const handleOpenModal = (count) => {
+    setNoOfTraveller(count);
+    setOpenAddTraveller(!openAddTraveller);
+  };
   const fetchPackage = async (id) => {
     try {
       const response = await fetch(
@@ -135,42 +151,36 @@ const Cart = () => {
   }, []);
 
   const handleIncrementTraveller = (id) => {
-    console.log(pack);
-     
-      pack.map((packageItem) => {
-        if (packageItem.id === id) {
-          // Increment the adult property by 1 for the package with the matching id
-          // return {
-          //   ...packageItem,
-          //   noOfTravelller: packageItem.noOfTravelller + 1,
-          // };
-          if(noOfTravelller >= packageItem.maximumGroupSize){
-            setShowError(true);
-            setError("Traveller limit excceded !!");
-          }
-          else{
-            setNoOfTraveller(noOfTravelller+1);
-          }
-        } 
-      })
-    
+    // console.log(pack);
+
+    pack.map((packageItem) => {
+      console.log(packageItem);
+      if (packageItem.id === id) {
+        // Increment the adult property by 1 for the package with the matching id
+        // return {
+        //   ...packageItem,
+        //   noOfTravelller: packageItem.noOfTravelller + 1,
+        // };
+        if (noOfTravelller >= packageItem.maximumGroupSize) {
+          setShowError(true);
+          setError("Traveller limit excceded !!");
+        } else {
+          setNoOfTraveller(noOfTravelller + 1);
+        }
+      }
+    });
   };
   const handleDecrementTraveller = (id) => {
-    
-      pack.map((packageItem) => {
-        
-        if (packageItem.id === id) {
-          if (noOfTravelller <= pack.minimumGroupSize ) {
-            setShowError(true);
-            setError("The traveller cannot be less than 2 in this package");
-            
-          }
-          else{
-            setNoOfTraveller(noOfTravelller-1)
-          }
-         }
-       })
-    
+    pack.map((packageItem) => {
+      if (packageItem.id === id) {
+        if (noOfTravelller <= packageItem.minimumGroupSize) {
+          setShowError(true);
+          setError("The traveller cannot be less than minimum Group Size ");
+        } else {
+          setNoOfTraveller(noOfTravelller - 1);
+        }
+      }
+    });
   };
   // const handleIncrementChildTraveller = (id) => {
   //   setPackage(
@@ -262,7 +272,7 @@ const Cart = () => {
     const updatedBill = pack.map((packageItem) => {
       //const discountedPrice = (packageItem.price*0.5) - (packageItem.price*0.5 * packageItem.discount) / 100;
 
-      const bill = packageItem.price;
+      const bill = packageItem.price ;
       // packageItem.price * 0.5 * packageItem.adult +
       // packageItem.price * 0.5 * 0.5 * packageItem.children;
 
@@ -288,10 +298,17 @@ const Cart = () => {
     setTotalPrice(totalBillSum.toFixed(2));
   }, [pack]);
 
-  const handleCheckout = (id) => {
+  const handleCheckout = async (id) => {
+    const packageDetails = await fetchPackage(id);
+    console.log("Details", packageDetails);
+    localStorage.setItem("currentBookingName", packageDetails.title);
+    localStorage.setItem("noOfTraveller", noOfTravelller);
+    localStorage.setItem("originalPrice",packageDetails.price)
+    localStorage.setItem("discount",packageDetails.discount)
+
+    console.log(localStorage.getItem("noOfTraveller"));
     router.push(`/checkout/${id}`);
   };
-
 
   // const handlePromo=(id)=>{
   //  // const packageId=id
@@ -315,118 +332,114 @@ const Cart = () => {
           {pack.map((pkg) => (
             <div className="w-full flex md:flex-col sm:flex-col xs:flex-col lg:flex-row mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4  md:p-4 gap-6">
               {/*<div className="flex md:flex-row  p-4 gap-6"> */}
-                
-                  <div className="md:flex-shrink-0 w-80 h-60 overflow-hidden">
-                    <Swiper
-                      modules={[Navigation]}
-                      navigation={true}
-                      slidesPerView={1}
-                      loop={true}
-                      className="h-60 relative" // Ensure the Swiper itself has a fixed height
-                    >
-                      {pkg.images.map((slide, index) => (
-                        <SwiperSlide key={index}>
-                          <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                            {" "}
-                            {/* Added bg-gray-200 as a placeholder background */}
-                            <img
-                              src={slide}
-                              alt={`Slide ${index + 1}`}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-                
-                <div className="">
-                  <div className="uppercase tracking-wide text-lg text-dark-cyan font-semibold">
-                    {pkg.title}
-                  </div>
-                  <p className="block mt-1 text-sm leading-tight font-medium text-black ">
-                    {pkg.duration} days
-                  </p>
-                  <p className="mt-2 text-sm text-gray-500">
-                    {pkg.description.substring(0, 100)}...
-                  </p>
-                  <div className="flex mt-4 flex-col gap-1">
-                    <div className="text-teal-600 text-sm">
-                      {pkg.discount}% Off
-                    </div>
-                    <div className="items-center font-sans md:text-2xl font-bold">
-                      <span>&#8377;</span>
-                      {Math.floor(pkg.price - (pkg.price * pkg.discount) / 100)}
-                      <sup className="text-red-600 text-bold">*</sup>
-                      <div className="ml-4 relative inline-block">
-                        <span className="relative z-10 text-deep-purple text-[18px]">
-                          {pkg.price}
-                        </span>
-                        <div className="absolute w-full h-0.5 bg-deep-purple top-1/2 transform -translate-y-1/2"></div>
+
+              <div className="md:flex-shrink-0 w-80 h-60 overflow-hidden">
+                <Swiper
+                  modules={[Navigation]}
+                  navigation={true}
+                  slidesPerView={1}
+                  loop={true}
+                  className="h-60 relative" // Ensure the Swiper itself has a fixed height
+                >
+                  {pkg.images.map((slide, index) => (
+                    <SwiperSlide key={index}>
+                      <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                        {" "}
+                        {/* Added bg-gray-200 as a placeholder background */}
+                        <img
+                          src={slide}
+                          alt={`Slide ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+
+              <div className="">
+                <div className="uppercase tracking-wide text-lg text-dark-cyan font-semibold">
+                  {pkg.title}
+                </div>
+                <p className="block mt-1 text-sm leading-tight font-medium text-black ">
+                  {pkg.duration} days
+                </p>
+                <p className="mt-2 text-sm text-gray-500">
+                  {pkg.description.substring(0, 100)}...
+                </p>
+                <div className="flex mt-4 flex-col gap-1">
+                  <div className="text-teal-600 text-sm">
+                    {pkg.discount}% Off
+                  </div>
+                  <div className="items-center font-sans md:text-2xl font-bold">
+                    <span>&#8377;</span>
+                    {Math.floor(pkg.price - (pkg.price * pkg.discount) / 100)}
+                    <sup className="text-red-600 text-bold">*</sup>
+                    <div className="ml-4 relative inline-block">
+                      <span className="relative z-10 text-deep-purple text-[18px]">
+                        {pkg.price}
+                      </span>
+                      <div className="absolute w-full h-0.5 bg-deep-purple top-1/2 transform -translate-y-1/2"></div>
                     </div>
                   </div>
+                </div>
 
-                  <div className="mt-4">
-                    <h3 className="text-gray-700 font-semibold">
-                      Destinations:
-                    </h3>
-                    <p className="text-gray-700">
-                      {pkg.destinations.join(" ➜ ")}
-                    </p>
-                  </div>
+                <div className="mt-4">
+                  <h3 className="text-gray-700 font-semibold">Destinations:</h3>
+                  <p className="text-gray-700">
+                    {pkg.destinations.join(" ➜ ")}
+                  </p>
+                </div>
 
-                  {/* Buttons */}
-                  <div className="flex md:flex-row sm:flex-col mt-4">
+                {/* Buttons */}
+                <div className="flex md:flex-row sm:flex-col mt-4">
+                  <button
+                    onClick={() => {
+                      handleRemovePackage(pkg._id);
+                    }}
+                    title="Click to remove this package from cart"
+                    className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l"
+                  >
+                    REMOVE
+                  </button>
+
+                  {/* {pkg.type != "honeymoon" && ( */}
+                  <>
                     <button
+                      title="Click to customize the number of traveller"
+                      className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 "
                       onClick={() => {
-                        handleRemovePackage(pkg._id);
+                        handleOpenModal(pkg.minimumGroupSize);
                       }}
-                      title="Click to remove this package from cart"
-                      className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l"
                     >
-                      REMOVE
+                      CUSTOMIZE
                     </button>
-                    
-                    {/* {pkg.type != "honeymoon" && ( */}
-                    <>
-                      <button
-                        title="Click to customize the number of traveller"
-                        className="bg-dark-cyan hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 "
-                        onClick={() => {
-                          setOpenAddTraveller(!openAddTraveller);
-                        }}
-                      >
-                        CUSTOMIZE
-                      </button>
-                      <button
-                     onClick={() => handleCheckout(pkg._id)} 
+                    <button
+                      onClick={() => handleCheckout(pkg._id)}
                       title="proceed to checkout"
                       className=" bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
                     >
                       PROCEED TO CHECKOUT
                     </button>
-                      {openAddTraveller && (
-                        <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center">
-                          <AddTraveller
-                            handleIncrementTraveller={
-                              handleIncrementTraveller
-                            }
-                            handleDecrementTraveller={
-                              handleDecrementTraveller
-                            }
-                            setOpenAddTraveller={setOpenAddTraveller}
-                            noOfTravelller={noOfTravelller}
-                            id={pkg.id}
-                            error={error}
-                            showError={showError}
-                          />
-                        </div>
-                      )}
-                    </>
-                    {/* )} */}
-                  </div>
+                    {openAddTraveller && (
+                      <div className="fixed inset-0 bg-black bg-opacity-5 flex justify-center items-center">
+                        <AddTraveller
+                          handleIncrementTraveller={handleIncrementTraveller}
+                          handleDecrementTraveller={handleDecrementTraveller}
+                          setShowError={setShowError}
+                          setOpenAddTraveller={setOpenAddTraveller}
+                          setNoOfTraveller={setNoOfTraveller}
+                          noOfTravelller={noOfTravelller}
+                          id={pkg.id}
+                          error={error}
+                          showError={showError}
+                        />
+                      </div>
+                    )}
+                  </>
+                  {/* )} */}
                 </div>
+              </div>
               {/*</div>*/}
             </div>
           ))}
@@ -447,33 +460,28 @@ const Cart = () => {
               <div key={item.id} className="border-b-2 border-gray-200 pb-4">
                 <div className="text-lg font-semibold mb-2">{item.title}</div>
                 {/* Promo code section */}
-                <div className="flex flex-row m-2 p-1"> 
-                <input
-                
-                type="text"
-                id="promo"
-                name="promo"
-                placeholder="Promo code"
-                className="bg-gray-100 border-none p-2 rounded-l "
-               
-                
-              />
-              {/*  value={promos[item.id] || ''}
+                <div className="flex flex-row m-2 p-1">
+                  <input
+                    type="text"
+                    id="promo"
+                    name="promo"
+                    placeholder="Promo code"
+                    className="bg-gray-100 border-none p-2 rounded-l "
+                  />
+                  {/*  value={promos[item.id] || ''}
                 onChange={(e) =>
                   setPromos({ ...promos, [item.id]: e.target.value })
                 } */}
-              <button
-                     
-                      title="Click to apply promo"
-                      className=" bg-dark-cyan w-full hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
-                    >
-                      Apply
-                    </button>
+                  <button
+                    title="Click to apply promo"
+                    className=" bg-dark-cyan w-full hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
+                  >
+                    Apply
+                  </button>
                   {/* <input type="text" placeholder="Promo Code eg:ASDB34" value={0}> </input> */}
-                   </div>
-                   
-                   
-                   <div className="flex flex-row justify-between mb-2 mr-2">
+                </div>
+
+                <div className="flex flex-row justify-between mb-2 mr-2">
                   <div className="text-sm">Original Price:</div>
                   <div className="text-sm">&#8377; {item.originalPrice}</div>
                 </div>
@@ -495,8 +503,6 @@ const Cart = () => {
                     &#8377; {item.taxedPrice}
                   </div>
                 </div>
-                   
-                
               </div>
             ))}
           </div>

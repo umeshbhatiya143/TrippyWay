@@ -3,10 +3,9 @@ import DetailsForm from "./DetailsForm";
 import Alert from "../Alert";
 
 const TravellerForm = ({
-  packageid,
-  packagename,
   handleTravellerDetails,
-  travellerDetails
+  travellerDetails,
+  noOfTraveller
 }) => {
 
    //const [detailsPerPackage, setDetailsPerPackage] = useState(travellerDetails);
@@ -38,18 +37,22 @@ const TravellerForm = ({
 //     }, 5000); // 10000 milliseconds = 10 seconds
 //   }, [showError,showSuccess]);
 //  // console.log(detailsPerPackage)
+
+//const noOfTraveller=localStorage.getItem("noOfTraveller")
+const noOfTravellerInteger = parseInt(noOfTraveller);
   return (
     <section className=" flex justify-center items-center">
       {/* Adult details*/}
       <div className="">
         <div className="grid md:grid-cols-2 sm:grid-cols-1">
-          {[...Array(2)].map((_, index) => (
+          {[...Array(noOfTravellerInteger)].map((_, index) => (
             <DetailsForm  travellerDetails={travellerDetails} handleAddDetails={handleAddDetails}  index={index}/>
             //   handleAddDetailsPerPackage={handleAddDetailsPerPackage}
               
          
             // />
           ))}
+          
         </div>
 
         {/* <div className="grid md:grid-cols-2 sm:grid-cols-1">
