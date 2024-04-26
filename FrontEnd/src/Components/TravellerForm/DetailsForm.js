@@ -9,15 +9,11 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
  // console.log("state opening",detailsPerPackage);
   const initialFormValues = travellerDetails.find(detail => detail.index === index) || {
     index: index,
-    title: "",
     firstname: "",
     lastname: "",
     adhaarnumber: "",
     dateofbirth: new Date().toISOString().slice(0, 10),
-    gender: "",
-    nationality: "",
-    passportnumber: "",
-    passportexpirydate: new Date().toISOString().slice(0, 10),
+    gender: ""
   };
 
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -26,21 +22,41 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
     setFormValues({ ...formValues, [event.target.name]: event.target.value });
   };
   const handleValidation = () => {
-    const { title, firstname, lastname,adhaarnumber, dateofbirth, gender, nationality } =
+    const {firstname, lastname,adhaarnumber, dateofbirth, gender } =
       formValues;
     if 
-      (title == "" || firstname == "" ||
+      (firstname == "" ||
       lastname == "" ||
       dateofbirth == ""||
-      gender == ""||
-      nationality == ""||
-      adhaarnumber==""
+      gender == ""|| adhaarnumber==""
     
     ) {
       setOpenError(true);
       setErrorMessage("Fill all the required fields !");
       return false
     }
+    const today = new Date();
+    const selectedDate = new Date(dateofbirth);
+    const fiveYearsAgo = new Date();
+    fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
+  
+    if (selectedDate > today) {
+      setOpenError(true);
+      setErrorMessage("Date of birth cannot be in the future!");
+      return false;
+    }
+  
+    if (selectedDate > fiveYearsAgo) {
+      setOpenError(true);
+      setErrorMessage("Travellers must be at least 5 years old!");
+      return false;
+    }
+    const aadhaarRegex = /^\d{12}$/;
+  if (!aadhaarRegex.test(adhaarnumber)) {
+    setOpenError(true);
+    setErrorMessage("Enter a valid 12-digit Aadhaar number!");
+    return false;
+  }
     return true
   };
   const handleSubmit = (e) => {
@@ -75,7 +91,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
 
         <form className="w-full" action="">
           <div className="grid md:grid-cols-2  sm:grid-cols-1 w-full gap-6">
-            <div className="flex flex-col gap-1.5 font-medium">
+            {/* <div className="flex flex-col gap-1.5 font-medium">
               <label htmlFor="title">Title:</label>
               <select
                 id="title"
@@ -90,7 +106,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
                 <option value="Miss">Miss</option>
                 <option value="Ms">Ms</option>
               </select>
-            </div>
+            </div> */}
             <div className="flex flex-col w-full gap-1.5 font-medium">
               <label htmlFor="name">Firstname:</label>
               <input
@@ -158,7 +174,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
                 <option value="other">Other</option>
               </select>
             </div>
-            <div className="flex flex-col w-full gap-1.5 font-medium">
+            {/* <div className="flex flex-col w-full gap-1.5 font-medium">
               <label htmlFor="nationality">Nationality</label>
               <input
                 required
@@ -170,8 +186,8 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
                 value={formValues.nationality}
                 onChange={handleChange}
               />
-            </div>
-            <div className="flex flex-col w-full gap-1.5 font-medium">
+            </div> */}
+            {/* <div className="flex flex-col w-full gap-1.5 font-medium">
               <label htmlFor="contact">Passport Number</label>
               <input
                 type="passportnumber"
@@ -181,8 +197,8 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
                 className="bg-gray-100 border-none p-2.5 rounded-lg"
                 value={formValues.passportnumber}
                 onChange={handleChange}
-              />
-            </div>
+              /> */}
+            {/* </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
               <label htmlFor="contact">Passport Expirt Date</label>
               <input
@@ -193,7 +209,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
                 value={formValues.passportexpirydate}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
             <button
               onClick={handleSubmit}
               type="submit"

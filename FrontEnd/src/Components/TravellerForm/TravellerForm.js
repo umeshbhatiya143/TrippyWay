@@ -6,10 +6,7 @@ const TravellerForm = ({
   packageid,
   packagename,
   handleTravellerDetails,
-  travellerDetails,
-
-  adult,
-  children,
+  travellerDetails
 }) => {
 
    //const [detailsPerPackage, setDetailsPerPackage] = useState(travellerDetails);
