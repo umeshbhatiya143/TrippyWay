@@ -116,10 +116,10 @@ exports.getAllUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     // console.log(req.body)
-    const users = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-    if (!users)
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!user)
       return res.status(404).send({ message: "No users Found." });
-    res.status(200).send({ users });
+    res.status(200).send({ message: "user details updated successfully" });
   } catch (err) {
     res.status(500).send(err.message)
   }

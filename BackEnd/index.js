@@ -11,6 +11,7 @@ const userRoutes = require('./routes/userRoutes');
 const packageRoutes = require('./routes/packageRoutes');
 const imageRoutes = require('./routes/imageRoute');
 const hotelRoutes = require('./routes/hotelRoutes');
+const bookingRoutes = require('./routes/bookingRoutes')
 
 const cors = require('cors');
 
@@ -27,8 +28,8 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/packages', packageRoutes);
 app.use('/api/images', imageRoutes);
-app.use('/api/hotels', hotelRoutes)
-//app.use('/api/order',orderRoutes)
+app.use('/api/hotels', hotelRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 
 //api for RazorPay

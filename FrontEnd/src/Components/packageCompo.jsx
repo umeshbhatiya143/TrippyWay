@@ -119,7 +119,12 @@ const PackageCompo = ({ pkg }) => {
 
     const addToCart = (pkgId) => {
         if (isLoggedIn) {
-            updateUserProfile(pkgId)
+            if (userData.cart.includes(pkgId)) {
+                toast.error("Package already exist in cart", toastOptions)
+            }
+            else {
+                updateUserProfile(pkgId)
+            }
         } else {
             dispatch(toggleLogin())
         }
@@ -192,10 +197,9 @@ const PackageCompo = ({ pkg }) => {
                     </div>
 
                     {/* Buttons */}
-                    <div
-                        onClick={() => router.push(`/package/${pkg._id}`)}
-                        className="flex mt-4">
-                        <button className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
+                    <div className="flex mt-4">
+                        <button onClick={() => router.push(`/package/${pkg._id}`)}
+                        className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
                             View Details
                         </button>
                         <button onClick={() => addToCart(pkg._id)}

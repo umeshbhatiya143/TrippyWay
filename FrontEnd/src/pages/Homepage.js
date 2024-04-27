@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // Import Swiper styles
@@ -13,29 +14,42 @@ import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 const Homepage = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [destination, setDestination] = useState('');
+  const [duration, setDuration] = useState('')
   const [filteredCities, setFilteredCities] = useState([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [month, setMonth] = useState('');
+  const [cities, setCities] = useState([])
+
+  const router = useRouter()
+
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
+
   // Simulated list of cities for the dropdown.
   // In a real application, you might fetch this from an API.
-  const cities = [
-    'Alappuzha',
-    'Ernakulam',
-    'Idukki',
-    'Kannur',
-    'Kochi',
-    'Kollam',
-    'Kottayam',
-    'Kozhikode',
-    'Palakkad',
-    'Thiruvananthapuram',
-    // ... more cities
-  ];
+  const fetchAllDestinations = async () => {
+    try {
+      // const queryParams = new URLSearchParams(filter).toString();
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/destinations`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setCities(data);
+    } catch (error) {
+      console.error('Error fetching packages:', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllDestinations()
+  }, [])
 
   const handleDestinationChange = (event) => {
     const input = event.target.value;
@@ -57,6 +71,7 @@ const Homepage = () => {
     setMonth(event.target.value);
   };
 
+
   const slideContent = [
     {
       image: 'slide1.jpg'
@@ -68,6 +83,16 @@ const Homepage = () => {
       image: 'slide3.jpg',
     }
   ]
+
+  const handleSearchPackage = () => {
+    const stateData = {
+      destination: destination,
+      month: month,
+      duration: duration
+    };
+    const queryParams = new URLSearchParams(stateData).toString();
+    router.push(`/holidays?${queryParams}`);
+  }
 
   return (
     <section className="flex flex-col gap-20">
@@ -162,13 +187,13 @@ const Homepage = () => {
               </div>
               <div className="">
                 <label htmlFor="duration" className="block text-gray-700 font-semibold mb-2">Duration:</label>
-                <select name="duration" id="duration" className='bg-white w-full rounded-md p-2'>
+                <select onChange={(e) => setDuration(e.target.value)} name="duration" id="duration" className='bg-white w-full rounded-md p-2'>
                   <option value="">select duration</option>
                   <option value="2-3">2 to 3 days</option>
                   <option value="4-5">4 to 5 days</option>
                   <option value="6-7">6 to 7 days</option>
-                  <option value="10-12">7+ days</option>
-                  <option value="ND">Not Decided</option>
+                  <option value="7+">7+ days</option>
+                  {/* <option value="ND">Not Decided</option> */}
                 </select>
               </div>
               {/* Month Selector */}
@@ -187,8 +212,9 @@ const Homepage = () => {
                   ))}
                 </select>
               </div>
-              <button className="flex justify-center items-center gap-2 bg-dark-cyan hover:bg-opacity-75 transition-all duration-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md">
-                Explore Now
+              <button onClick={handleSearchPackage}
+                className="flex justify-center items-center gap-2 bg-dark-cyan hover:bg-opacity-75 transition-all duration-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md">
+                Search Packages
                 <FaArrowUpRightFromSquare />
               </button>
             </div>

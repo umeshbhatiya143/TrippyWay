@@ -38,6 +38,9 @@ const bookingSchema = new mongoose.Schema({
             gender: {
                 type: String
             },
+            aadhaarCard: {
+                type: String
+            }
         }
     ],
     journeyStatus: {
@@ -60,10 +63,15 @@ const bookingSchema = new mongoose.Schema({
         default: 'pending'
     },
     paymentDetails: {
-        // Payment details can be stored here (e.g., transaction ID, payment method, etc.)
+        transactionId: {
+            type: String
+        },
+        paymentMethod: {
+            type: String
+        }
     },
 
-});
+}, { timestamps: true });
 
 // Define PackageBooking model
 const Booking = mongoose.model('booking', bookingSchema);

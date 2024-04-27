@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import FAQItem from '@/Components/faqItem';
 import ReviewCard from '@/Components/reviewCard';
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -24,13 +25,15 @@ const packages = () => {
   const [isNoMore, setIsNoMore] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
 
+  const router = useRouter()
+
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-   // ----------filters-----------
-   const [filters, setFilters] = useState({
+  // ----------filters-----------
+  const [filters, setFilters] = useState({
     categories: {
       Honeymoon: false,
       Family: false,
@@ -79,6 +82,18 @@ const packages = () => {
       'Flights': false,
     }
   });
+
+  useEffect(() => {
+    // Get query parameters
+    const { destination, month, duration } = router.query;
+    setDestination(destination)
+    setMonth(month)
+    if (duration) {
+      handleCheckboxChange('duration', duration)
+    }
+
+
+  }, [router.query]);
 
   const handleCheckboxChange = (category, value) => {
     // If category is an object (e.g., duration), handle its nested state
@@ -230,9 +245,10 @@ const packages = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({searchQuery, filters}),
+        body: JSON.stringify({ searchQuery, filters }),
       });
       const data = await response.json();
+      console.log(data)
       if (data.packages.length === 0) {
         setIsNoMore(true);
       }
@@ -285,6 +301,16 @@ const packages = () => {
     fetchPackages(currentPage, filters);
 
   }, [currentPage, filters]);
+
+  useEffect(() => {
+    if (destination) {
+      handleSearch()
+    }
+  }, [destination]);
+  useEffect(()=>{
+
+  },[packages])
+
   return (
     <div className='w-full'>
 
@@ -453,8 +479,8 @@ const packages = () => {
                 {/* cities checkboxes */}
                 {/* <div className="mb-6">
                   <h4 className="font-semibold mb-2">Cities</h4> */}
-                  {/* Map through durations or any similar category */}
-                  {/* {Object.keys(filters.destinations).map((key) => (
+                {/* Map through durations or any similar category */}
+                {/* {Object.keys(filters.destinations).map((key) => (
                     <label key={key} className="flex items-center mb-2">
                       <input
                         type="checkbox"
@@ -493,7 +519,7 @@ const packages = () => {
             <div className="flex items-center w-full cursor-pointer flex-col gap-2">
               <h2 className="text-xl w-full border-b-2 text-left text-deep-purple font-medium">Showing {packages.length} results...</h2>
               {packages.map((pkg) => (
-                <PackageCompo pkg={pkg} />
+                <PackageCompo key={pkg._id} pkg={pkg} />
               ))}
 
 
