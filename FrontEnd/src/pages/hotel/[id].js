@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useRouter } from "next/router";
 import { FaImages } from "react-icons/fa";
 import { LiaHotelSolid } from "react-icons/lia";
@@ -41,6 +41,19 @@ import { GiWineBottle } from "react-icons/gi";
 import { MdIron } from "react-icons/md";
 import { MdOutlinePets } from "react-icons/md";
 const Hotels = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id)
+  const [hotel,setHotel]=useState({
+    
+        name: "",
+        location: [ ],
+        rating: 0,
+        description: "",
+        amenities: [],
+        price: 0,
+        images: []
+  })
   const slideContent = [
     {
       image: "/slide1.jpg",
@@ -203,6 +216,40 @@ const Hotels = () => {
   const [read, setRead] = useState(false);
   const readFunction = () => setRead((read) => !read);
   const stars = 4.5;
+
+
+  const fetchHotel = async () => {
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/hotels/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      // console.log(data.package)
+      
+     setHotel(data.hotel);
+      
+      
+      
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchHotel()
+   
+    
+   
+  }, [id]);
+  console.log(hotel)
+
   return (
     <div className="flex w-full justify-center ">
       <div className="w-[70%] flex flex-col gap-4">
@@ -212,7 +259,7 @@ const Hotels = () => {
             <div className="container  md:flex justify-between gap-5 items-center p-4">
               {/* package heading */}
               <div className="flex flex-col gap-4 font-sans md:text-3xl font-bold ">
-                <h2>{hotels.name}</h2>
+                <h2>{hotel.name}</h2>
               </div>
               {/* customize and book Section */}
               <div className="flex items-center space-x-4 gap-5 justify-center ">
@@ -307,13 +354,13 @@ const Hotels = () => {
                 loop={true}
                 className="h-full relative" // Ensure the Swiper itself has a fixed height
               >
-                {slideContent.map((slide, index) => (
+                {hotel.images.map((slide, index) => (
                   <SwiperSlide key={index}>
                     <div className="w-full h-full flex items-center rounded-md justify-center bg-gray-200">
                       {" "}
                       {/* Added bg-gray-200 as a placeholder background */}
                       <img
-                        src={slide.image}
+                        src={slide}
                         alt={`Slide ${index + 1}`}
                         className="w-full h-full rounded-md object-cover"
                       />
@@ -345,7 +392,7 @@ const Hotels = () => {
               <div id="inclusion" className="mt-2">
                 <p className="font-bold md:text-xl">Rating</p>
                 <div>
-                  <Rating stars={stars} />
+                  <Rating stars={hotel.rating} />
                 </div>
 
                 <hr size="3"></hr>
@@ -357,12 +404,12 @@ const Hotels = () => {
             <div className="text-xl font-bold m-5">About the hotel</div>
 
             <div className="m-5">
-              {hotels.description1}
-              <button onClick={readFunction} className="font-bold p-1">
+              {hotel.description}
+              {/* <button onClick={readFunction} className="font-bold p-1">
                 {" "}
                 {read ? "Read Less" : "Read More..."}
               </button>
-              {read ? <div>{hotels.description2}</div> : <></>}
+              {read ? <div>{hotels.description2}</div> : <></>} */}
             </div>
           </div>
           <hr></hr>
@@ -370,7 +417,7 @@ const Hotels = () => {
           <div id="location" className="flex flex-col m-3">
             <div className="text-xl font-bold m-5">Location </div>
 
-            <div className="md:w-[50%] md:ml-10">{hotels.location}</div>
+            <div className="md:w-[50%] md:ml-10">{hotel.location}</div>
           </div>
           <hr></hr>
           {/* Rooms */}
@@ -381,7 +428,7 @@ const Hotels = () => {
             </div>
             <div className="flex flex-row justify-center border  ">
               <div className="grid grid-cols-5 gap-4 justify-start gap-y-6 m-2 mt-8 mb-5">
-                {hotels.amenities.map((amenity) => (
+                {hotel.amenities.map((amenity) => (
                   <div
                     key={amenity}
                     className="flex flex-col gap-2 justify-center items-center mr-2"
@@ -400,7 +447,7 @@ const Hotels = () => {
 
           <div id="rooms" className="m-3 p-2">
             <div className="text-xl font-bold m-5 ">
-              Room Types at {hotels.name}{" "}
+              Room Types at {hotel.name}{" "}
             </div>
             <div className="flex flex-col justify-center ">
               {hotels.rooms.map((room) => (
@@ -413,13 +460,13 @@ const Hotels = () => {
                       loop={true}
                       className="h-60 relative" // Ensure the Swiper itself has a fixed height
                     >
-                      {slideContent.map((slide, index) => (
+                      {hotel.images.map((slide, index) => (
                         <SwiperSlide key={index}>
                           <div className="w-full h-full flex items-center justify-center bg-gray-200">
                             {" "}
                             {/* Added bg-gray-200 as a placeholder background */}
                             <img
-                              src={slide.image}
+                              src={slide}
                               alt={`Slide ${index + 1}`}
                               className="w-full h-full object-cover"
                             />
