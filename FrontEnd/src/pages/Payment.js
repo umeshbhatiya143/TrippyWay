@@ -92,7 +92,7 @@ const Payment = () => {
     }
   }
   const paymentHandler = async (event) => {
-    const amount = bill.taxedPrice ;
+    const amount = bill.taxedPrice *100 ;
     const currency = "INR";
     const receiptId = "1234567899";
 

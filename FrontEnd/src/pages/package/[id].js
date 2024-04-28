@@ -12,12 +12,12 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Swiper, SwiperSlide } from "swiper/react"
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import ReviewCard from "@/Components/reviewCard";
 import FAQItem from "@/Components/faqItem";
 import Card from "@/Components/card";
@@ -33,19 +33,23 @@ import { TbTrekking } from "react-icons/tb";
 import { ImSafari } from "react-icons/im";
 import { MdOutlineFlight } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
-import { useSelector, useDispatch } from 'react-redux'
-import { toggleLogin, loginUser, logoutUser } from '@/store/slices'
-import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from "react-redux";
+import { toggleLogin, loginUser, logoutUser } from "@/store/slices";
+import { toast } from "react-toastify";
+import { GoDotFill } from "react-icons/go";
+import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
+import { SlLocationPin } from "react-icons/sl";
 
 const Packages = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const userData = useSelector((state) => state.auth.userData)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const userData = useSelector((state) => state.auth.userData);
 
   const [pack, setPack] = useState({
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     duration: 0,
     price: 0,
     discount: 0,
@@ -55,38 +59,39 @@ const Packages = () => {
     inclusions: [],
     exclusions: [],
     hotels: [],
-    transportation: '',
+    transportation: "",
     images: [],
-    rating: '',
+    rating: "",
     reviews: [],
     numberOfBookingsMade: 0,
     availableSpots: 0,
-    cancellationPolicy: '',
+    cancellationPolicy: "",
     paymentOptions: [],
     minimumGroupSize: 0,
     maximumGroupSize: 0,
     ageRestrictions: 0,
-    healthAndSafetyMeasures: '',
-    specialOffers: '',
+    healthAndSafetyMeasures: "",
+    specialOffers: "",
     tagsKeywords: [],
-  })
+  });
   const router = useRouter();
   const { id } = router.query;
   //hooks to
   const [read, setRead] = useState(false);
+  const [packageHotel,setPackageHotel]=useState([]);
   // const [open, setOpen] = useState(...pack.detailedItinirary,);
-
+ console.log(pack.hotels)
   const slideContent = [
     {
-      image: '/slide1.jpg'
+      image: "/slide1.jpg",
     },
     {
-      image: '/slide2.jpg',
+      image: "/slide2.jpg",
     },
     {
-      image: '/slide3.jpg',
-    }
-  ]
+      image: "/slide3.jpg",
+    },
+  ];
 
   const toastOptions = {
     position: "top-right",
@@ -94,58 +99,58 @@ const Packages = () => {
     pauseOnHover: true,
     draggable: true,
     theme: "light",
-}
+  };
 
   const iSize = 25;
   const inclusionIcons = {
-    'Sightseeing': <PiBinoculars size={iSize} />,
-    'Meals': <GiHotMeal size={iSize} />,
-    'Breakfast': <IoFastFoodOutline size={iSize} />,
-    'Transfers': <MdOutlineTransferWithinAStation size={iSize} />,
-    'Airport Pickup-Drop': <MdAirportShuttle size={iSize} />,
-    'Private Cab': <FaCar size={iSize} />,
-    'Cruise': <GiCruiser size={iSize} />,
-    'Houseboat': <MdHouseboat size={iSize} />,
-    'Adventure Activity': <TbTrekking />,
-    'Safari': <ImSafari size={iSize} />,
-    'Flights': <MdOutlineFlight size={iSize} />,
-    'Stay': <FaHome size={iSize} />
-  }
+    Sightseeing: <PiBinoculars size={iSize} />,
+    Meals: <GiHotMeal size={iSize} />,
+    Breakfast: <IoFastFoodOutline size={iSize} />,
+    Transfers: <MdOutlineTransferWithinAStation size={iSize} />,
+    "Airport Pickup-Drop": <MdAirportShuttle size={iSize} />,
+    "Private Cab": <FaCar size={iSize} />,
+    Cruise: <GiCruiser size={iSize} />,
+    Houseboat: <MdHouseboat size={iSize} />,
+    "Adventure Activity": <TbTrekking />,
+    Safari: <ImSafari size={iSize} />,
+    Flights: <MdOutlineFlight size={iSize} />,
+    Stay: <FaHome size={iSize} />,
+  };
 
   //--------Reviews------
   const reviews = [
     // Dummy review data
     {
       id: 1,
-      name: 'John Doe',
-      date: 'Oct 22, 2023',
+      name: "John Doe",
+      date: "Oct 22, 2023",
       rating: 5,
-      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
-      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+      comment: "Amazing experience, our guide was knowledgeable and friendly!",
+      avatar: "https://i.pravatar.cc/300?img=1", // Placeholder avatar image URL
     },
     {
       id: 1,
-      name: 'John Doe',
-      date: 'Oct 22, 2023',
+      name: "John Doe",
+      date: "Oct 22, 2023",
       rating: 5,
-      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
-      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+      comment: "Amazing experience, our guide was knowledgeable and friendly!",
+      avatar: "https://i.pravatar.cc/300?img=1", // Placeholder avatar image URL
     },
     {
       id: 1,
-      name: 'John Doe',
-      date: 'Oct 22, 2023',
+      name: "John Doe",
+      date: "Oct 22, 2023",
       rating: 5,
-      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
-      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+      comment: "Amazing experience, our guide was knowledgeable and friendly!",
+      avatar: "https://i.pravatar.cc/300?img=1", // Placeholder avatar image URL
     },
     {
       id: 1,
-      name: 'John Doe',
-      date: 'Oct 22, 2023',
+      name: "John Doe",
+      date: "Oct 22, 2023",
       rating: 5,
-      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
-      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+      comment: "Amazing experience, our guide was knowledgeable and friendly!",
+      avatar: "https://i.pravatar.cc/300?img=1", // Placeholder avatar image URL
     },
     // More reviews...
   ];
@@ -153,28 +158,34 @@ const Packages = () => {
   // ------faqs---------
   const faqs = [
     {
-      question: 'How do I sign up?',
-      answer: 'You can sign up by clicking the Sign Up button at the top of the page.',
+      question: "How do I sign up?",
+      answer:
+        "You can sign up by clicking the Sign Up button at the top of the page.",
     },
     {
-      question: 'Can I cancel my subscription?',
-      answer: 'Yes, you can cancel your subscription from your profile settings at any time.',
+      question: "Can I cancel my subscription?",
+      answer:
+        "Yes, you can cancel your subscription from your profile settings at any time.",
     },
     {
-      question: 'How do I sign up?',
-      answer: 'You can sign up by clicking the Sign Up button at the top of the page.',
+      question: "How do I sign up?",
+      answer:
+        "You can sign up by clicking the Sign Up button at the top of the page.",
     },
     {
-      question: 'Can I cancel my subscription?',
-      answer: 'Yes, you can cancel your subscription from your profile settings at any time.',
+      question: "Can I cancel my subscription?",
+      answer:
+        "Yes, you can cancel your subscription from your profile settings at any time.",
     },
     {
-      question: 'How do I sign up?',
-      answer: 'You can sign up by clicking the Sign Up button at the top of the page.',
+      question: "How do I sign up?",
+      answer:
+        "You can sign up by clicking the Sign Up button at the top of the page.",
     },
     {
-      question: 'Can I cancel my subscription?',
-      answer: 'Yes, you can cancel your subscription from your profile settings at any time.',
+      question: "Can I cancel my subscription?",
+      answer:
+        "Yes, you can cancel your subscription from your profile settings at any time.",
     },
     // ... more FAQs
   ];
@@ -229,7 +240,6 @@ const Packages = () => {
     slidesToScroll: 1,
   };
 
-
   // //to maintain accordion state
   // const [openSections, setOpenSections] = useState(Array(pack.detailedItininary.length).fill(false));
 
@@ -239,43 +249,69 @@ const Packages = () => {
     setOpenSections(newOpenSections);
   };
 
-
-  const fetchHotel = async ({ hotelId }) => {
+  
+  //End
+  const fetchHotel = async (hotelId ) => {
+    console.log("id",hotelId)
+    
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/hotels/${hotelId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/hotels/${hotelId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
-      return data
+      //console.log("Response:", response);
+     // console.log("Status code:", response.status);
+
+      //setPack(data.hotels);
+      //console.log("hoteldata",data.hotel)
+      return data.hotel;
       // return data.packages
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
-  const fetchHotels = async () => {
-    const hotels = await Promise.all(pkg.hotels.map((hotelId) => {
-      return fetchHotel(hotelId);
-    }));
-    setHotels(hotels)
-  }
+  const fetchHotels = async (data) => {
+    console.log("extracting hotels", pack.hotels)
+    const hotels = await Promise.all(
+      data.map((hotelId) => {
+        console.log(hotelId)
+        return fetchHotel(hotelId);
+      })
+    );
+    console.log("donehotels")
+   
+    setPackageHotel(hotels);
+    console.log(packageHotel)
+  };
 
   const fetchPackage = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
       // console.log(data.package)
-      setPack(data.package)
+      fetchHotels(data.package.hotels)
+     setPack(data.package);
+      console.log("package before sending ",pack)
+      
+      
+      
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -283,61 +319,81 @@ const Packages = () => {
     // setIsLoading(true)
 
     try {
-      const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`);
-      const params = { fields: 'cart' }; // Define fields you want to fetch
+      const url = new URL(
+        `${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`
+      );
+      const params = { fields: "cart" }; // Define fields you want to fetch
       url.search = new URLSearchParams(params).toString();
 
       await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      })
-        .then(async res => {
-          res = await res.json();
+      }).then(async (res) => {
+        res = await res.json();
 
-          const updatedCart = [...res.user.cart, pkgId];
+        const updatedCart = [...res.user.cart, pkgId];
 
-          const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ cart: updatedCart }),
-          });
-          if (!response.ok) throw new Error('Failed to update profile');
-          toast.success('Package added in cart successfully', toastOptions);
+          }
+        );
+        if (!response.ok) throw new Error("Failed to update profile");
+        toast.success("Package added in cart successfully", toastOptions);
 
-          const updatedData = {
-            userId: userData.userId,
-            token: userData.token,
-            cart: updatedCart
-        }
-        dispatch(loginUser(updatedData))
-        })
-
+        const updatedData = {
+          userId: userData.userId,
+          token: userData.token,
+          cart: updatedCart,
+        };
+        dispatch(loginUser(updatedData));
+      });
     } catch (error) {
       console.error(error.message);
-      toast.error('Failed to add package in cart', toastOptions);
+      toast.error("Failed to add package in cart", toastOptions);
     } finally {
-      router.push('/Cart')
+      router.push("/Cart");
     }
   };
 
   const addToCart = (pkgId) => {
     if (isLoggedIn) {
-      updateUserProfile(pkgId)
+      updateUserProfile(pkgId);
     } else {
-      dispatch(toggleLogin())
+      dispatch(toggleLogin());
     }
-  }
+  };
 
   useEffect(() => {
     fetchPackage()
-    console.log(pack)
-  }, [])
+   
+    
+   
+  }, [id]);
+
+ 
+  //Fetch hotels
+
+ 
+ 
+
+  // useEffect(() => {
+  //   fetchHotels();
+  // console.log(packageHotel);
+  // }, [pack.hotels]);
+
+
+  let itininaryIcon1={background :"#0B525B"}
+  let itininaryIcon2={background :"#3C096C"}
+
 
   return (
     <>
-
       <div className="w-full flex justify-center">
         <div className="w-[70%] flex flex-col gap-20">
           {/* Anchor Section */}
@@ -348,13 +404,19 @@ const Packages = () => {
                 <div className="flex flex-col gap-4 font-sans md:text-3xl font-bold ">
                   <h2>{pack.title}</h2>
                   <div className="flex flex-col gap-1">
-                    <div className="text-teal-600 text-sm">{pack.discount}% Off</div>
+                    <div className="text-teal-600 text-sm">
+                      {pack.discount}% Off
+                    </div>
                     <div className="items-center font-sans md:text-2xl font-bold">
                       <span>&#8377;</span>
-                      {Math.floor(pack.price - (pack.price * (pack.discount) / 100))}
+                      {Math.floor(
+                        pack.price - (pack.price * pack.discount) / 100
+                      )}
                       <sup className="text-red text-bold">*</sup>
                       <div className="ml-4 relative inline-block">
-                        <span className="relative z-10 text-deep-purple text-xl">{pack.price}</span>
+                        <span className="relative z-10 text-deep-purple text-xl">
+                          {pack.price}
+                        </span>
                         <div className="absolute w-full h-0.5 bg-deep-purple top-1/2 transform -translate-y-1/2"></div>
                       </div>
                     </div>
@@ -362,7 +424,6 @@ const Packages = () => {
                 </div>
                 {/* customize and book Section */}
                 <div className="flex w-fit items-center space-x-4 gap-5 justify-center ">
-
                   <div className="">
                     <button className="bg-dark-cyan hover:bg-opacity-80 text-white transition-colors duration-300 font-bold md:py-2 md:px-4 py-1 px-2 rounded-lg shadow-md">
                       Customize
@@ -448,12 +509,15 @@ const Packages = () => {
                   {pack.images.map((slide, index) => (
                     <SwiperSlide key={index}>
                       <div className="w-full h-full flex items-center rounded-md justify-center bg-gray-200">
-                        <img src={slide} alt={`Slide ${index + 1}`} className="w-full h-full rounded-md object-cover" />
+                        <img
+                          src={slide}
+                          alt={`Slide ${index + 1}`}
+                          className="w-full h-full rounded-md object-cover"
+                        />
                       </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
-
 
                 {/* <div className="absolute bottom-4 right-0 left-0">
                 <div className="flex justify-center items-center gap-2">
@@ -470,8 +534,8 @@ const Packages = () => {
                 <div id="customize" className="mt-2">
                   <p className="font-bold md:text-xl">Customizable</p>
                   <p className="text-left mt-2 mb-2">
-                    Customizable itineraries where you may choose transport, stay &
-                    sightseeing as per your taste & comfort
+                    Customizable itineraries where you may choose transport,
+                    stay & sightseeing as per your taste & comfort
                   </p>
 
                   <hr size="3"></hr>
@@ -487,10 +551,17 @@ const Packages = () => {
                 </div>
 
                 <div className="mt-4">
-                  <p className="font-bold md:text-xl">Hotel Included in the package:</p>
+                  <p className="font-bold md:text-xl">
+                    Hotel Included in the package:
+                  </p>
                   <div className="mb-5 mt-8">
-                    {['2 star', '3 star', '4 star', '5 star'].map((rating) => (
-                      <span key={rating} className={`inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2`}>{rating}</span>
+                    {["2 star", "3 star", "4 star", "5 star"].map((rating) => (
+                      <span
+                        key={rating}
+                        className={`inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2`}
+                      >
+                        {rating}
+                      </span>
                     ))}
                   </div>
                   <hr size="3"></hr>
@@ -518,7 +589,10 @@ const Packages = () => {
                   </div> */}
                   <div className="flex p-4 gap-2 justify-between flex-wrap items-center mt-4">
                     {pack?.inclusions?.map((inclusion) => (
-                      <div key={inclusion} className="flex flex-col gap-2 justify-center items-center mr-2">
+                      <div
+                        key={inclusion}
+                        className="flex flex-col gap-2 justify-center items-center mr-2"
+                      >
                         {/*<img className="h-6 w-6" src={`/icons/${inclusion.toLowerCase()}.png`} alt={inclusion} />*/}
                         {inclusionIcons[inclusion]}
                         <span className="ml-1 text-sm">{inclusion}</span>
@@ -548,17 +622,17 @@ const Packages = () => {
             <div id="hotels" className="w-full ">
               <div className="w-full mt-5 flex flex-row justify-center">
                 {/* <Slider {...settings}>
-                {pack.hotels.map((hotel, index) => {
+                {packageHotel.map((hotel, index) => {
                   return (
-                    <div className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
+                    <div key={index} className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
                       <a>
                         <img
                           className="rounded-t-xl h-[200px]"
-                          src={hotel.image}
+                          src={hotel.images[0]}
                         ></img>
                         <div className="flex flex-col justify-start gap-1 p-1">
                           <p className="text-xl font-semibold">{hotel.name}</p>
-                          <p>{hotel.distance}</p>
+                          <p>{hotel.price}</p>
                           <p>{hotel.location}</p>
                         </div>
                       </a>
@@ -567,8 +641,7 @@ const Packages = () => {
                 })}
               </Slider> */}
 
-
-                {/* <Swiper
+                <Swiper
                   modules={[Navigation, Autoplay, Pagination]}
                   autoplay={{
                     delay: 6000,
@@ -576,87 +649,76 @@ const Packages = () => {
                   }}
                   navigation={true}
                   pagination={{ clickable: true }}
-                  slidesPerView={4}
+                  slidesPerView={2}
 
                   loop={true}
-                  className="h-full w-full relative flex justify-center" // Ensure the Swiper itself has a fixed height
+                  className="h-full w-full relative flex flex-row gap-3 justify-center" // Ensure the Swiper itself has a fixed height
                 >
-                  {hotels.map((hotel, index) => {
+                  {packageHotel.map((hotel, index) => {
                     return (
-                      <SwiperSlide key={index}>
-                        <div className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
-                          <a>
+                      <SwiperSlide key={index} >
+                        <div className="bg-slate-200 rounded-xl w-[300px] h-[400px] text-black m-10 p-5">
+                        
+                            <div className="bg-white h-[350px]">
+
                             <img
-                              className="rounded-t-xl h-[200px]"
-                              src={hotel.image}
+                              className="rounded-t-xl h-[250px] w-[300px]"
+                              src={hotel.images[0]}
                             ></img>
                             <div className="flex flex-col justify-start gap-1 p-1">
-                              <p className="text-xl font-semibold">{hotel.name}</p>
-                              <p>{hotel.distance}</p>
-                              <p>{hotel.location}</p>
+                              <p className="text-[15px] font-semibold">{hotel.name}</p>
+                              <div className="flex flex-row justify-between m-2 ">
+                              <p><span>&#8377;</span>{hotel.price}</p>
+                              {/* <p>{hotel.location}</p> */}
+                              <button onClick={() => router.push(`/hotel/${hotel._id}`)}
+                        className="m-2 bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
+                            View Details
+                        </button>
+                              </div>
+                              
                             </div>
-                          </a>
+                            </div>
+                           
+                          
+                          
                         </div>
                       </SwiperSlide>
                     );
                   })}
-                </Swiper> */}
+                </Swiper>
               </div>
             </div>
             <hr className="mt-10 mb-5"></hr>
 
-
-            <div id="itininary" className="md:w-1/2 m-5 sm:w-full">
-              <div className="text-xl font-bold mb-3">Detailed itininary</div>
-              {pack.itinerary.map((itininary, index) => {
-                return (
-                  <div key={index} className="mb-5">
-                    <div
-                      className="flex justify-between items-center cursor-pointer p-2 bg-gray-100 rounded-md shadow hover:bg-gray-200"
-                      onClick={() => toggle(index)}
-                    >
-                      <p className="font-semibold">{itininary}</p>
-                      {/* <FaChevronDown className={`transition-transform duration-300 ${openSections[index] ? 'rotate-180' : ''}`} /> */}
-                    </div>
-                    {/* {openSections[index] && (
-                      <div className="mt-3 p-4 bg-white rounded-md shadow">
-                        <Swiper
-                          modules={[Navigation]}
-                          navigation={true}
-                          slidesPerView={1}
-                          loop={true}
-                          className="h-60" // Fixed height
-                        >
-                          {slideContent.map((slide, index) => (
-                            <SwiperSlide key={index}>
-                              <img src={slide.image} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-                            </SwiperSlide>
-                          ))}
-                        </Swiper>
-                        <ul className="list-disc list-inside mt-4">
-                          {Object.keys(itininary.details).map((key) => (
-                            <li key={key} className="mt-1">
-                              {itininary.details[key]}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )} */}
-                  </div>
-                )
-              }
-              )}
+            <div  className="md:w-1/2 m-5 sm:w-full">
+             
+              
+            </div>
+            <div id="itininary" className="text-xl font-bold mb-5 m-3">Detailed itininary</div>
+            <div className="bg-slate-200 rounded-xl">
+            
+            <VerticalTimeline className="border-t-2">
+            {pack.itinerary.map((itininary, index) => {
+              return (<VerticalTimelineElement contentStyle={{ borderTop: "#3C096C"}}  key={index} date={itininary.split("-")[0]} dateClassName="date" iconStyle={index%2==0 ? itininaryIcon1 :itininaryIcon2} icon={<SlLocationPin className="text-white font-bold"/>}>
+                  <h3 className={`vertical-timeline-element-title font-semibold text-xl m-2 p-1 ${index%2!=0 ? 'text-button-color-hover' :'text-dark-cyan'} `}>{itininary.split("-")[1]}</h3>
+                  <hr className="bg-button-color"></hr>
+                  <p id="description" className="m-2 p-2 text-[14px]" >{itininary.split("-")[2]}</p>
+              </VerticalTimelineElement>)
+            })}
+            </VerticalTimeline>
             </div>
           </div>
 
           {/* -----------Recommended Destinantions----------- */}
           <div className=" shadow-2xl rounded-xl pt-20 px-4 pb-10">
-            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Destinations</h2>
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">
+              Recommened Destinations
+            </h2>
             <div className=" relative">
               {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
               <div className="verflow-hidden flex relative">
                 <Swiper
-                  modules={[Autoplay,]}
+                  modules={[Autoplay]}
                   autoplay={{
                     delay: 6000,
                     disableOnInteraction: false,
@@ -675,18 +737,22 @@ const Packages = () => {
               </div>
             </div>
             <div className="flex justify-center mt-10">
-              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">
+                view more
+              </div>
             </div>
           </div>
 
           {/* -----------Recommended packages---------------- */}
           <div className="shadow-2xl rounded-xl pt-20 px-4 pb-10">
-            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Packages</h2>
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">
+              Recommened Packages
+            </h2>
             <div className=" relative">
               {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
               <div className="verflow-hidden flex relative">
                 <Swiper
-                  modules={[Autoplay,]}
+                  modules={[Autoplay]}
                   autoplay={{
                     delay: 6000,
                     disableOnInteraction: false,
@@ -705,18 +771,22 @@ const Packages = () => {
               </div>
             </div>
             <div className="flex justify-center mt-10">
-              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">
+                view more
+              </div>
             </div>
           </div>
 
           {/* -----------Recommended Hotels--------------- */}
           <div className="shadow-2xl rounded-xl pt-20 px-4 pb-10">
-            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Hotels</h2>
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">
+              Recommened Hotels
+            </h2>
             <div className=" relative">
               {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
               <div className="verflow-hidden flex relative">
                 <Swiper
-                  modules={[Autoplay,]}
+                  modules={[Autoplay]}
                   autoplay={{
                     delay: 6000,
                     disableOnInteraction: false,
@@ -735,18 +805,22 @@ const Packages = () => {
               </div>
             </div>
             <div className="flex justify-center mt-10">
-              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">
+                view more
+              </div>
             </div>
           </div>
 
           {/*----------------- Recommended Blogs----------------- */}
           <div className="shadow-2xl rounded-xl pt-20 px-4 pb-10">
-            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">Recommened Blogs</h2>
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">
+              Recommened Blogs
+            </h2>
             <div className=" relative">
               {/* <div className="absolute -top-10 right-8 text-dark-cyan border border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div> */}
               <div className="verflow-hidden flex relative">
                 <Swiper
-                  modules={[Autoplay,]}
+                  modules={[Autoplay]}
                   autoplay={{
                     delay: 6000,
                     disableOnInteraction: false,
@@ -765,15 +839,18 @@ const Packages = () => {
               </div>
             </div>
             <div className="flex justify-center mt-10">
-              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">view more</div>
+              <div className="w-28 text-dark-cyan border text-center border-dark-cyan hover:bg-dark-cyan hover:text-white transition-all duration-1000 rounded-md px-2 font-medium text-md hover:cursor-pointer">
+                view more
+              </div>
             </div>
           </div>
-
 
           {/*----------------- Tour Reviews----------------- */}
           <div className="shadow-2xl rounded-xl p-6 bg-custom-white p-10">
             <div className="container flex flex-col items-center mx-auto  bg-dark-cyan gap-6 rounded-b-xl py-20">
-              <h2 className="text-4xl font-bold text-center text-white mb-10">Tour Reviews</h2>
+              <h2 className="text-4xl font-bold text-center text-white mb-10">
+                Tour Reviews
+              </h2>
               <div className=" -mx-4 justify-center max-w-2xl">
                 <Swiper
                   modules={[Autoplay, Navigation]}
@@ -786,34 +863,35 @@ const Packages = () => {
                   loop={true}
                   className="relative"
                 >
-                  {
-                    reviews.map((review) => {
-                      return (
-                        <SwiperSlide>
-                          <ReviewCard key={review.id} review={review} />
-                        </SwiperSlide>
-                      )
-                    })
-                  }
+                  {reviews.map((review) => {
+                    return (
+                      <SwiperSlide>
+                        <ReviewCard key={review.id} review={review} />
+                      </SwiperSlide>
+                    );
+                  })}
                 </Swiper>
               </div>
             </div>
           </div>
 
-
           {/* ------------FAQS-------------- */}
           <div className="w-full shadow-2xl rounded-xl mx-auto p-5">
-            <h2 className="text-3xl text-center font-semibold mb-14">Frequently Asked Questions</h2>
+            <h2 className="text-3xl text-center font-semibold mb-14">
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-2 md:space-y-4">
               {faqs.map((faq, index) => (
-                <FAQItem key={index} question={faq.question} answer={faq.answer} />
+                <FAQItem
+                  key={index}
+                  question={faq.question}
+                  answer={faq.answer}
+                />
               ))}
             </div>
-
           </div>
         </div>
       </div>
-
     </>
   );
 };
