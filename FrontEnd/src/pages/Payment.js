@@ -156,11 +156,7 @@ const Payment = () => {
   };
 
   const paymentHandler = async (event) => {
-<<<<<<< HEAD
-    const amount = bill.taxedPrice *100 ;
-=======
     const amount = bill.taxedPrice;
->>>>>>> c500d71 (booking done)
     const currency = "INR";
     const receiptId = "1234567899";
 

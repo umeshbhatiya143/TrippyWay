@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Loader from '@/assets/loader.gif'
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
+
 import Card from '@/Components/card';
 import PackageCompo from '@/Components/packageCompo';
 
@@ -82,6 +83,7 @@ const packages = () => {
       'Flights': false,
     }
   });
+
 
   useEffect(() => {
     // Get query parameters
@@ -307,9 +309,9 @@ const packages = () => {
       handleSearch()
     }
   }, [destination]);
-  useEffect(()=>{
+  useEffect(() => {
 
-  },[packages])
+  }, [packages])
 
   return (
     <div className='w-full'>
