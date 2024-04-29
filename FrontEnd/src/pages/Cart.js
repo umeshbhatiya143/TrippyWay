@@ -235,7 +235,7 @@ const Cart = () => {
         res = await res.json();
 
         const updatedCart = res.user.cart.filter((_id) => _id !== pkgId);
-        console.log(updatedCart);
+        // console.log(updatedCart);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_HOST}/api/users/${userData.userId}`,
           {
@@ -251,6 +251,7 @@ const Cart = () => {
           userId: userData.userId,
           token: userData.token,
           cart: updatedCart,
+          bookings: userData.bookings
         };
         dispatch(loginUser(updatedData));
       });

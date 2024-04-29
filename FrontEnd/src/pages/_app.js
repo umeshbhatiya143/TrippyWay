@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }) {
 
           <ToastContainer/>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </PersistGate>
     </Provider>
   );

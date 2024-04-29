@@ -9,10 +9,10 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
  // console.log("state opening",detailsPerPackage);
   const initialFormValues = travellerDetails.find(detail => detail.index === index) || {
     index: index,
-    firstname: "",
-    lastname: "",
-    adhaarnumber: "",
-    dateofbirth: new Date().toISOString().slice(0, 10),
+    firstName: "",
+    lastName: "",
+    aadhaarNumber: "",
+    dob: new Date().toISOString().slice(0, 10),
     gender: ""
   };
 
@@ -22,13 +22,13 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
     setFormValues({ ...formValues, [event.target.name]: event.target.value });
   };
   const handleValidation = () => {
-    const {firstname, lastname,adhaarnumber, dateofbirth, gender } =
+    const {firstName, lastName,aadhaarNumber, dob, gender } =
       formValues;
     if 
-      (firstname == "" ||
-      lastname == "" ||
-      dateofbirth == ""||
-      gender == ""|| adhaarnumber==""
+      (firstName == "" ||
+      lastName == "" ||
+      dob == ""||
+      gender == ""|| aadhaarNumber==""
     
     ) {
       setOpenError(true);
@@ -36,7 +36,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
       return false
     }
     const today = new Date();
-    const selectedDate = new Date(dateofbirth);
+    const selectedDate = new Date(dob);
     const fiveYearsAgo = new Date();
     fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
   
@@ -52,7 +52,7 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
       return false;
     }
     const aadhaarRegex = /^\d{12}$/;
-  if (!aadhaarRegex.test(adhaarnumber)) {
+  if (!aadhaarRegex.test(aadhaarNumber)) {
     setOpenError(true);
     setErrorMessage("Enter a valid 12-digit Aadhaar number!");
     return false;
@@ -108,53 +108,53 @@ const DetailsForm = ({index,travellerDetails ,handleAddDetails}) => {
               </select>
             </div> */}
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="name"><span className="text-red-700">* </span>Firstname:</label>
+              <label htmlFor="name"><span className="text-red-700">* </span>firstName:</label>
               <input
                 required
                 type="text"
-                id="firstname"
-                name="firstname"
-                placeholder="firstname"
+                id="firstName"
+                name="firstName"
+                placeholder="firstName"
                 className="bg-gray-100 border-none p-2.5 rounded-lg "
-                value={formValues.firstname}
+                value={formValues.firstName}
                 onChange={handleChange}
               />
             </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="lastname"><span className="text-red-700">* </span>Lastname:</label>
+              <label htmlFor="lastName"><span className="text-red-700">* </span>lastName:</label>
               <input
                 required
-                type="lastname"
-                id="lastname"
-                name="lastname"
-                placeholder="lastname"
+                type="lastName"
+                id="lastName"
+                name="lastName"
+                placeholder="lastName"
                 className="bg-gray-100 border-none p-2.5 rounded-lg"
-                value={formValues.lastname}
+                value={formValues.lastName}
                 onChange={handleChange}
               />
             </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="lastname"><span className="text-red-700">* </span>Adhaar Number:</label>
+              <label htmlFor="lastName"><span className="text-red-700">* </span>Adhaar Number:</label>
               <input
                 required
-                type="adhaarnumber"
-                id="adhaarnumber"
-                name="adhaarnumber"
-                placeholder="adhaarnumber"
+                type="aadhaarNumber"
+                id="aadhaarNumber"
+                name="aadhaarNumber"
+                placeholder="aadhaarNumber"
                 className="bg-gray-100 border-none p-2.5 rounded-lg"
-                value={formValues.adhaarnumber}
+                value={formValues.aadhaarNumber}
                 onChange={handleChange}
               />
             </div>
             <div className="flex flex-col w-full gap-1.5 font-medium">
-              <label htmlFor="dateofbirth"><span className="text-red-700">* </span>Date Of Birth:</label>
+              <label htmlFor="dob"><span className="text-red-700">* </span>Date Of Birth:</label>
               <input
                 required
                 type="date"
-                id="dateofbirth"
-                name="dateofbirth"
+                id="dob"
+                name="dob"
                 className="bg-gray-100 border-none p-2.5 rounded-lg"
-                value={formValues.dateofbirth}
+                value={formValues.dob}
                 onChange={handleChange}
               />
             </div>

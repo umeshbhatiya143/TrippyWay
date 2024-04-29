@@ -16,6 +16,7 @@ module.exports = {
         'button-color': '#7B2CBF',
         'button-color-hover': '#3C096C'
       },
+      
     },
   },
   plugins: [],

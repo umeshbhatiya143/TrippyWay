@@ -8,7 +8,7 @@ const checkOut = () => {
   const [openForm, setOpenform] = useState(false);
   const [travellerDetails, setTravellerDetails] = useState([]);
   const [showError, setShowError] = useState(false);
-  const [noOfTraveller,setNoOfTraveller]=useState(localStorage.getItem("noOfTraveller"))
+  const [noOfTraveller, setNoOfTraveller] = useState(localStorage.getItem("noOfTraveller"))
   //const [showSuccess ,setShowSuccess]=useState(false)
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -41,14 +41,15 @@ const checkOut = () => {
   };
   const handleProceedToPay = () => {
     let flag = false;
-    if (travellerDetails.length != 2) {
+    if (travellerDetails.length === 0) {
       flag = true;
     }
     if (!flag) {
-      router.push("/Payment");
+      const serializedTravellerDetails = encodeURIComponent(JSON.stringify(travellerDetails));
+      router.push(`/Payment?travellerDetails=${serializedTravellerDetails}&packageId=${encodeURIComponent(slug)}`);
     } else {
       setShowError(true);
-      setErrorMessage("Please Fill all the details");
+      setErrorMessage("Please fill all the details");
     }
   };
   useEffect(() => {
@@ -67,7 +68,7 @@ const checkOut = () => {
       <div className="flex w-full justify-center m-5">
         <div className="w-[70%]  flex flex-col m-2 bg-white border-2 p-2 shadow-md overflow-hidden my-4 ">
           <div className="text-xl font-bold m-3 p-1">
-           {localStorage.getItem("currentBookingName")}
+            {localStorage.getItem("currentBookingName")}
           </div>
 
           {/*Link to Adult form */}
@@ -82,20 +83,20 @@ const checkOut = () => {
                 </li>
               </ul>
             </div>
-            
-              <TravellerForm
-                
-                handleTravellerDetails={handleTravellerDetails}
-                travellerDetails={travellerDetails}
-                handleSubmit={handleSubmit}
-                noOfTraveller={noOfTraveller}
-              />
-            
+
+            <TravellerForm
+
+              handleTravellerDetails={handleTravellerDetails}
+              travellerDetails={travellerDetails}
+              handleSubmit={handleSubmit}
+              noOfTraveller={noOfTraveller}
+            />
+
             <div className="m-3">
-              
+
               <button
                 onClick={handleProceedToPay}
-                className="bg-deep-purple  hover:bg-opacity-75 transition-colors duration-300  text-white font-bold py-2 px-4 rounded-r"
+                className="bg-deep-purple  hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-r"
               >
                 Proceed To Pay
               </button>

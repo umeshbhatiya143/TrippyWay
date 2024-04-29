@@ -196,7 +196,7 @@ const Invoice = ({ bookingOBj }) => {
                 margin: "1px",
               }}
             >
-              TrippyWay GST No. : GST456763
+              TrippyWay GST No. : {bookingOBj.gstNo}
             </Text>
           </View>
         </View>
@@ -264,11 +264,11 @@ const Invoice = ({ bookingOBj }) => {
                 margin: "1px",
               }}
             >
-              {bookingOBj.PackageName}
+              {bookingOBj.packageTitle}
             </Text>
           </View>
           <View styles={{ margin: "10px" }}>
-            <Text>{bookingOBj.price}</Text>
+            <Text>{bookingOBj.totalPrice}</Text>
           </View>
         </View>
         <View
@@ -321,7 +321,7 @@ const Invoice = ({ bookingOBj }) => {
             </Text>
           </View>
           <View styles={{ margin: "10px" }}>
-            <Text>{bookingOBj.price + 100}</Text>
+            <Text>{bookingOBj.totalPrice + 100}</Text>
           </View>
         </View>
         {/* Horizontal line */}

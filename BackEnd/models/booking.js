@@ -12,13 +12,17 @@ const bookingSchema = new mongoose.Schema({
         ref: 'Package', // Reference to the Package collection
         required: true
     },
+    packageTitle: {
+        type: String,
+        required:true
+    },
     startDate: {
         type: Date,
-        required: true
+        // required: true
     },
     endDate: {
         type: Date,
-        required: true
+        // required: true
     },
     numberOfTravellers: {
         type: Number,
@@ -38,7 +42,7 @@ const bookingSchema = new mongoose.Schema({
             gender: {
                 type: String
             },
-            aadhaarCard: {
+            aadhaarNumber: {
                 type: String
             }
         }
@@ -49,6 +53,10 @@ const bookingSchema = new mongoose.Schema({
         default: 'pending'
     },
     totalPrice: {
+        type: Number,
+        required: true
+    },
+    gst: {
         type: Number,
         required: true
     },
@@ -63,7 +71,10 @@ const bookingSchema = new mongoose.Schema({
         default: 'pending'
     },
     paymentDetails: {
-        transactionId: {
+        orderId: {
+            type: String
+        },
+        paymentId: {
             type: String
         },
         paymentMethod: {

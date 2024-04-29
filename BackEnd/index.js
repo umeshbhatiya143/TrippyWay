@@ -56,6 +56,7 @@ app.post("/order", async (req, res) => {
        }
 
        res.json(order);
+       console.log("order api: ", order);
        
    } catch (error) {
        console.log(error);

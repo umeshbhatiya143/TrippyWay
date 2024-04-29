@@ -44,7 +44,7 @@ exports.login = async (req, res, next) => {
     }
 
     // Create token
-    const token = jwt.sign({ userId: user._id, cart:user.cart }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+    const token = jwt.sign({ userId: user._id, cart:user.cart, bookings: user.bookings }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
 
     res.status(200).json({ token });
   } catch (error) {

@@ -106,7 +106,8 @@ const PackageCompo = ({ pkg }) => {
                     const updatedData = {
                         userId: userData.userId,
                         token: userData.token,
-                        cart: updatedCart
+                        cart: updatedCart,
+                        bookings: userData.bookings
                     }
                     dispatch(loginUser(updatedData))
                 })

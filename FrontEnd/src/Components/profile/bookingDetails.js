@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaSearch, FaRegSadTear } from 'react-icons/fa';
 import { BsFillCalendarCheckFill } from 'react-icons/bs';
+import { useSelector, useDispatch } from 'react-redux'
+import BookingDetail from './bookingDetailCompo';
 
 const BookingDetails = () => {
     const [activeTab, setActiveTab] = useState('upcoming');
     const [searchQuery, setSearchQuery] = useState('');
+    const userData = useSelector(state => state.auth.userData);
+    const [bookings, setBookings] = useState()
 
     const bookingData = {
-        upcoming: [{ id: 1, title: "Beach Holiday", date: "2024-05-20" }], // Sample data
-        cancelledRefunded: [],
+        upcoming: [],
+        cancelled: [],
         completed: [],
-        unsuccessful: []
     };
 
     const handleSearchChange = (e) => setSearchQuery(e.target.value);
@@ -18,6 +21,38 @@ const BookingDetails = () => {
         e.preventDefault();
         console.log('Search for:', searchQuery);
     };
+
+    const fetchBookingDetails = async (bookingId) => {
+        try {
+            // Construct URL with query parameters
+
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/bookings/${bookingId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json();
+            return data
+
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+        }
+    }
+
+    const fetchBookings = async () => {
+        const bookings = await Promise.all(
+            userData.bookings.map((bookingId) => {
+                return fetchBookingDetails(bookingId);
+            })
+        );
+        setBookings(bookings);
+    };
+
+    useEffect(() => {
+        fetchBookings()
+    }, [])
 
     const renderNoBookingsMessage = () => (
         <div className="flex flex-col items-center justify-center py-10">
@@ -29,12 +64,11 @@ const BookingDetails = () => {
     );
 
     const renderTabContent = (tab) => {
-        return bookingData[tab].length > 0 ? (
-            bookingData[tab].map((booking) => (
-                <div key={booking.id} className="p-4 bg-custom-white rounded shadow-lg mb-4">
-                    <h3 className="text-deep-purple font-semibold">{booking.title}</h3>
-                    <p className="text-dark-cyan">Date: {booking.date}</p>
-                </div>
+        const filteredBookings = bookings ? bookings.filter(booking => booking.journeyStatus === tab) : [];
+
+        return filteredBookings.length > 0 ? (
+            filteredBookings.map((booking, index) => (
+                <BookingDetail key={index} travelersDetail={booking.TravelersDetail} bookingStatus={booking.bookingStatus} journeyStatus={booking.journeyStatus} totalPrice={booking.totalPrice} packageTitle={booking.packageTitle} paymentDetails={booking.paymentDetails} />
             ))
         ) : (
             renderNoBookingsMessage()
@@ -66,26 +100,26 @@ const BookingDetails = () => {
             </div>
 
             <div className="flex justify-center mb-6">
-                    {Object.keys(bookingData).map((tab) => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 mx-1 transform hover:-translate-y-1 shadow ${
-                                activeTab === tab
-                                    ? 'bg-deep-purple text-custom-white'
-                                    : 'text-dark-cyan bg-custom-white hover:bg-dark-cyan hover:text-custom-white'
+                {Object.keys(bookingData).map((tab) => (
+                    <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 mx-1 transform hover:-translate-y-1 shadow ${activeTab === tab
+                            ? 'bg-deep-purple text-custom-white'
+                            : 'text-dark-cyan bg-custom-white hover:bg-dark-cyan hover:text-custom-white'
                             }`}
-                        >
-                            {activeTab === tab && (
-                                <BsFillCalendarCheckFill className="text-white mr-2" />
-                            )}
-                            {tab.charAt(0).toUpperCase() + tab.slice(1).replace(/([A-Z])/g, ' $1')}
-                        </button>
-                    ))}
-                </div>
+                    >
+                        {activeTab === tab && (
+                            <BsFillCalendarCheckFill className="text-white mr-2" />
+                        )}
+                        {tab.charAt(0).toUpperCase() + tab.slice(1).replace(/([A-Z])/g, ' $1')}
+                    </button>
+                ))}
+            </div>
 
-            <div className="p-4 bg-custom-white rounded shadow-md">
+            <div className="p-4 rounded">
                 {activeTab && renderTabContent(activeTab)}
+
             </div>
 
             <div className="mt-6 text-center text-dark-cyan bg-yellow-200 p-2 rounded">

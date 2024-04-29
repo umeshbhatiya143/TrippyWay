@@ -42,8 +42,8 @@ const Dashboard = () => {
   })
 
   return (
-    <section className='w-full flex justify-center'>
-      <div className="w-[60%] flex flex-col py-10 gap-6">
+    <section className='w-full h-[85vh] flex justify-center overflow-hidden'>
+      <div className="w-[70%] flex flex-col py-10 gap-6">
         <div className='flex justify-between items-center gap-4 text-deep-purple'>
           <div className='flex items-center gap-4'>
             <div className='w-60 text-center font-bold border border-dark-cyan rounded-md py-2 px-4'>Dashboard</div>
@@ -80,7 +80,7 @@ const Dashboard = () => {
             </li>
           </ul>
 
-          <div className="flex-grow">
+          <div className="flex-grow h-[90vh] overflow-y-scroll pb-40" style={{ scrollbarWidth: "none" }}>
             {selectedPage && (
               <DynamicPageLoader page={selectedPage}/>
             )}
