@@ -21,7 +21,7 @@ const AddTraveller = ({
     useEffect(() => {
       setTimeout(() => {
        setShowError(false);
-      }, 2000); // 10000 milliseconds = 10 seconds
+      }, 5000); // 10000 milliseconds = 10 seconds
     }, [showError]);
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50">

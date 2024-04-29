@@ -8,25 +8,30 @@ import {
   Image,
 } from "@react-pdf/renderer";
 
-const Invoice = ({ bookingOBj }) => {
+
+const Invoice = ({ bookingObj }) => {
+  console.log(bookingObj);
+  
   return (
+    
+    
     <Document>
-      <Page size="A4" className="flex flex-col m-2 p-1 bg-white">
-        <View style={{ backgroundColor: "#7B2CBF" }}>
-          <View style={{ alignItems: "center" }}>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          
             <Text
-              style={{ color: "white", fontWeight: "bold", fontSize: "40px" }}
+              style={styles.headerText}
             >
               Invoice
             </Text>
-          </View>
+          
 
           {/* Company address and logo */}
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              backgroundColor: "#7B2CBF",
+              
             }}
           >
             <View style={{ margin: "20px", marginTop: "30px" }}>
@@ -111,7 +116,7 @@ const Invoice = ({ bookingOBj }) => {
                   margin: "1px",
                 }}
               >
-                {bookingOBj.userId}
+                {bookingObj.userName}
               </Text>
               <Text
                 style={{
@@ -120,7 +125,7 @@ const Invoice = ({ bookingOBj }) => {
                   margin: "1px",
                 }}
               >
-                {bookingOBj.address.address1}
+                {bookingObj.address.address1}
               </Text>
               <Text
                 style={{
@@ -129,7 +134,7 @@ const Invoice = ({ bookingOBj }) => {
                   margin: "1px",
                 }}
               >
-                {bookingOBj.address.address2}
+                {bookingObj.address.address2}
               </Text>
               <Text
                 style={{
@@ -138,7 +143,7 @@ const Invoice = ({ bookingOBj }) => {
                   margin: "1px",
                 }}
               >
-                {bookingOBj.address.city}
+                {bookingObj.address.city}
               </Text>
               <Text
                 style={{
@@ -147,7 +152,7 @@ const Invoice = ({ bookingOBj }) => {
                   margin: "1px",
                 }}
               >
-                {bookingOBj.address.state}
+                {bookingObj.address.state}
               </Text>
               <Text
                 style={{
@@ -156,7 +161,7 @@ const Invoice = ({ bookingOBj }) => {
                   margin: "1px",
                 }}
               >
-                {bookingOBj.address.country}
+                {bookingObj.address.country}
               </Text>
               <Text
                 style={{
@@ -165,7 +170,7 @@ const Invoice = ({ bookingOBj }) => {
                   margin: "1px",
                 }}
               >
-                {bookingOBj.address.postalCode}
+                {bookingObj.address.postalCode}
               </Text>
             </View>
           </View>
@@ -178,7 +183,7 @@ const Invoice = ({ bookingOBj }) => {
                 margin: "1px",
               }}
             >
-              Order Id : {bookingOBj.orderId}
+              Order Id : {bookingObj.bookingId}
             </Text>
             <Text
               style={{
@@ -187,7 +192,7 @@ const Invoice = ({ bookingOBj }) => {
                 margin: "1px",
               }}
             >
-              Booking Date : 25th May 2024
+              Booking Date : {bookingObj.bookingDate}
             </Text>
             <Text
               style={{
@@ -203,10 +208,10 @@ const Invoice = ({ bookingOBj }) => {
         {/* Horizontal line */}
         <View
           style={{
-            borderBottom: "0.5px solid black",
+            borderBottom: "0.2px solid black",
             marginTop: "10px",
             marginBottom: "10px",
-            margin:"10px"
+            margin: "10px",
           }}
         />
         {/* Total payment */}
@@ -220,12 +225,23 @@ const Invoice = ({ bookingOBj }) => {
           <View styles={{ margin: "5px" }}>
             <Text
               style={{
-                fontWeight: "bold",
-                fontSize: "15px",
+                fontWeight: 900,
+                fontSize: "20px",
                 margin: "1px",
               }}
             >
               Package Name
+            </Text>
+          </View>
+          <View styles={{ margin: "5px" }}>
+            <Text
+              style={{
+                fontWeight: 900,
+                fontSize: "20px",
+                margin: "1px",
+              }}
+            >
+              Traveller
             </Text>
           </View>
           <View styles={{ margin: "5px" }}>
@@ -246,7 +262,7 @@ const Invoice = ({ bookingOBj }) => {
             borderBottom: "0.5px solid black",
             marginTop: "10px",
             marginBottom: "10px",
-            margin:"10px"
+            margin: "10px",
           }}
         />
         <View
@@ -257,18 +273,79 @@ const Invoice = ({ bookingOBj }) => {
           }}
         >
           <View styles={{ margin: "10px" }}>
-            <Text
+            {/* <Text
               style={{
                 fontWeight: "medium",
                 fontSize: "15px",
                 margin: "1px",
               }}
+            > */}
+            {/* Check if package name is too long */}
+            {bookingObj.PackageName.length > 20 ? (
+              <>
+                {/* Display first part of the package name */}
+                <Text
+                  style={{
+                    fontWeight: "medium",
+                    fontSize: "10px",
+                    margin: "1px",
+                  }}
+                >
+                  {bookingObj.PackageName.slice(0, 20)}
+                </Text>
+                <br />
+                {/* Display second part of the package name */}
+                <Text
+                  style={{
+                    fontWeight: "medium",
+                    fontSize: "10px",
+                    margin: "1px",
+                  }}
+                >
+                  {bookingObj.PackageName.slice(20)}
+                </Text>
+              </>
+            ) : (
+              <Text
+                style={{
+                  fontWeight: "medium",
+                  fontSize: "10px",
+                  margin: "1px",
+                }}
+              >
+                {bookingObj.PackageName}
+              </Text>
+            )}
+            {/* </Text> */}
+          </View>
+          <View
+            styles={{ fontWeight: "medium", fontSize: "10px", margin: "1px" }}
+          >
+            <Text>{bookingObj.noOfTraveller}</Text>
+          </View>
+          <View
+            styles={{ fontWeight: "medium", fontSize: "10px", margin: "1px" }}
+          >
+            <Text styles={{ fontWeight: "medium", fontSize: "10px", margin: "1px" }}>Rs{ } {bookingObj.bill.originalPrice}</Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            margin: "10px",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View styles={{ margin: "10px" }}>
+            <Text
+              style={{ fontWeight: "medium", fontSize: "10px", margin: "1px" }}
             >
-              {bookingOBj.PackageName}
+              Discount
             </Text>
           </View>
           <View styles={{ margin: "10px" }}>
-            <Text>{bookingOBj.price}</Text>
+            <Text>-Rs{ } {bookingObj.bill.discountAmt}({(bookingObj.bill.discount)} %)</Text>
           </View>
         </View>
         <View
@@ -280,17 +357,13 @@ const Invoice = ({ bookingOBj }) => {
         >
           <View styles={{ margin: "10px" }}>
             <Text
-              style={{
-                fontWeight: "medium",
-                fontSize: "10px",
-                margin: "1px",
-              }}
+              style={{ fontWeight: "medium", fontSize: "10px", margin: "1px" }}
             >
               GST
             </Text>
           </View>
           <View styles={{ margin: "10px" }}>
-            <Text>{bookingOBj.gst}</Text>
+            <Text>+Rs{ } {bookingObj.bill.taxAmt}({(bookingObj.gst)} %)</Text>
           </View>
         </View>
         {/* Horizontal line */}
@@ -299,7 +372,7 @@ const Invoice = ({ bookingOBj }) => {
             borderBottom: "0.5px solid black",
             marginTop: "5px",
             marginBottom: "5px",
-            margin:"10px"
+            margin: "10px",
           }}
         />
         <View
@@ -321,21 +394,40 @@ const Invoice = ({ bookingOBj }) => {
             </Text>
           </View>
           <View styles={{ margin: "10px" }}>
-            <Text>{bookingOBj.price + 100}</Text>
+            <Text>Rs{ } {bookingObj.bill.taxedPrice}</Text>
           </View>
         </View>
         {/* Horizontal line */}
         <View
           style={{
-            borderBottom: "0.5px solid black",
+            borderBottom: "0.2px solid black",
             marginTop: "5px",
             marginBottom: "5px",
-            margin:"10px"
+            margin: "10px",
           }}
         />
       </Page>
     </Document>
   );
 };
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: "column",
+    backgroundColor: "white",
+    padding: 10,
+  },
+  header: {
+    backgroundColor: "#3C096C",
+    alignItems: "center",
+    paddingTop:10,
+    paddingBottom: 10,
+    marginBottom: 10,
+  },
+  headerText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 40,
+  },
+});
 
 export default Invoice;
