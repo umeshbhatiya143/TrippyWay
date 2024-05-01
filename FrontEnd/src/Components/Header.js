@@ -90,7 +90,7 @@ const Header = () => {
                         <div>
                             {isLoggedIn ? (
                                 <div className="flex text-white items-center space-x-6">
-                                    <a href="#" className="flex items-center justify-center space-x-2 bg-dark-cyan hover:bg-button-color-hover bg-gradient-to-bl from-dark-cyan to-deep-purple  text-white transition-colors py-2 px-4 rounded-full">TourAI</a>
+                                    {/* <a href="#" className="flex items-center justify-center space-x-2 bg-dark-cyan hover:bg-button-color-hover bg-gradient-to-bl from-dark-cyan to-deep-purple  text-white transition-colors py-2 px-4 rounded-full">TourAI</a> */}
                                     <div className='relative z-1'
                                     >
                                         <button onClick={() => setIsShowMenu(!isShowMenu)} className="flex items-center justify-center space-x-2 bg-gradient-to-bl from-deep-purple to-dark-cyan text-white bg-dark-cyan hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
@@ -121,9 +121,9 @@ const Header = () => {
                                 </div>
                             ) : (
                                 <div className='flex space-x-6'>
-                                    <button onClick={() => dispatch(setShowLogin())} className="flex items-center justify-center space-x-2 bg-gradient-to-bl from-deep-purple to-dark-cyan text-white bg-dark-cyan hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
+                                    {/* <button onClick={() => dispatch(setShowLogin())} className="flex items-center justify-center space-x-2 bg-gradient-to-bl from-deep-purple to-dark-cyan text-white bg-dark-cyan hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
                                         Become a Agent
-                                    </button>
+                                    </button> */}
                                     <button onClick={() => dispatch(toggleLogin())} className="flex items-center justify-center space-x-2 bg-gradient-to-bl from-deep-purple to-dark-cyan text-white bg-dark-cyan hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
                                         Login / Signup
                                     </button>
