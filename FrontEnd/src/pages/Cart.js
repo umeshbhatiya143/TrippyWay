@@ -330,7 +330,7 @@ const Cart = () => {
       <div className="flex md:flex-row sm:flex-col gap-1 justify-center ">
         {/* package add to cart */}
         <div className="w-4/6 m-2 p-1">
-          {pack.map((pkg) => (
+       {pack.length>0 && <>{pack.map((pkg) => (
             <div className="w-full flex md:flex-col sm:flex-col xs:flex-col lg:flex-row mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4  md:p-4 gap-6">
               {/*<div className="flex md:flex-row  p-4 gap-6"> */}
 
@@ -443,8 +443,10 @@ const Cart = () => {
               </div>
               {/*</div>*/}
             </div>
-          ))}
-        </div>
+          ))}</>
+          
+        }{pack.length===0 && <div><img src="../../emptycart.png" width={1000} height={1000}></img></div>} </div>
+        
         {/*price details */}
         <div className="w-2/6 mt-5 mb-5 p-4  bg-white border-2 rounded-xl shadow-md overflow-hidden">
           {/* Total price */}
