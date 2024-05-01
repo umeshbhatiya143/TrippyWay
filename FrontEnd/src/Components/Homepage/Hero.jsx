@@ -63,12 +63,12 @@ const HeroSection = () => {
             <div className="w-full h-full absolute top-0 z-10 flex justify-center overflow-hidden">
                 {/* TrippyAI Section */}
                 <div className="flex flex-col gap-3 items-center justify-center w-1/2 text-white bg-glassy my-10 mx-28 px-28 rounded-lg shadow-md">
-                    <h2 className="text-6xl font-black mb-4">Discover TrippyAI</h2>
+                    <h2 className="text-6xl font-black mb-4">Discover TourAI</h2>
                     <span className="text-1xl font-bold text-red-400" >
                         <Typewriter
-                            words={['TrippyAI: Your personalized travel guru.',
-                                'Dream up your perfect trip. Let TrippyAI plan it for you.',
-                                'Explore hidden gems and adventures with TrippyAI.',
+                            words={['TourAI: Your personalized travel guru.',
+                                'Dream up your perfect trip. Let TourAI plan it for you.',
+                                'Explore hidden gems and adventures with TourAI.',
                                 'AI-powered travel experiences that surprise and delight.',]}
                             loop={true}
                             cursor
@@ -80,11 +80,11 @@ const HeroSection = () => {
                     </span>
                     <p className="text-lg mb-8">Explore the possibilities of AI-powered travel experiences.</p>
                     <div className="typewriter-container">
-                        <span className="typewriter">Typing out some text about TrippyAI...</span>
+                        <span className="typewriter">Typing out some text about TourAI...</span>
                     </div>
                     <textarea className="w-[450px] p-4 mt-4 mb-4 bg-gray-800 rounded-lg border border-gray-600 text-white focus:outline-none focus:border-blue-500" placeholder="Enter your text here..."></textarea>
                     <button className="flex items-center gap-2 bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md">
-                       <span>Interact with TrippyAI</span> 
+                       <span>Interact with TourAI</span> 
                        <FaArrowUpRightFromSquare />
                     </button>
                 </div>

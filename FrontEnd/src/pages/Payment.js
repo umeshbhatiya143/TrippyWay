@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const Payment = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [booking, setBooking] = useState(false);
+  //const [booking, setBooking] = useState(false);
   const [bill, setBill] = useState({});
   const userData = useSelector((state) => state.auth.userData);
   const [name, setName] = useState("");
@@ -156,7 +156,7 @@ const Payment = () => {
   };
 
   const paymentHandler = async (event) => {
-    const amount = bill.taxedPrice;
+    const amount = bill.taxedPrice *100;
     const currency = "INR";
     const receiptId = "1234567899";
 
@@ -251,8 +251,8 @@ const Payment = () => {
         // console.log("jsonResponse", jsonResponse);
         // alert("transaction successful");
         //After successful payment move to home page
-        //router.push("/");
-        setBooking(true);
+        router.push("/");
+        
       },
       //user billing Address ,we have pull user details and pass here
       prefill: {
@@ -290,7 +290,7 @@ const Payment = () => {
 
   return (
     <>
-      {!booking && (
+      
         <div>
           {/* subheading */}
           <div className="flex flex-row  h-20 justify-center bg-white border-2 rounded-xl shadow-md overflow-hidden">
@@ -389,20 +389,20 @@ const Payment = () => {
             </div>
           </div>
         </div>
-      )}
-      {booking && (
+      
+      {/* {booking && (
         <div>
           {/* subheading */}
-          <div className="flex flex-row  h-20 justify-center bg-white border-2 rounded-xl shadow-md overflow-hidden">
+          {/* <div className="flex flex-row  h-20 justify-center bg-white border-2 rounded-xl shadow-md overflow-hidden">
             <div className="text-2xl m-3 p-2">Payment</div>
-          </div>
+          </div> */} 
           {/* main section*/}
-          <div className=" flex flex-row justify-center gap-2">
+          {/* <div className=" flex flex-row justify-center gap-2">
             <div className="w-3/6 m-8 p-1  bg-white border-2 rounded-xl shadow-md overflow-hidden">
               <div className="flex flex-col  m-3 p-1">
                 <div>The package name is booked </div>
-                <div className=" flex flex-row justify-center">
-                  <PDFDownloadLink
+                <div className=" flex flex-row justify-center"> */}
+                  {/* <PDFDownloadLink
                     document={<Invoice bookingOBj={bookingDetail} />}
                     filename="invoice.pdf"
                     style={{
@@ -418,21 +418,21 @@ const Payment = () => {
                     {/* {({ blob, url, loading, error }) =>
                       loading ? "Loading document..." : "Download now!"
                     } */}
-                    download
-                  </PDFDownloadLink>
+                    {/* download
+                  </PDFDownloadLink>  */}
 
-                </div>
-              </div>
+                {/* </div>
+              </div> */}
 
               {/* proceed to pay */}
-            </div>
+            {/* </div>
 
-          </div>
+          </div> */}
           {/* <PDFViewer>
                     <Invoice bookingOBj={bookingOBj}/>
                   </PDFViewer> */}
-        </div>
-      )}
+        {/* </div>
+      )} */}
     </>
   );
 };

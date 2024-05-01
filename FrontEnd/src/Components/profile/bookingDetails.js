@@ -68,7 +68,7 @@ const BookingDetails = () => {
 
         return filteredBookings.length > 0 ? (
             filteredBookings.map((booking, index) => (
-                <BookingDetail key={index} travelersDetail={booking.TravelersDetail} bookingStatus={booking.bookingStatus} journeyStatus={booking.journeyStatus} totalPrice={booking.totalPrice} packageTitle={booking.packageTitle} paymentDetails={booking.paymentDetails} />
+                <BookingDetail key={index} travelersDetail={booking.TravelersDetail} bookingStatus={booking.bookingStatus} journeyStatus={booking.journeyStatus} totalPrice={booking.totalPrice} packageTitle={booking.packageTitle} paymentDetails={booking.paymentDetails} packageId={booking.package} />
             ))
         ) : (
             renderNoBookingsMessage()
