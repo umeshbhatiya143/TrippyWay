@@ -52,7 +52,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* component */}
-                <div className="h-[90vh] w-full overflow-scroll pb-4" style={{ scrollbarWidth: "none" }}>
+                <div className="h-[90vh] w-full overflow-scroll pt-4 pb-4" style={{ scrollbarWidth: "none" }}>
                     {renderPage()}
                 </div>
             </div>

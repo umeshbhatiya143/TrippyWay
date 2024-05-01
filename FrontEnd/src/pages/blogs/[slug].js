@@ -116,14 +116,14 @@ const Blogs = () => {
         </div>
 
         {/* selected page */}
-        <div className="w-full min-h-screen p-10 ">
+        <div className="w-full min-h-screen p-10 flex justify-center ">
           {/* Dynamically load selected page component */}
           {selectedPage && <DynamicPageLoader page={selectedPage} />}
 
           {/* cta */}
-          <div className="w-60 flex fixed h-96 right-10">
+          {/* <div className="w-60 flex fixed h-96 right-10">
             <CTA />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

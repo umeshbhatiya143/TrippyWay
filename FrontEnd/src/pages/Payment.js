@@ -80,8 +80,6 @@ const Payment = () => {
   };
 
 
-
-
   const billingAddress = {
     name: "John Doe",
     address_line1: "1234 Main Street",

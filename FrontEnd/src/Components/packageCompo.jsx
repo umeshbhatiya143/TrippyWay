@@ -171,18 +171,27 @@ const PackageCompo = ({ pkg }) => {
                 </div>
                 <div className="">
                     <div className="uppercase tracking-wide text-lg text-dark-cyan font-semibold">{pkg.title}</div>
-                    <p className="block mt-1 text-sm leading-tight font-medium text-black ">{pkg.duration} days</p>
+                    <p className="block mt-1 text-sm leading-tight font-medium text-black rounded px-1 border border-deep-purple w-fit ">{pkg.duration-1} nights / {pkg.duration} days</p>
                     <p className="mt-2 text-sm text-gray-500"> {pkg.description.substring(0, 200)}...</p>
-                    <div className="mt-4">
-                        <div className="text-teal-600">{pkg.discount}% Off</div>
-                        <div className='flex items-center'>
-                            <div className="text-lg font-bold text-gray-900"><span>&#8377;</span>{Math.floor(pkg.price - (pkg.price * (pkg.discount) / 100))}</div>
-                            <sup className='text-red-600 text-bold'>*</sup>
-                            <div className="ml-4 relative inline-block">
-                                <span className="relative z-10 text-deep-purple text-md">{pkg.price}</span>
-                                <div className="absolute w-full h-0.5 bg-deep-purple top-1/2 transform -translate-y-1/2"></div>
+                    <div className="flex flex-col gap-1 mb-5 mt-3">
+                        <div className="text-teal-600 text-sm">
+                            {pkg.discount}% Off
+                        </div>
+                        <div className="items-center flex font-sans md:text-3xl font-bold text-deep-purple ">
+                            <span>&#8377;</span>
+                            {Math.floor(
+                                pkg.price - (pkg.price * pkg.discount) / 100
+                            )}
+                            <sup className="text-red-600 text-bold">*</sup>
+                            <div className="ml-4 flex relative inline-block -mb-2">
+                                <span className="relative text-gray-600 font-normal text-[16px]">
+                                    {pkg.price}
+                                </span>
+                                <div className="absolute w-full h-[2px] bg-gray-900 top-[17px]"></div>
+
                             </div>
                         </div>
+                        <p className="text-gray-600 text-[10px] font-normal -mt-2">*per person</p>
                     </div>
                     <div className="mt-4">
                         <h3 className="text-gray-700 font-semibold">Hotel included in package:</h3>
@@ -200,7 +209,7 @@ const PackageCompo = ({ pkg }) => {
                     {/* Buttons */}
                     <div className="flex mt-4">
                         <button onClick={() => router.push(`/package/${pkg._id}`)}
-                        className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
+                            className="bg-deep-purple hover:bg-opacity-75 transition-colors duration-300 text-white font-bold py-2 px-4 rounded-l">
                             View Details
                         </button>
                         <button onClick={() => addToCart(pkg._id)}

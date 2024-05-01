@@ -70,7 +70,7 @@ const Blog = () => {
   return (
     <div>
       {/* blog */}
-      <div className="">
+      <div className="w-full flex flex-col items-center">
         {/* main section  it will contain main image ,small discription and wriiten by */}
         <div className="w-2/4 flex flex-col justify-between m-2 p-2 md:ml-20 md:mr-10 sm:ml-3 sm:mr-3 shadow-md">
           {/*Blog description */}

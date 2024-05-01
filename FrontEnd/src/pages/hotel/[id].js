@@ -262,7 +262,7 @@ const Hotels = () => {
                 <h2>{hotel.name}</h2>
               </div>
               {/* customize and book Section */}
-              <div className="flex items-center space-x-4 gap-5 justify-center ">
+              {/* <div className="flex items-center space-x-4 gap-5 justify-center ">
                 <div className="">
                   <button className="bg-dark-cyan hover:bg-opacity-80 text-white transition-colors duration-300 font-bold md:py-2 md:px-4 py-1 px-2 rounded-lg shadow-md">
                     Customize
@@ -273,7 +273,7 @@ const Hotels = () => {
                     Book
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
             {/* Anchor section  */}
             <div>
