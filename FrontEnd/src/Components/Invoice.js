@@ -201,7 +201,7 @@ const Invoice = ({ bookingObj }) => {
                 margin: "1px",
               }}
             >
-              TrippyWay GST No. : {bookingObj.gstNo}
+              TourWay GST No. : {bookingObj.gstNo}
             </Text>
           </View>
         </View>

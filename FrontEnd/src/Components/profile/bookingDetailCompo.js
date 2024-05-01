@@ -88,10 +88,11 @@ const TravelersDetail = ({ travelersDetail, bookingStatus, journeyStatus, totalP
           console.log(error);
         }
       };
+    useEffect(()=>{fetchPackage(packageId)},[packageId])
     
     useEffect(() => {
         
-        fetchPackage(packageId)
+        //fetchPackage(packageId)
          
         // Calculate the bill for each package
         const originalPrice = packageDetails.price;
@@ -115,8 +116,9 @@ const TravelersDetail = ({ travelersDetail, bookingStatus, journeyStatus, totalP
     
         // Update the bill state
         setBill(paymentBill);
+        //console.log(bill)
         fetchUser();
-      }, [travelersDetail,packageId]);
+      }, [packageDetails]);
     
     
 
