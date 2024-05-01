@@ -179,9 +179,9 @@ const Payment = () => {
       key: "",
       amount,
       currency,
-      name: "TrippyWay",
+      name: "TourWay",
       description: "Test Transaction",
-      image: "../logo.png",
+      image: "../logo2.jpeg",
       //passing the orderid geberated above
       order_id: order.id,
       handler: async function (response) {
