@@ -59,7 +59,7 @@ const Dashboard = () => {
 
         <div className='flex w-full gap-8'>
           <ul className='flex flex-col gap-4 bg-gray-100 rounded-md shadow-xl w-60 h-fit py-4'>
-            {['personalInfo', 'loginDetails', 'bookingDetails', 'eWallet', 'paymentDetails', 'wishlist'].map((page) => (
+            {['personalInfo', 'loginDetails', 'bookingDetails', 'eWallet', 'paymentDetails'].map((page) => (
               <li
                 key={page}
                 className={`w-full cursor-pointer rounded-md py-3 px-4 font-bold text-gray-700 ${selectedPage === page ? 'bg-deep-purple text-white border-l-[5px] border-blue-600' : 'hover:bg-gray-300'} transition-colors duration-300`}
@@ -68,6 +68,12 @@ const Dashboard = () => {
                 {formatPageName(page)}
               </li>
             ))}
+            <li
+                className={`w-full cursor-pointer rounded-md py-3 px-4 font-bold text-gray-700 transition-colors duration-300`}
+                onClick={()=> router.push('/Cart')}
+              >
+                Wishlist
+              </li>
             <li
               className="cursor-pointer text-red-600 font-bold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors duration-300 flex items-center"
               onClick={() => {

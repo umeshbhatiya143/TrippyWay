@@ -52,8 +52,9 @@ const Header = () => {
                 <div className='bg-white text-black border-t-2 border '>
                     <div className="container mx-auto flex justify-between items-center   px-6 lg:px-12">
                         {/* Logo and Navigation */}
-                        <div className="flex items-center">
-                            <img src="/logo2.jpeg" alt="Logo" className="h-20 w-60 rounded-md mr-8" />
+                        <div onClick={() => goToProfilePage('/')} 
+                         className="flex items-center mt-1 mb-1 cursor-pointer">
+                            <img src="/logo.png" alt="Logo" className="h-20 w-60 object-cover" />
                             <nav>
                                 {/* <ul className="flex items-center space-x-10">
                                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
@@ -120,10 +121,10 @@ const Header = () => {
                                 </div>
                             ) : (
                                 <div className='flex space-x-6'>
-                                    <button onClick={() => dispatch(setShowLogin())} className="bg-button-color hover:bg-button-color-hover text-custom-white transition-colors py-2 px-4 rounded-full text-sm">
+                                    <button onClick={() => dispatch(setShowLogin())} className="flex items-center justify-center space-x-2 bg-gradient-to-bl from-deep-purple to-dark-cyan text-white bg-dark-cyan hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
                                         Become a Agent
                                     </button>
-                                    <button onClick={() => dispatch(toggleLogin())} className="bg-button-color hover:bg-button-color-hover text-custom-white transition-colors py-2 px-4 rounded-full text-sm">
+                                    <button onClick={() => dispatch(toggleLogin())} className="flex items-center justify-center space-x-2 bg-gradient-to-bl from-deep-purple to-dark-cyan text-white bg-dark-cyan hover:bg-button-color-hover transition-colors py-2 px-4 rounded-full">
                                         Login / Signup
                                     </button>
                                 </div>
