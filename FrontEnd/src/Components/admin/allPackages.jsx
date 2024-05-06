@@ -197,10 +197,10 @@ const AllPackages = () => {
 
 
   return (
-    <div className='w-full flex flex-col items-center'>
-      <h2 className='font-bold text-2xl text-center'>All Packages</h2>
+    <div className='w-full flex flex-col items-center px-10 pb-20'>
+      {/* <h2 className='font-bold text-2xl text-center pb-4'>All Packages</h2> */}
 
-      <div className="bg-gray-200 rounded-lg  shadow-md p-4 flex w-full max-w-2xl">
+      <div className="bg-gray-200 mt-4 mb-6 rounded-lg  shadow-md p-4 flex w-full max-w-2xl">
         {/* Destination Input */}
         <div className="flex-grow relative">
           <input
@@ -243,9 +243,9 @@ const AllPackages = () => {
             <p>Duration: {pkg.duration}</p>
 
             <div className="flex justify-end">
-              <button className="bg-green-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2">View</button>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2">Update</button>
-              <button onClick={() => handleDeletePackage(pkg.id)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</button>
+              {/* <button className="bg-green-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2">View</button>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2">Update</button> */}
+              <button onClick={() => handleDeletePackage(pkg._id)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</button>
             </div>
           </div>
         ))}

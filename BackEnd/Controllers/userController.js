@@ -113,6 +113,20 @@ exports.getAllUser = async (req, res, next) => {
   }
 };
 
+exports.getCountUsers = async (req, res, next) => {
+  try {
+      // Use distinct to get unique destinations from all packages
+      const users = await User.find();
+
+      // Return the list of destinations
+      res.status(200).json(users.length);
+  } catch (error) {
+      // Handle errors
+      console.error('Error fetching destinations:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 exports.updateUser = async (req, res, next) => {
   try {
     // console.log(req.body)

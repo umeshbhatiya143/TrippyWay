@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import TravellerForm from "@/Components/TravellerForm/TravellerForm";
 import Alert from "@/Components/Alert";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleLogin, loginUser, logoutUser } from "@/store/slices";
+
 const checkOut = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { slug } = router.query;
   const [openForm, setOpenform] = useState(false);
   const [travellerDetails, setTravellerDetails] = useState([]);
@@ -18,6 +23,13 @@ const checkOut = () => {
   const toggleForm = () => {
     setOpenform(!openForm);
   };
+
+  useEffect(()=> {
+    if(isLoggedIn === false){
+      router.push('/')
+    }
+  })
+  
   const handleTravellerDetails = (details) => {
     const existingIndex = travellerDetails.findIndex(
       (detail) => detail.index === details.index

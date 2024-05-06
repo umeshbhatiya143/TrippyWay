@@ -98,6 +98,12 @@ const Cart = () => {
     }, 2000); // 10000 milliseconds = 10 seconds
   }, []);
 
+  useEffect(()=> {
+    if(isLoggedIn === false){
+      router.push('/')
+    }
+  })
+
   //To maintain state of each package traveller
   // useEffect(() => {
   //   const initialNoOfTravellers = {};

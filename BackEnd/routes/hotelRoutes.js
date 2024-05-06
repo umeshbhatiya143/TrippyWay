@@ -1,14 +1,20 @@
 const router = require('express').Router();
-const { addHotel, getHotelbyId, getAllHotels, updateHotel, deleteHotel } = require('../Controllers/hotelController');
+const { addHotel, getHotelbyId, getAllHotels, updateHotel, deleteHotel, getAllNames, getCountHotels } = require('../Controllers/hotelController');
 
 // Add packages
 router.post('/add', addHotel);
+
+//get all hotel names
+router.get('/names', getAllNames);
+
+//get all hotel count
+router.get('/count', getCountHotels);
 
 // get package by Id
 router.get('/:id', getHotelbyId);
 
 // get all packages
-router.get('/', getAllHotels);
+router.post('/', getAllHotels);
 
 //Update packages
 router.patch('/:id', updateHotel);

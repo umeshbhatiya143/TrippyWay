@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { signup, login, getUserbyId, getAllUser, updateUser, deleteUser, changePassword } = require('../Controllers/userController');
+const { signup, login, getUserbyId, getAllUser, updateUser, deleteUser, changePassword, getCountUsers } = require('../Controllers/userController');
 
 // Add users
 router.post('/signup', signup);
@@ -9,6 +9,9 @@ router.post('/login', login);
 
 //update password
 router.patch('/change-password', changePassword)
+
+//count all users
+router.get('/count', getCountUsers)
 
 // get user by Id
 router.get('/:id', getUserbyId);

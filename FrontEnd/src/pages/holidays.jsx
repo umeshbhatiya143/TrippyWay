@@ -25,6 +25,8 @@ const packages = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isNoMore, setIsNoMore] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
+  const [packagesCount, setPackagesCount] = useState();
+  const [currentPackagesCount, setCurrentPackagesCount] = useState(10);
 
   const router = useRouter()
 
@@ -262,6 +264,21 @@ const packages = () => {
     }
   }
 
+  const fetchPackagesCount = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/count`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      const data = await response.json();
+      setPackagesCount(data);
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+    }
+  };
+
   const fetchPackages = async (page, filters) => {
     setIsLoading(true);
     try {
@@ -278,7 +295,7 @@ const packages = () => {
         body: JSON.stringify({ filters, searchQuery }),
       });
       const data = await response.json();
-      if (data.packages.length === 0) {
+      if (data.packages.length <10 || data.packages.length === 0) {
         setIsNoMore(true);
       }
       setPackages(data.packages);
@@ -291,11 +308,13 @@ const packages = () => {
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
+    setCurrentPackagesCount(currentPackagesCount+packages.length)
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      setCurrentPackagesCount(currentPackagesCount-packages.length)
     }
   };
 
@@ -309,8 +328,9 @@ const packages = () => {
       handleSearch()
     }
   }, [destination]);
-  useEffect(() => {
 
+  useEffect(() => {
+  fetchPackagesCount();
   }, [packages])
 
   return (
@@ -519,7 +539,7 @@ const packages = () => {
             {/*------------ package components ------------*/}
 
             <div className="flex items-center w-full cursor-pointer flex-col gap-2">
-              <h2 className="text-xl w-full border-b-2 text-left text-deep-purple font-medium">Showing {packages.length} results...</h2>
+              <h2 className="text-xl w-full border-b-2 text-left text-deep-purple font-medium">Showing {currentPackagesCount} out of {packagesCount} results...</h2>
               {packages.map((pkg) => (
                 <PackageCompo key={pkg._id} pkg={pkg} />
               ))}

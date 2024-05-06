@@ -7,16 +7,19 @@ import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+  const path = router.pathname;
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Header />
-        <div className='pt-[120px]'>
+        {path !== "/admin" && path !== "/admin/login" && <Header />}
+        <div className={path === "/admin" || path === "/admin/login" ? "" : "pt-[120px]"}>
           <Component {...pageProps} />
-
-          <ToastContainer/>
+          <ToastContainer />
         </div>
         {/* <Footer /> */}
       </PersistGate>

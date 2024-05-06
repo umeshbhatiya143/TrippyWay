@@ -128,7 +128,7 @@ const PersonalInfo = () => {
         body: JSON.stringify(updatedData),
       });
       if (!response.ok) throw new Error('Failed to update profile');
-      toast.success('Profile updated successfully',toastOptions);
+      toast.success('Profile updated successfully', toastOptions);
     } catch (error) {
       console.error(error.message);
       toast.error('Failed to update profile', toastOptions);

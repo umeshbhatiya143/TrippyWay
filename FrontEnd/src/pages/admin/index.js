@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import AddPackage from '@/Components/admin/addPackage'
 import AddHotel from '@/Components/admin/addHotel'
 import Dashboard from '@/Components/admin/dashboard';
 import AllPackages from '@/Components/admin/allPackages';
 import AllHotels from '@/Components/admin/allHotels';
+import { useRouter } from 'next/router';
+import Header from '@/Components/admin/header';
 
 
 const AdminDashboard = () => {
+    const router = useRouter();
+
     const [selectedPage, setSelectedPage] = useState('dashboard')
 
 
@@ -27,9 +31,18 @@ const AdminDashboard = () => {
         }
     };
 
+    useEffect(()=>{
+        const isLoggedIn = localStorage.getItem("adminLogin");
+        console.log(isLoggedIn);
+        if(isLoggedIn===""){
+          router.push('/admin/login');
+        }
+      })
+
     return (
         <>
-            <div className='w-full h-[90vh] overflow-hidden flex gap-4 scroll-bar'>
+        <Header/>
+            <div className='w-full h-screen overflow-hidden flex gap-4 scroll-bar pt-[120px]'>
                 <div className="w-80 flex flex-col gap-6 h-screen p-6 pt-10 bg-dark-cyan">
                     <h1 className="text-2xl font-bold text-deep-purple text-center rounded-md bg-white p-2 shadow-md mb-4">Admin Panel</h1>
                     <ul className="text-white">

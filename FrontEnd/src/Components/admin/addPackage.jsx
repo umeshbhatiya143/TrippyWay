@@ -55,7 +55,7 @@ export default function TourPackageForm() {
 
         try {
             // Construct URL with query parameters
-            const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/hotels`);
+            const url = new URL(`${process.env.NEXT_PUBLIC_HOST}/api/hotels/names`);
             //   const params = { fields: 'name,profilePicture,gender,dob,pincode,state,country,address' }; // Define fields you want to fetch
             //   url.search = new URLSearchParams(params).toString();
 
@@ -544,10 +544,10 @@ export default function TourPackageForm() {
                                 .filter((hotel) => hotel.name.toLowerCase().includes(searchTerm.toLowerCase()))
                                 .map((hotel) => (
                                     <li
-                                        onClick={() => handleHotelSelect(hotel._id)}
+                                        onClick={() => handleHotelSelect(hotel.id)}
                                         key={hotel.hotelId} className="cursor-pointer hover:bg-gray-100 p-2 rounded-md">
                                         <p className="font-medium text-deep-purple">{hotel.name}</p>
-                                        <p className="text-gray-500 text-sm">ID: {hotel._id}</p>
+                                        <p className="text-gray-500 text-sm">ID: {hotel.id}</p>
                                     </li>
                                 ))}
                         </ul>

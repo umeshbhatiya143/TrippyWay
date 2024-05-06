@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
@@ -61,6 +61,11 @@ const login = () => {
       setTimeout(() => {
         dispatch(toggleLogin());
         window.location.reload()
+
+        if (values.email === "umesh@admin.com") {
+          localStorage.setItem("adminLogin", true);
+          router.push('/admin')
+        }
       }, 1000);
     } catch (error) {
       console.error('Login error:', error.message);

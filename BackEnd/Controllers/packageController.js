@@ -246,7 +246,19 @@ exports.getAllTitles = async (req, res, next) => {
     }
 };
 
+exports.getCountPackages = async (req, res, next) => {
+    try {
+        // Use distinct to get unique destinations from all packages
+        const packages = await Package.find();
 
+        // Return the list of destinations
+        res.status(200).json(packages.length);
+    } catch (error) {
+        // Handle errors
+        console.error('Error fetching destinations:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
 
 // PUT: Update a package by ID
 exports.updatePackage = async (req, res, next) => {
