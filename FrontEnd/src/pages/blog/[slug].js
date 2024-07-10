@@ -104,7 +104,7 @@ const Blog = () => {
               <p className="m-3 p-2">{blog.desc2}</p>
               {blog.places.map((place, index) => {
                 return (
-                  <div className="flex flex-col justify-center mt-5">
+                  <div key={index} className="flex flex-col justify-center mt-5">
                     <h2 className="lg:text-2xl md:text-xl sm:text:xl md:font-medium sm:font-semibold m-2 p-2">
                       {place.name}
                     </h2>
@@ -138,7 +138,7 @@ const Blog = () => {
             <Slider {...settings}>
               {recent.recent.map((place, index) => {
                 return (
-                  <div className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
+                  <div key={index} className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
                     <a>
                       <img
                         className="rounded-t-xl h-[250px] w-full"
@@ -162,7 +162,7 @@ const Blog = () => {
             <Slider {...settings}>
               {popular.popular.map((place, index) => {
                 return (
-                  <div className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
+                  <div key={index} className="bg-slate-200 rounded-xl w-[300px] h-[350px] text-black ">
                     <a>
                       <img
                         className="rounded-t-xl h-[250px] w-full"

@@ -5,7 +5,7 @@ import Alert from "@/Components/Alert";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleLogin, loginUser, logoutUser } from "@/store/slices";
 
-const checkOut = () => {
+const CheckOut = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -122,4 +122,4 @@ const checkOut = () => {
   );
 };
 
-export default checkOut;
+export default CheckOut;

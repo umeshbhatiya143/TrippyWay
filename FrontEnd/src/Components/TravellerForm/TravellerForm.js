@@ -46,7 +46,7 @@ const noOfTravellerInteger = parseInt(noOfTraveller);
       <div className="">
         <div className="grid md:grid-cols-2 sm:grid-cols-1">
           {[...Array(noOfTravellerInteger)].map((_, index) => (
-            <DetailsForm  travellerDetails={travellerDetails} handleAddDetails={handleAddDetails}  index={index}/>
+            <DetailsForm key={index} travellerDetails={travellerDetails} handleAddDetails={handleAddDetails}  index={index}/>
             //   handleAddDetailsPerPackage={handleAddDetailsPerPackage}
               
          

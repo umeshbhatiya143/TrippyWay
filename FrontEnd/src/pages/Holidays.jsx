@@ -15,17 +15,15 @@ import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import Card from '@/Components/card';
 import PackageCompo from '@/Components/packageCompo';
 
-const packages = () => {
+const Holidays = ({cities, packagesCount}) => {
   const [destination, setDestination] = useState('');
   const [filteredCities, setFilteredCities] = useState([]);
-  const [cities, setCities] = useState([])
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [month, setMonth] = useState('');
   const [packages, setPackages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isNoMore, setIsNoMore] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
-  const [packagesCount, setPackagesCount] = useState();
   const [currentPackagesCount, setCurrentPackagesCount] = useState(10);
 
   const router = useRouter()
@@ -193,28 +191,6 @@ const packages = () => {
     }
   ]
 
-  const fetchAllDestinations = async () => {
-    try {
-      // const queryParams = new URLSearchParams(filter).toString();
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/destinations`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      console.log(data)
-      setCities(data);
-    } catch (error) {
-      console.error('Error fetching packages:', error);
-    }
-  }
-
-  useEffect(() => {
-    fetchAllDestinations()
-  }, [])
-
   const handleDestinationChange = (event) => {
     const input = event.target.value;
     setDestination(input);
@@ -264,21 +240,6 @@ const packages = () => {
     }
   }
 
-  const fetchPackagesCount = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/count`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      const data = await response.json();
-      setPackagesCount(data);
-    } catch (error) {
-      console.error('Error fetching hotels:', error);
-    }
-  };
-
   const fetchPackages = async (page, filters) => {
     setIsLoading(true);
     try {
@@ -323,15 +284,12 @@ const packages = () => {
 
   }, [currentPage, filters]);
 
+ //useEffect for whenever a user select any destination in searchbar it automatically search and render
   useEffect(() => {
     if (destination) {
       handleSearch()
     }
   }, [destination]);
-
-  useEffect(() => {
-  fetchPackagesCount();
-  }, [packages])
 
   return (
     <div className='w-full'>
@@ -716,9 +674,9 @@ const packages = () => {
                   className="relative"
                 >
                   {
-                    reviews.map((review) => {
+                    reviews.map((review, index) => {
                       return (
-                        <SwiperSlide>
+                        <SwiperSlide key={index}>
                           <ReviewCard key={review.id} review={review} />
                         </SwiperSlide>
                       )
@@ -746,4 +704,37 @@ const packages = () => {
   )
 }
 
-export default packages
+export default Holidays
+
+// Fetching static destinations
+export async function getStaticProps() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/destinations`);
+    const cities = await response.json();
+
+    const response2 = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/count`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    const packagesCount = await response2.json();
+
+    return {
+      props: {
+        cities: cities || [],
+        packagesCount: packagesCount || 0,
+      },
+      revalidate: 3600, // Revalidate every hour
+    };
+
+  } catch (error) {
+    console.error('Error fetching destinations:', error);
+    return {
+      props: {
+        cities: [],
+        packagesCount: 0,
+      },
+    };
+  }
+}

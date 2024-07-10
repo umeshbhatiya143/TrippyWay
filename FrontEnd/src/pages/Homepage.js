@@ -7,9 +7,16 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import pack from './package/pack.json'
-import Card from '@/Components/card'
+import Card2 from '@/Components/card'
 import { Typewriter } from 'react-simple-typewriter'
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { Parallax } from 'react-scroll-parallax';
+import ReviewCard from '@/Components/reviewCard';
+import Image from 'next/image';
+import SearchDestination from '@/assets/search_des.gif'
+import ChoosePackages from '@/assets/choose_package.gif'
+import BookAndEnjoy from '@/assets/book.gif'
+
 
 const Homepage = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -26,6 +33,45 @@ const Homepage = () => {
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
+
+  //--------Reviews------
+  const reviews = [
+    // Dummy review data
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    {
+      id: 1,
+      name: 'John Doe',
+      date: 'Oct 22, 2023',
+      rating: 5,
+      comment: 'Amazing experience, our guide was knowledgeable and friendly!',
+      avatar: 'https://i.pravatar.cc/300?img=1', // Placeholder avatar image URL
+    },
+    // More reviews...
+  ];
+
 
 
   // Simulated list of cities for the dropdown.
@@ -95,34 +141,44 @@ const Homepage = () => {
   }
 
   return (
-    <section className="flex flex-col gap-20">
+    <section className="flex flex-col gap-10">
 
-      {/* -----------------hero section------------ */}
-      <div className="h-[88vh] relative overflow-hidden">
-        <Swiper
-          modules={[Autoplay]}
-          slidesPerView={1}
-          autoplay={{
-            delay: 6000,
-            disableOnInteraction: false,
-          }}
-          loop={true}
-          className="relative"
+      {/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                    Hero Section
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+
+      <section className="relative overflow-hidden py-20 bg-gray-100 h-[88vh]">
+        <Parallax className="absolute top-0 left-0 w-full h-full"
+          y={[-500, 500]}
+          tagOuter="figure"
+          speed={-50}
         >
+          {/* <div className="h-[88vh] relative overflow-hidden"> */}
+          <Swiper
+            modules={[Autoplay]}
+            slidesPerView={1}
+            autoplay={{
+              delay: 6000,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+            className="relative"
+          >
 
-          {
-            slideContent.map((slide) => {
-              return (
-                <SwiperSlide>
-                  <div className="w-full !important flex items-center justify-center">
-                    <img src={slide.image} alt="" className='w-full !important' />
-                  </div>
-                </SwiperSlide>
-              )
-            })
-          }
-        </Swiper>
-        <div className="w-full h-full absolute top-0 z-10 flex justify-center overflow-hidden">
+            {
+              slideContent.map((slide, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <div className="w-full !important flex items-center justify-center">
+                      <img src={slide.image} alt="" className='w-full !important' />
+                    </div>
+                  </SwiperSlide>
+                )
+              })
+            }
+          </Swiper>
+        </Parallax>
+        <div className="w-full h-full top-0 z-10 flex justify-center">
           {/* TrippyAI Section */}
           <div className="flex flex-col gap-3 items-center justify-center w-1/2 text-white bg-glassy my-10 mx-28 px-28 rounded-lg shadow-md">
             <h2 className="text-6xl font-black mb-4">NextGen Tour</h2>
@@ -152,7 +208,7 @@ const Homepage = () => {
           </div>
 
           {/* search bar for choosing package */}
-          <div className="flex flex-col items-center justify-center w-1/2 rounded-lg shadow-md">
+          <div className="flex flex-col z-10 items-center justify-center w-1/2 rounded-lg shadow-md">
             <div className="w-[60%] flex flex-col gap-4 bg-gray-200 rounded-lg shadow-md p-10">
               {/* Package Selection Form */}
               <h2 className="text-2xl font-semibold mb-4 text-center">Customize & Book Amazing Holiday Packages</h2>
@@ -220,15 +276,23 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-      </div>
+        {/* </div> */}
+      </section>
 
-      {/*------------ Recommended Packages Section ------------*/}
-      <div className="w-full flex flex-col items-center gap-10 py-10">
-        <h2 className="text-4xl font-bold text-dark-cyan mb-10">Top Packages</h2>
-        <div className="w-full md:w-3/4 xl:w-2/3 relative">
-          <button className="text-sm font-medium text-white bg-deep-purple hover:bg-dark-cyan transition-colors duration-300 py-2 px-4 rounded-full absolute right-0 -top-16 shadow-lg">
-            View More
-          </button>
+
+      {/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                   Recommended Packages Section
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+
+
+      <div className="w-full flex flex-col items-center gap-20 mt-10">
+        <div className="w-[80%] relative">
+          <div className='flex justify-between'>
+            <h2 className="text-4xl font-bold text-dark-cyan">Top Packages</h2>
+            <span className="flex items-center cursor-pointer text-sm font-medium text-white bg-deep-purple hover:bg-dark-cyan transition-colors duration-300 px-4 rounded-full shadow-lg">
+              View More
+            </span>
+          </div>
           <Swiper
             modules={[Autoplay, Navigation]}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
@@ -244,8 +308,8 @@ const Homepage = () => {
             className="shadow-xl rounded-xl overflow-hidden"
           >
             {Array.from({ length: 5 }, (_, i) => i).map(index => (
-              <SwiperSlide key={index} className="bg-white p-4 hover:scale-110 transition-transform duration-300 ease-in-out">
-                <Card data={pack} />
+              <SwiperSlide key={index} className="bg-white pl-2 pt-4 pb-10">
+                <Card2 data={pack} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -253,13 +317,21 @@ const Homepage = () => {
       </div>
 
 
-      {/*------------ Recommended Packages Section ------------*/}
-      <div className="w-full flex flex-col items-center gap-10 py-10">
-        <h2 className="text-4xl font-bold text-dark-cyan mb-10">Top Packages</h2>
-        <div className="w-full md:w-3/4 xl:w-2/3 relative">
-          <button className="text-sm font-medium text-white bg-deep-purple hover:bg-dark-cyan transition-colors duration-300 py-2 px-4 rounded-full absolute right-0 -top-16 shadow-lg">
-            View More
-          </button>
+
+      {/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                    Recommended Packages Section
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+
+
+
+      <div className="w-full flex flex-col items-center gap-20 mt-10">
+        <div className="w-[80%] relative">
+          <div className='flex justify-between'>
+            <h2 className="text-4xl font-bold text-dark-cyan">Top Packages</h2>
+            <span className="flex items-center cursor-pointer text-sm font-medium text-white bg-deep-purple hover:bg-dark-cyan transition-colors duration-300 px-4 rounded-full shadow-lg">
+              View More
+            </span>
+          </div>
           <Swiper
             modules={[Autoplay, Navigation]}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
@@ -275,8 +347,8 @@ const Homepage = () => {
             className="shadow-xl rounded-xl overflow-hidden"
           >
             {Array.from({ length: 5 }, (_, i) => i).map(index => (
-              <SwiperSlide key={index} className="bg-white p-4 hover:scale-110 transition-transform duration-300 ease-in-out">
-                <Card data={pack} />
+              <SwiperSlide key={index} className="bg-white pl-2 pt-4 pb-10">
+                <Card2 data={pack} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -284,13 +356,20 @@ const Homepage = () => {
       </div>
 
 
-      {/*------------ Recommended Packages Section ------------*/}
-      <div className="w-full flex flex-col items-center gap-10">
-        <h2 className="text-4xl font-bold text-dark-cyan mb-10">Top Packages</h2>
-        <div className="w-full md:w-3/4 xl:w-2/3 relative">
-          <button className="text-sm font-medium text-white bg-deep-purple hover:bg-dark-cyan transition-colors duration-300 py-2 px-4 rounded-full absolute right-0 -top-12 shadow-lg">
-            View More
-          </button>
+
+      {/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                    Recommended Packages Section
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+
+
+      <div className="w-full flex flex-col items-center gap-20 mt-10">
+        <div className="w-[80%] relative">
+          <div className='flex justify-between'>
+            <h2 className="text-4xl font-bold text-dark-cyan">Top Packages</h2>
+            <span className="flex items-center cursor-pointer text-sm font-medium text-white bg-deep-purple hover:bg-dark-cyan transition-colors duration-300 px-4 rounded-full shadow-lg">
+              View More
+            </span>
+          </div>
           <Swiper
             modules={[Autoplay, Navigation]}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
@@ -306,15 +385,108 @@ const Homepage = () => {
             className="shadow-xl rounded-xl overflow-hidden"
           >
             {Array.from({ length: 5 }, (_, i) => i).map(index => (
-              <SwiperSlide key={index} className="bg-white p-4 hover:scale-105 transition-transform duration-300 ease-in-out">
-                <Card data={pack} />
+              <SwiperSlide key={index} className="bg-white pl-2 pt-4 pb-10">
+                <Card2 data={pack} />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </div>
 
-    </section>
+
+      {/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                    How it works section
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+
+
+      <section className="relative overflow-hidden py-20 bg-gray-100">
+        <Parallax className="absolute top-0 left-0 w-full h-full" y={[-500, 500]} tagOuter="figure" speed={-50}>
+          <img src="/slide3.jpg" alt="Background" className="object-cover w-full h-[1000px]" />
+        </Parallax>
+        <div className="relative flex flex-col gap-52 justify-center items-center z-10 container mx-auto text-center h-[800px]">
+          <h2 className="text-5xl font-extrabold text-white bg-dark-cyan bg-opacity-80 p-6 px-12 rounded-full shadow-2xl mb-16">
+            How It Works
+          </h2>
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="relative p-10 py-16 flex flex-col gap-2 bg-white rounded-lg shadow-md justify-center items-center transform transition-transform duration-300 hover:shadow-2xl hover:scale-105">
+              <div className="absolute top-[-75px] p-6 bg-dark-cyan transform rotate-45 rounded-lg flex justify-center items-center">
+                <Image
+                  src={SearchDestination}
+                  alt="Search Destination"
+                  width={100}
+                  height={100}
+                  className="transform -rotate-45"
+                />
+              </div>
+              <h3 className="mt-20 mb-2 text-xl font-bold text-deep-purple">Search Destinations</h3>
+              <p>Use our search bar to find your ideal travel destination.</p>
+            </div>
+            <div className="relative p-10 py-16 flex flex-col gap-2 bg-white rounded-lg shadow-md justify-center items-center transform transition-transform duration-300 hover:shadow-2xl hover:scale-105">
+              <div className="absolute top-[-75px] h-[150px] w-[150px] p-6 bg-dark-cyan transform rotate-45 rounded-lg flex justify-center items-center">
+                <Image
+                  src={ChoosePackages}
+                  alt="Choose Package"
+                  width={150}
+                  height={150}
+                  className="transform -rotate-45"
+                />
+              </div>
+              <h3 className="mt-20 mb-2 text-xl font-bold text-deep-purple">Choose Your Package</h3>
+              <p>Select from a variety of packages that suit your needs.</p>
+            </div>
+            <div className="relative p-10 py-16 flex flex-col gap-2 bg-white rounded-lg shadow-md justify-center items-center transform transition-transform duration-300 hover:shadow-2xl hover:scale-105">
+              <div className="absolute top-[-75px] p-6 bg-dark-cyan transform rotate-45 rounded-lg flex justify-center items-center">
+                <Image
+                  src={BookAndEnjoy}
+                  alt="Book and Enjoy"
+                  width={100}
+                  height={100}
+                  className="transform -rotate-45"
+                />
+              </div>
+              <h3 className="mt-20 mb-2 text-xl font-bold text-deep-purple">Book and Enjoy</h3>
+              <p>Book your trip in a few easy steps and enjoy your vacation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                    customer reviews section
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
+
+
+      <div className="shadow-2xl rounded-xl p-6 bg-custom-white p-10">
+        <div className="container flex flex-col items-center mx-auto  bg-dark-cyan gap-6 rounded-b-xl py-20">
+          <h2 className="text-4xl font-bold text-center text-white mb-10">Tour Reviews</h2>
+          <div className=" -mx-4 justify-center max-w-2xl">
+            <Swiper
+              modules={[Autoplay, Navigation]}
+              slidesPerView={1}
+              navigation={true}
+              autoplay={{
+                delay: 6000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              className="relative"
+            >
+              {
+                reviews.map((review, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <ReviewCard key={review.id} review={review} />
+                    </SwiperSlide>
+                  )
+                })
+              }
+            </Swiper>
+          </div>
+        </div>
+      </div>
+
+
+    </section >
   )
 }
 

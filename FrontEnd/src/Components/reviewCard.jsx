@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoMdStar } from "react-icons/io";
 import Rating from './Rating';
-
+import Image from 'next/image';
 // Individual review card
 const ReviewCard = ({ review }) => {
   const rating=4;
@@ -10,7 +10,7 @@ const ReviewCard = ({ review }) => {
       <div className="flex items-center mb-4">
         <Rating stars={rating}/>
       </div>
-      <p className="text-gray-600 italic mb-4">"{review.comment}"</p>
+      <p className="text-gray-600 italic mb-4">&quot;{review.comment}&quot;</p>
       <div className="flex justify-between items-center mt-4">
         <div className="flex flex-col gap-4 justify-center items-center">
           <div className="mr-2">

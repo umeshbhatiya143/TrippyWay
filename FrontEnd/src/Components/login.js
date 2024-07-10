@@ -12,7 +12,7 @@ import Loader from '@/assets/loader.gif'
 
 import { jwtDecode } from 'jwt-decode';
 
-const login = () => {
+const Login = () => {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -133,7 +133,7 @@ const login = () => {
           }
         </form>
         <div className="flex gap-1.5 text-sm items-center">
-          <p>Don't have an account?</p>
+          <p>Don&apos;t have an account?</p>
           <span className="cursor-pointer text-blue-700 transition-all duration-700" onClick={() => { dispatch(toggleLogin()); dispatch(toggleSignup()); }}>
             Signup
           </span>
@@ -154,4 +154,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login

@@ -450,8 +450,8 @@ const Hotels = () => {
               Room Types at {hotel.name}{" "}
             </div>
             <div className="flex flex-col justify-center ">
-              {hotels.rooms.map((room) => (
-                <div className="w-full flex flex-row gap-4 mx-auto bg-white border-2  rounded-md shadow-md overflow-hidden my-4">
+              {hotels.rooms.map((room, index) => (
+                <div key={index} className="w-full flex flex-row gap-4 mx-auto bg-white border-2  rounded-md shadow-md overflow-hidden my-4">
                   <div className="w-2/6 m-2 rounded-md">
                     <Swiper
                       modules={[Navigation]}
@@ -523,9 +523,9 @@ const Hotels = () => {
                   className="relative"
                 >
                   {
-                    reviews.map((review) => {
+                    reviews.map((review, index) => {
                       return (
-                        <SwiperSlide>
+                        <SwiperSlide key={index}>
                           <ReviewCard key={review.id} review={review} />
                         </SwiperSlide>
                       )

@@ -336,8 +336,8 @@ const Cart = () => {
       <div className="flex md:flex-row sm:flex-col gap-1 justify-center ">
         {/* package add to cart */}
         <div className="w-4/6 m-2 p-1">
-       {pack.length>0 && <>{pack.map((pkg) => (
-            <div className="w-full flex md:flex-col sm:flex-col xs:flex-col lg:flex-row mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4  md:p-4 gap-6">
+       {pack.length>0 && <>{pack.map((pkg, index) => (
+            <div key={index} className="w-full flex md:flex-col sm:flex-col xs:flex-col lg:flex-row mx-auto bg-white border-2 rounded-xl shadow-md overflow-hidden my-4  md:p-4 gap-6">
               {/*<div className="flex md:flex-row  p-4 gap-6"> */}
 
               <div className="md:flex-shrink-0 w-80 h-60 overflow-hidden">

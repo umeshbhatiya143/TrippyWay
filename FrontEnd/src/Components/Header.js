@@ -7,6 +7,7 @@ import { BsCart } from "react-icons/bs";
 import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import Login from '@/Components/login'
 import Signup from '@/Components/signup'
+import Image from 'next/image';
 
 const Header = () => {
     const router = useRouter();
@@ -47,14 +48,16 @@ const Header = () => {
 
                 {/* offers slider */}
                 <div className="w-full pipe-slider overflow-hidden flex items-center justify-center py-2 bg-white text-center z-10">
-                    <p className="w-full text-red-600 text-center">For a limited-time discount: "50% off for the next 48 hours! Don't miss out!"</p>
+                <p className="w-full text-red-600 text-center">
+                        For a limited-time discount: &quot;50% off for the next 48 hours! Don&apos;t miss out!&quot;
+                    </p>
                 </div>
                 <div className='bg-white text-black border-t-2 border '>
                     <div className="container mx-auto flex justify-between items-center   px-6 lg:px-12">
                         {/* Logo and Navigation */}
-                        <div onClick={() => goToProfilePage('/')} 
+                        <div onClick={() => router.push('/')} 
                          className="flex items-center mt-1 mb-1 cursor-pointer">
-                            <img src="/logo.png" alt="Logo" className="h-20 w-60 object-cover" />
+                             <Image src="/Tlogo.png" alt="Logo" width={180} height={40} className="object-cover" />
                             <nav>
                                 {/* <ul className="flex items-center space-x-10">
                                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
@@ -66,21 +69,21 @@ const Header = () => {
 
                                 <ul className="flex items-center">
                                     <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
-                                        onClick={() => goToProfilePage('/')}>
+                                        onClick={() => router.push('/')}>
                                         Home
                                     </li>
                                     <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
-                                        onClick={() => goToProfilePage('/holidays')}>
+                                        onClick={() => router.push('/Holidays')}>
                                         holidays
                                     </li>
                                     {/* <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
                                         onClick={() => goToProfilePage('/holidays')}>Activities
                                     </li> */}
                                     <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
-                                        onClick={() => goToProfilePage('/blogs/0')}>Blogs
+                                        onClick={() => router.push('/blogs/0')}>Blogs
                                     </li>
                                     <li className="hover:text-button-color hover:bg-white cursor-pointer p-2 px-6 rounded-full transition-colors duration-600"
-                                        onClick={() => goToProfilePage('/offers')}>offers
+                                        onClick={() => router.push('/offers')}>offers
                                     </li>
                                 </ul>
                             </nav>

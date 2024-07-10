@@ -10,7 +10,7 @@ import { toggleLogin, toggleSignup } from "@/store/slices";
 import Loader from '@/assets/loader.gif'
 import Image from "next/image";
 
-const signup = () => {
+const Signup = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -235,4 +235,4 @@ const signup = () => {
     )
 }
 
-export default signup
+export default Signup

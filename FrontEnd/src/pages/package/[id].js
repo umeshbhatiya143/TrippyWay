@@ -929,9 +929,9 @@ const Packages = () => {
                   loop={true}
                   className="relative"
                 >
-                  {reviews.map((review) => {
+                  {reviews.map((review, index) => {
                     return (
-                      <SwiperSlide>
+                      <SwiperSlide key={index}>
                         <ReviewCard key={review.id} review={review} />
                       </SwiperSlide>
                     );

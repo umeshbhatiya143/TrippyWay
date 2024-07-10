@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
        
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
       </Head>
       <body>
         <Main />

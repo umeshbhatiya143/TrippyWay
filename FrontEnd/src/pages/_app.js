@@ -8,6 +8,7 @@ import Footer from '@/Components/Footer';
 import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -16,12 +17,15 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {path !== "/admin" && path !== "/admin/login" && <Header />}
-        <div className={path === "/admin" || path === "/admin/login" ? "" : "pt-[120px]"}>
-          <Component {...pageProps} />
-          <ToastContainer />
-        </div>
-        {/* <Footer /> */}
+        <ParallaxProvider>
+          {path !== "/admin" && path !== "/admin/login" && <Header />}
+          <div className={path === "/admin" || path === "/admin/login" ? "" : "pt-[120px]"}>
+
+            <Component {...pageProps} />
+            <ToastContainer />
+          </div>
+          <Footer />
+        </ParallaxProvider>
       </PersistGate>
     </Provider>
   );
