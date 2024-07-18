@@ -57,7 +57,7 @@ const Header = () => {
                         {/* Logo and Navigation */}
                         <div onClick={() => router.push('/')} 
                          className="flex items-center mt-1 mb-1 cursor-pointer">
-                             <Image src="/logo2.jpeg" alt="Logo" width={180} height={40} className="object-cover" />
+                             <Image src="/logo4.jpeg" alt="Logo" width={180} height={40} className="object-cover" />
                             <nav>
                                 {/* <ul className="flex items-center space-x-10">
                                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
