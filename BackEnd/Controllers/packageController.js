@@ -15,13 +15,13 @@ const validatePackageInput = (req, res, next) => {
     next();
 };
 
-// POST: Create a new package
+// POST: Create a new pack
 exports.createPackage = async (req, res, next) => {
     try {
 
         // console.log(req.body)
-        // Create package object
-        const package = new Package(req.body);
+        // Create pack object
+        const pack = new Package(req.body);
 
         // Validate input
         //if (!user.email || !user.password) {
@@ -29,12 +29,12 @@ exports.createPackage = async (req, res, next) => {
         //}
 
         // Check for existing Package
-        const existingPackage = await Package.findOne({ title: package.title });
+        const existingPackage = await Package.findOne({ title: pack.title });
         if (existingPackage) {
             return res.status(400).json({ message: 'Package already exists.' });
         }
         // Save to DB
-        await package.save();
+        await pack.save();
 
         res.status(201).json({ message: 'Package created successfully.' });
     } catch (error) {
@@ -42,19 +42,19 @@ exports.createPackage = async (req, res, next) => {
     }
 };
 
-// GET: Retrieve a single package by ID
+// GET: Retrieve a single pack by ID
 exports.getPackagebyId = async (req, res, next) => {
     try {
-        const package = await Package.findById(req.params.id);
-        if (!package)
-            return res.status(404).send({ message: "No packages Found." });
-        res.status(200).send({ package });
+        const pack = await Package.findById(req.params.id);
+        if (!pack)
+            return res.status(404).send({ message: "No packs Found." });
+        res.status(200).send({ pack });
     } catch (err) {
         res.status(500).send(err.message)
     }
 };
 
-// GET: Retrieve all packages
+// GET: Retrieve all packs
 // exports.getAllPackage = async (req, res, next) => {
 
 //     try{
@@ -64,10 +64,10 @@ exports.getPackagebyId = async (req, res, next) => {
 //         const pageValue = parseInt(page, 10) || 1;
 //         const skip = (pageValue - 1) * limitValue;
 //         // console.log(limitValue, skip, pageValue)
-//         const packages = await Package.find().sort({ createdAt: -1 }).skip(skip).limit(limitValue);
-//         if(!packages)
-//             return res.status(404).send({ message: "No packages Found."});
-//         res.status(200).send({packages});
+//         const packs = await Package.find().sort({ createdAt: -1 }).skip(skip).limit(limitValue);
+//         if(!packs)
+//             return res.status(404).send({ message: "No packs Found."});
+//         res.status(200).send({packs});
 //     }catch(err){
 //         res.status(500).send(err.message)
 //     }
@@ -204,15 +204,15 @@ exports.getAllPackage = async (req, res, next) => {
 
 
 
-        // Fetch packages based on the constructed filter object
-        const packages = Object.keys(filterObject).length === 0
+        // Fetch packs based on the constructed filter object
+        const packs = Object.keys(filterObject).length === 0
             ? await Package.find().sort({ createdAt: -1 }).skip(skip).limit(limitValue)
             : await Package.find(filterObject).sort({ createdAt: -1 }).skip(skip).limit(limitValue);
 
-        if (!packages) {
-            return res.status(404).send({ message: "No packages found." });
+        if (!packs) {
+            return res.status(404).send({ message: "No packs found." });
         }
-        res.status(200).send({ packages });
+        res.status(200).send({ packs });
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -220,7 +220,7 @@ exports.getAllPackage = async (req, res, next) => {
 
 exports.getAllDestinations = async (req, res, next) => {
     try {
-        // Use distinct to get unique destinations from all packages
+        // Use distinct to get unique destinations from all packs
         const destinations = await Package.distinct('destinations');
 
         // Return the list of destinations
@@ -234,7 +234,7 @@ exports.getAllDestinations = async (req, res, next) => {
 
 exports.getAllTitles = async (req, res, next) => {
     try {
-        // Use distinct to get unique destinations from all packages
+        // Use distinct to get unique destinations from all packs
         const titles = await Package.distinct('title');
 
         // Return the list of destinations
@@ -248,11 +248,11 @@ exports.getAllTitles = async (req, res, next) => {
 
 exports.getCountPackages = async (req, res, next) => {
     try {
-        // Use distinct to get unique destinations from all packages
-        const packages = await Package.find();
+        // Use distinct to get unique destinations from all packs
+        const packs = await Package.find();
 
         // Return the list of destinations
-        res.status(200).json(packages.length);
+        res.status(200).json(packs.length);
     } catch (error) {
         // Handle errors
         console.error('Error fetching destinations:', error);
@@ -260,25 +260,25 @@ exports.getCountPackages = async (req, res, next) => {
     }
 };
 
-// PUT: Update a package by ID
+// PUT: Update a pack by ID
 exports.updatePackage = async (req, res, next) => {
     try {
-        const packages = await Package.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!packages)
-            return res.status(404).send({ message: "No packages Found." });
-        res.status(200).send({ packages });
+        const packs = await Package.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!packs)
+            return res.status(404).send({ message: "No packs Found." });
+        res.status(200).send({ packs });
     } catch (err) {
         res.status(500).send(err.message)
     }
 };
 
-// DELETE: Delete a package by ID
+// DELETE: Delete a pack by ID
 exports.deletePackage = async (req, res, next) => {
     try {
-        const packages = await Package.findByIdAndDelete(req.params.id);
-        if (!packages)
-            return res.status(404).send({ message: "No packages Found." });
-        res.status(200).send({ packages });
+        const packs = await Package.findByIdAndDelete(req.params.id);
+        if (!packs)
+            return res.status(404).send({ message: "No packs Found." });
+        res.status(200).send({ packs });
     } catch (err) {
         res.status(500).send(err.message)
     }
