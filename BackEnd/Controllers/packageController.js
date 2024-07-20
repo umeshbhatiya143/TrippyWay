@@ -48,7 +48,7 @@ exports.getPackagebyId = async (req, res, next) => {
         const pack = await Package.findById(req.params.id);
         if (!pack)
             return res.status(404).send({ message: "No packs Found." });
-        res.status(200).send({ pack });
+        res.status(200).send({pack});
     } catch (err) {
         res.status(500).send(err.message)
     }
@@ -73,7 +73,7 @@ exports.getPackagebyId = async (req, res, next) => {
 //     }
 // };
 
-exports.getAllPackage = async (req, res, next) => {
+exports.getFilteredPackage = async (req, res, next) => {
     try {
         const monthMap = {
             January: 1,
@@ -202,7 +202,7 @@ exports.getAllPackage = async (req, res, next) => {
         // }
         // console.log(filterObject)
 
-
+        
 
         // Fetch packs based on the constructed filter object
         const packs = Object.keys(filterObject).length === 0
@@ -217,6 +217,18 @@ exports.getAllPackage = async (req, res, next) => {
         res.status(500).send(err.message);
     }
 };
+
+//all packages
+exports.getAllPackages = async (req,res) => {
+    try {
+        const packs = Package.find({});
+
+        res.status(200).json({packs})
+        
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
 
 exports.getAllDestinations = async (req, res, next) => {
     try {

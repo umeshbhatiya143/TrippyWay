@@ -256,10 +256,11 @@ const Holidays = ({cities, packagesCount}) => {
         body: JSON.stringify({ filters, searchQuery }),
       });
       const data = await response.json();
-      if (data.packages.length <10 || data.packages.length === 0) {
+      console.log(data)
+      if (data.packs.length <10 || data.packs.length === 0) {
         setIsNoMore(true);
       }
-      setPackages(data.packages);
+      setPackages(data.packs);
     } catch (error) {
       console.error('Error fetching packages:', error);
     } finally {

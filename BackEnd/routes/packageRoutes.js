@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { createPackage, getPackagebyId, getAllPackage, updatePackage, deletePackage, getAllDestinations, getAllTitles, getCountPackages} = require('../Controllers/packageController');
+const { createPackage, getPackagebyId, getAllPackages, updatePackage, deletePackage, getAllDestinations, getAllTitles, getCountPackages, getFilteredPackage} = require('../Controllers/packageController');
 
 // Add packages
 router.post('/add', createPackage);
@@ -13,11 +13,14 @@ router.get('/titles', getAllTitles)
 //count total packages
 router.get('/count', getCountPackages);
 
+//get all packages
+router.get('/all', getAllPackages)
+
 // get package by Id
 router.get('/:id', getPackagebyId);
 
-// get all packages
-router.post('/', getAllPackage);
+// get packages based on filter
+router.post('/', getFilteredPackage);
 
 //Update packages
 router.patch('/:id', updatePackage);

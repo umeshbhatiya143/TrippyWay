@@ -43,7 +43,7 @@ import { SlLocationPin } from "react-icons/sl";
 import { FaCalendarCheck } from "react-icons/fa6";
 import Calendar from 'react-calendar';
 
-const Packages = () => {
+const Packages = ({packageData}) => {
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -51,33 +51,7 @@ const Packages = () => {
   const [showMore, setShowMore] = useState(false)
   const [showCalendar, setShowCalendar] = useState(false)
 
-  const [pack, setPack] = useState({
-    title: "",
-    description: "",
-    duration: 0,
-    price: 0,
-    discount: 0,
-    datesAvailable: [],
-    destinations: [],
-    itinerary: [],
-    inclusions: [],
-    exclusions: [],
-    hotels: [],
-    transportation: "",
-    images: [],
-    rating: "",
-    reviews: [],
-    numberOfBookingsMade: 0,
-    availableSpots: 0,
-    cancellationPolicy: "",
-    paymentOptions: [],
-    minimumGroupSize: 0,
-    maximumGroupSize: 0,
-    ageRestrictions: 0,
-    healthAndSafetyMeasures: "",
-    specialOffers: "",
-    tagsKeywords: [],
-  });
+  const [pack, setPack] = useState(packageData);
   const router = useRouter();
   const { id } = router.query;
   //hooks to
@@ -321,24 +295,24 @@ const Packages = () => {
 
   };
 
-  const fetchPackage = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      fetchHotels(data.package.hotels)
-      setPack(data.package);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchPackage = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_HOST}/api/packages/${id}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     fetchHotels(data.package.hotels)
+  //     setPack(data.package);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const updateUserProfile = async (pkgId) => {
     // setIsLoading(true)
@@ -963,3 +937,32 @@ const Packages = () => {
 };
 
 export default Packages;
+
+export async function getStaticPaths() {
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages/all`);
+  // const data = await res.json();
+  // console.log(data)
+  // // const paths = data.packs.map((pkg) => ({
+  // //   params: { id: pkg._id },
+  // // }));
+
+  // const paths = {
+  //   id:"3338838388388388"
+  // }
+
+  // return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  console.log(params)
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_HOST}/api/packages/${params.id}`
+  );
+  const packageData = await res.json();
+
+  return {
+    props: {
+      packageData: packageData.pack,
+    },
+  };
+}
