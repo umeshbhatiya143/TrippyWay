@@ -221,7 +221,7 @@ exports.getFilteredPackage = async (req, res, next) => {
 //all packages
 exports.getAllPackages = async (req,res) => {
     try {
-        const packs = Package.find({});
+        const packs = await Package.find();
 
         res.status(200).json({packs})
         

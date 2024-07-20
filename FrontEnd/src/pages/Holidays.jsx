@@ -248,7 +248,7 @@ const Holidays = ({cities, packagesCount}) => {
         month: month
       }
       // const queryParams = new URLSearchParams(filter).toString();
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/packages?limit=10&page=${page}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}api/packages?limit=10&page=${page}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
